@@ -5,6 +5,10 @@ const loginValidation = {
   params: Joi.object({
     address: Joi.string().required(),
   }),
+  body: Joi.object({
+    signature: Joi.string().required(),
+    message: Joi.string().required(),
+  }),
 };
 
 async function login(req, res) {

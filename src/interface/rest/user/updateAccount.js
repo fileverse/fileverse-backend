@@ -5,6 +5,11 @@ const updateAccountValidation = {
   params: Joi.object({
     address: Joi.string().required(),
   }),
+  body: Joi.object({
+    username: Joi.string().optional(),
+    name: Joi.string().optional().allow(''),
+    email: Joi.string().optional().allow(''),
+  }),
 };
 
 async function updateAccount(req, res) {

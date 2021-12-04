@@ -5,6 +5,9 @@ const updateValidation = {
   params: Joi.object({
     uuid: Joi.string().required(),
   }),
+  body: Joi.object({
+    file: Joi.any().required(),
+  }),
 };
 
 async function update(req, res) {
