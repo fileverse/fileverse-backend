@@ -12,6 +12,7 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 
 const auth = require('./infra/utils/auth');
+const router = require('./interface/rest');
 
 // Express App
 const app = express();
@@ -33,6 +34,8 @@ app.use('/ping', function (req, res) {
   res.json({ reply: 'pong' });
   res.end();
 });
+
+app.use('/', router);
 
 // Export the express app instance
 module.exports = app;
