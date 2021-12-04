@@ -11,9 +11,15 @@ const VersionSchema = new Schema({
 _file.schema = new Schema(
   {
     uuid: { type: String },
+    name: { type: String, trim: true },
     url: { type: String, trim: true },
     mimetype: { type: String, trim: true },
     currentVersion: { type: Number, default: 1 },
+    permission: {
+      type: String,
+      enum: ['public', 'private', 'unlisted'],
+      default: 'public',
+    },
     version: [VersionSchema],
     owner: {
       type: Schema.Types.ObjectId,
@@ -40,6 +46,7 @@ _file.schema.methods.safeObject = function () {
     'url',
     'uuid',
     'currentVersion',
+    'public',
     'version',
     'createdAt',
   ];
