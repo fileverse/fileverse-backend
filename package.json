@@ -1,0 +1,57 @@
+{
+  "name": "qrl-be",
+  "version": "0.0.1",
+  "description": "API server using express",
+  "main": "server.js",
+  "scripts": {
+    "test": "NODE_ENV=test mocha $(find tests -name '*.spec.js') --recursive --exit",
+    "test:unit": "NODE_ENV=test mocha $(find tests/unit -name '*.spec.js') --recursive --exit",
+    "test:e2e": "NODE_ENV=test mocha $(find tests/e2e -name '*.spec.js') --recursive --exit",
+    "start": "NODE_ENV=production node src/server.js",
+    "lint": "./node_modules/.bin/eslint ./src",
+    "lint:fix": "./node_modules/.bin/eslint ./src --fix",
+    "predeploy": "NODE_ENV=production npm install",
+    "deploy": "NODE_ENV=production npm start",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [
+    "graphql",
+    "express",
+    "node",
+    "mongodb"
+  ],
+  "author": "Vijay Krishnavanshi",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "bunyan": "^1.8.15",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "ethers": "^5.5.2",
+    "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.0.14",
+    "morgan": "^1.10.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "chai": "^4.3.4",
+    "eslint": "^8.4.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-security": "^1.4.0",
+    "husky": "^7.0.4",
+    "mocha": "^9.1.3",
+    "nodemon": "^2.0.15",
+    "plop": "^3.0.2",
+    "prettier": "^2.5.0"
+  },
+  "engines": {
+    "node": "^14.17.0"
+  }
+}

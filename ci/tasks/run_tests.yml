@@ -1,0 +1,15 @@
+---
+
+platform: linux
+
+image_resource:
+  type: registry-image
+  source:
+    repository: amidos/dcind
+inputs:
+  - name: express_gql
+  - name: dependency-cache
+  - name: mongo
+
+run:
+  path: express_gql/ci/scripts/run_tests.sh

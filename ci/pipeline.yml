@@ -1,0 +1,44 @@
+---
+resource_types:
+  - name: npm-cache
+    type: docker-image
+    source:
+      repository: ymedlop/npm-cache-resource
+      tag: latest
+resources:
+  - name: express_gql
+    type: git
+    source: &repo-source
+      uri: https://github.com/vijaykrishnavanshi/express-graphql-boilerplate.git
+      branch: master
+  - name: dependency-cache
+    type: npm-cache
+    source:
+      <<: *repo-source
+      paths:
+        - package.json
+  - name: mongo
+    type: docker-image
+    source:
+      repository: mongo
+      tag: 3.6.5
+
+jobs:
+  - name: Install dependencies
+    plan:
+      - get: express_gql
+        trigger: true
+      - get: dependency-cache
+  - name: Run tests
+    plan:
+      - aggregate:
+        - get: express_gql
+          trigger: true
+          passed: [Install dependencies]
+        - get: mongo
+          params: {save: true}
+        - get: dependency-cache
+          passed: [Install dependencies]
+      - task: run the test suite
+        privileged: true
+        file: express_gql/ci/tasks/run_tests.yml
