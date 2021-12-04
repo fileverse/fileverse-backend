@@ -1,3 +1,4 @@
+const createAccount = require('./createAccount');
 const { ethers } = require('ethers');
 const config = require('../../../config');
 const Encryption = require('../../infra/utils/encryption');
@@ -8,8 +9,9 @@ async function verifySignature({ address, message, signature }) {
 }
 
 async function getAuthToken({ address }) {
+  const userId = await createAccount({ address });
   const encryption = new Encryption(config.JWT_SECRET);
-  return encryption.signToken({ address: address.toLowerCase() });
+  return encryption.signToken({ address: address.toLowerCase(), userId });
 }
 
 async function login({ address, signature, message }) {
