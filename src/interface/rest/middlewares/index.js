@@ -4,4 +4,6 @@ module.exports = {
   canEditFile: require('./canEditFile'),
   canViewAccount: require('./canViewAccount'),
   canEditAccount: require('./canEditAccount'),
+  errorHandler: require('./errorHandler'),
+  validator: require('./validator'),
 };

@@ -10,6 +10,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const { errorHandler } = require('./interface/rest/middlewares');
 
 const auth = require('./infra/utils/auth');
 const router = require('./interface/rest');
@@ -36,6 +37,8 @@ app.use('/ping', function (req, res) {
 });
 
 app.use('/', router);
+
+app.use(errorHandler);
 
 // Export the express app instance
 module.exports = app;
