@@ -1,3 +1,4 @@
+const { User } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
@@ -13,8 +14,13 @@ const updateAccountValidation = {
 };
 
 async function updateAccount(req, res) {
-  console.log('the response will be sent by the next function ...');
-  res.json({ hello: true });
+  const { username, name, email } = req.body;
+  const account = await User.updateAccount(req.userId, {
+    username,
+    name,
+    email,
+  });
+  res.json(account);
 }
 
 module.exports = [validate(updateAccountValidation), updateAccount];

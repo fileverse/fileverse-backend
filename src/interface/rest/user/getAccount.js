@@ -1,3 +1,4 @@
+const { User } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
@@ -8,8 +9,9 @@ const getAccountValidation = {
 };
 
 async function getAccount(req, res) {
-  console.log('the response will be sent by the next function ...');
-  res.json({ hello: true });
+  const { address } = req.params;
+  const account = await User.getAccount(address);
+  res.json(account);
 }
 
 module.exports = [validate(getAccountValidation), getAccount];

@@ -1,3 +1,4 @@
+const { File } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
@@ -8,8 +9,9 @@ const getFilesByAccountValidation = {
 };
 
 async function getFilesByAccount(req, res) {
-  console.log('the response will be sent by the next function ...');
-  res.json({ hello: true });
+  const { address } = req.params;
+  const files = await File.getByAccount(address);
+  res.json({ file: files });
 }
 
 module.exports = [validate(getFilesByAccountValidation), getFilesByAccount];
