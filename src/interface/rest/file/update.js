@@ -15,7 +15,7 @@ const updateValidation = {
 async function update(req, res) {
   const { uuid } = req.params;
   const { file, name } = req.body;
-  const updatedFile = await File.create(uuid, {
+  const updatedFile = await File.update(uuid, {
     file,
     name,
   });
