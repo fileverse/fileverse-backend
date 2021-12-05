@@ -1,10 +1,13 @@
+const { Readable } = require('stream');
 const config = require('../../../config');
 const Pinata = require('../../infra/utils/pinata');
 const pinata = new Pinata(config.PINATA_API_KEY, config.PINATA_SECRET_KEY);
 
 async function upload(file) {
   const { name, mimetype, data } = file;
-  const pinataFile = await pinata.pinFileToIPFS(data, {
+  const stream = Readable.from(data);
+  stream.path = name;
+  const pinataFile = await pinata.pinFileToIPFS(stream, {
     name,
   });
   return { url: pinataFile.fileLink, mimetype };
