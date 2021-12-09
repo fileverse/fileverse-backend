@@ -1,4 +1,7 @@
-const asyncHandler = require('../../../infra/utils/asyncHandler');
+const {
+  asyncHandler,
+  asyncHandlerArray,
+} = require('../../../infra/utils/asyncHandler');
 const fileUpload = require('express-fileupload');
 const express = require('express');
 const router = express.Router();
@@ -14,14 +17,14 @@ router.post(
   '/create',
   asyncHandler(canCreateFile),
   fileUpload(),
-  asyncHandler(create),
+  asyncHandlerArray(create),
 );
-router.get('/:uuid', asyncHandler(canViewFile), asyncHandler(get));
+router.get('/:uuid', asyncHandler(canViewFile), asyncHandlerArray(get));
 router.post(
   '/:uuid/edit',
   asyncHandler(canEditFile),
   fileUpload(),
-  asyncHandler(update),
+  asyncHandlerArray(update),
 );
 
 module.exports = router;

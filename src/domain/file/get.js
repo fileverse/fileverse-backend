@@ -1,3 +1,4 @@
+const ErrorHandler = require('../../infra/utils/errorHandler');
 const { File } = require('../../infra/database/models');
 
 async function get(uuid) {
@@ -5,7 +6,7 @@ async function get(uuid) {
     uuid,
   });
   if (!foundFile) {
-    throw new Error('Cannot find the file by this uuid');
+    return ErrorHandler.throwError({ code: 404, message: 'Cannot find the file by this uuid' });
   }
   return foundFile.safeObject();
 }

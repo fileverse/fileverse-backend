@@ -1,4 +1,7 @@
-const asyncHandler = require('../../../infra/utils/asyncHandler');
+const {
+  asyncHandler,
+  asyncHandlerArray,
+} = require('../../../infra/utils/asyncHandler');
 const express = require('express');
 const router = express.Router();
 
@@ -11,17 +14,21 @@ const getFilesByAccount = require('./getFilesByAccount');
 // middlewares
 const { canViewAccount, canEditAccount } = require('../middlewares');
 
-router.post('/:address/login', asyncHandler(login));
-router.get('/:address', asyncHandler(canViewAccount), asyncHandler(getAccount));
+router.post('/:address/login', asyncHandlerArray(login));
+router.get(
+  '/:address',
+  asyncHandler(canViewAccount),
+  asyncHandlerArray(getAccount),
+);
 router.post(
   '/:address',
   asyncHandler(canEditAccount),
-  asyncHandler(updateAccount),
+  asyncHandlerArray(updateAccount),
 );
 router.get(
   '/:address/all',
   asyncHandler(canEditAccount),
-  asyncHandler(getFilesByAccount),
+  asyncHandlerArray(getFilesByAccount),
 );
 
 module.exports = router;

@@ -1,3 +1,4 @@
+const ErrorHandler = require('../../infra/utils/errorHandler');
 const { Account } = require('../../infra/database/models');
 
 function setRead() {
@@ -13,6 +14,9 @@ function setWrite({ accountOwner, viewer }) {
 
 async function permission({ address, userId }) {
   const account = await Account.findOne({ address });
+  if (!account) {
+    return ErrorHandler.throwError({ code: 404, message: 'Cannot find the account by this address' });
+  }
   const permission = {
     read: false,
     edit: false,

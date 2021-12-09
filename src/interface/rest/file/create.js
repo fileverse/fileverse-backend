@@ -9,7 +9,6 @@ const createValidation = {
 };
 
 async function create(req, res) {
-  console.log(req.body);
   const { name } = req.body;
   const createdFile = await File.create({
     file: req.files.file,
