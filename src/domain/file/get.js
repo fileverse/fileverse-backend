@@ -6,7 +6,10 @@ async function get(uuid) {
     uuid,
   });
   if (!foundFile) {
-    return ErrorHandler.throwError({ code: 404, message: 'Cannot find the file by this uuid' });
+    return ErrorHandler.throwError({
+      code: 404,
+      message: 'Cannot find the file by this uuid',
+    });
   }
   return foundFile.safeObject();
 }

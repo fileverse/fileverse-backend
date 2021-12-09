@@ -5,7 +5,10 @@ const { File } = require('../../infra/database/models');
 async function update(uuid, { name, file }) {
   const foundFile = await File.findOne({ uuid });
   if (!foundFile) {
-    return ErrorHandler.throwError({ code: 404, message: 'Cannot find the file by this uuid' });
+    return ErrorHandler.throwError({
+      code: 404,
+      message: 'Cannot find the file by this uuid',
+    });
   }
   if (file) {
     const oldVersion = {

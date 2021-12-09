@@ -21,7 +21,10 @@ function setWrite({ fileOwner, viewer }) {
 async function permission({ uuid, userId }) {
   const file = await File.findOne({ uuid });
   if (!file) {
-    return ErrorHandler.throwError({ code: 404, message: 'Cannot find the file by this uuid' });
+    return ErrorHandler.throwError({
+      code: 404,
+      message: 'Cannot find the file by this uuid',
+    });
   }
   const permission = {
     read: false,

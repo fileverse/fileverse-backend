@@ -15,7 +15,10 @@ function setWrite({ accountOwner, viewer }) {
 async function permission({ address, userId }) {
   const account = await Account.findOne({ address });
   if (!account) {
-    return ErrorHandler.throwError({ code: 404, message: 'Cannot find the account by this address' });
+    return ErrorHandler.throwError({
+      code: 404,
+      message: 'Cannot find the account by this address',
+    });
   }
   const permission = {
     read: false,
