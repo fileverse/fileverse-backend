@@ -2,24 +2,23 @@ const { File } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
-const updateValidation = {
+const editValidation = {
   params: Joi.object({
     uuid: Joi.string().required(),
   }),
   body: Joi.object({
     name: Joi.string().optional().allow(''),
-    file: Joi.any().required(),
   }),
 };
 
-async function update(req, res) {
+async function edit(req, res) {
   const { uuid } = req.params;
-  const { file, name } = req.body;
-  const updatedFile = await File.update(uuid, {
-    file,
+  const { name } = req.body;
+  const updatedFile = await File.edit(uuid, {
+    file: req.files.file,
     name,
   });
   res.json(updatedFile);
 }
 
-module.exports = [validate(updateValidation), update];
+module.exports = [validate(editValidation), edit];

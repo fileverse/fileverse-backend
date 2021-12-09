@@ -5,7 +5,7 @@ async function canViewAccount(req, res, next) {
   const { address } = req.params;
   const { userId } = req;
   const permission = await User.permission({ address, userId });
-  if (permission.view) {
+  if (permission.read) {
     next();
   } else {
     let statusCode = 403;

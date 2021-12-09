@@ -2,7 +2,7 @@ const ErrorHandler = require('../../infra/utils/errorHandler');
 const upload = require('./upload');
 const { File } = require('../../infra/database/models');
 
-async function update(uuid, { name, file }) {
+async function edit(uuid, { name, file }) {
   const foundFile = await File.findOne({ uuid });
   if (!foundFile) {
     return ErrorHandler.throwError({
@@ -29,4 +29,4 @@ async function update(uuid, { name, file }) {
   return foundFile.safeObject();
 }
 
-module.exports = update;
+module.exports = edit;

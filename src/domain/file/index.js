@@ -1,6 +1,6 @@
 module.exports = {
   create: require('./create'),
-  update: require('./update'),
+  edit: require('./edit'),
   get: require('./get'),
   getByAccount: require('./getByAccount'),
   upload: require('./upload'),

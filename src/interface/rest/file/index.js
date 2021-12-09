@@ -8,7 +8,7 @@ const router = express.Router();
 
 // domain
 const create = require('./create');
-const update = require('./update');
+const edit = require('./edit');
 const get = require('./get');
 // middlewares
 const { canEditFile, canViewFile, canCreateFile } = require('../middlewares');
@@ -24,7 +24,7 @@ router.post(
   '/:uuid/edit',
   asyncHandler(canEditFile),
   fileUpload(),
-  asyncHandlerArray(update),
+  asyncHandlerArray(edit),
 );
 
 module.exports = router;
