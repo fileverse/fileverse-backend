@@ -8,7 +8,7 @@ const router = express.Router();
 // domain
 const login = require('./login');
 const getAccount = require('./getAccount');
-const updateAccount = require('./updateAccount');
+const editAccount = require('./editAccount');
 const getFilesByAccount = require('./getFilesByAccount');
 
 // middlewares
@@ -21,9 +21,9 @@ router.get(
   asyncHandlerArray(getAccount),
 );
 router.post(
-  '/:address',
+  '/:address/edit',
   asyncHandler(canEditAccount),
-  asyncHandlerArray(updateAccount),
+  asyncHandlerArray(editAccount),
 );
 router.get(
   '/:address/all',

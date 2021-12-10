@@ -2,5 +2,6 @@ module.exports = {
   login: require('./login'),
   createAccount: require('./createAccount'),
   getAccount: require('./getAccount'),
-  updateAccount: require('./updateAccount'),
+  editAccount: require('./editAccount'),
+  permission: require('./permission'),
 };

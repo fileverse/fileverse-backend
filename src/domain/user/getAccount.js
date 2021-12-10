@@ -1,12 +1,12 @@
-const { User } = require('../../infra/database/models');
+const { Account } = require('../../infra/database/models');
 
 async function getAccount({ address }) {
-  const foundUser = await User.findOne({ address });
-  if (foundUser) {
-    return foundUser.safeObject();
+  const foundAccount = await Account.findOne({ address });
+  if (foundAccount) {
+    return foundAccount.safeObject();
   }
-  const createdUser = await new User({ address }).save();
-  return createdUser.safeObject();
+  const createdAccount = await new Account({ address }).save();
+  return createdAccount.safeObject();
 }
 
 module.exports = getAccount;

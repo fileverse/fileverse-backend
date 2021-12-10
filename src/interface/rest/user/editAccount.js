@@ -2,7 +2,7 @@ const { User } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
-const updateAccountValidation = {
+const editAccountValidation = {
   params: Joi.object({
     address: Joi.string().required(),
   }),
@@ -13,9 +13,9 @@ const updateAccountValidation = {
   }),
 };
 
-async function updateAccount(req, res) {
+async function editAccount(req, res) {
   const { username, name, email } = req.body;
-  const account = await User.updateAccount(req.userId, {
+  const account = await User.editAccount(req.userId, {
     username,
     name,
     email,
@@ -23,4 +23,4 @@ async function updateAccount(req, res) {
   res.json(account);
 }
 
-module.exports = [validate(updateAccountValidation), updateAccount];
+module.exports = [validate(editAccountValidation), editAccount];
