@@ -17,6 +17,7 @@ let verifyToken = (req, res, next) => {
     encryption
       .verifyToken(token)
       .then((decoded) => {
+        req.userId = decoded.userId;
         req.address = decoded.address;
         req.account = decoded;
         req.isAuthenticated = true;

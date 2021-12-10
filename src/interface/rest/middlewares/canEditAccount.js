@@ -5,7 +5,7 @@ async function canEditAccount(req, res, next) {
   const { address } = req.params;
   const { userId } = req;
   const permission = await User.permission({ address, userId });
-  if (permission.edit) {
+  if (permission.write) {
     next();
   } else {
     let statusCode = 403;
