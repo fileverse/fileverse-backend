@@ -47,6 +47,7 @@ _file.schema.methods.safeObject = function () {
     'uuid',
     'currentVersion',
     'mimetype',
+    'name',
     'permission',
     'owner',
     'public',
