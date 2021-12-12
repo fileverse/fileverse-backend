@@ -10,7 +10,6 @@ const getValidation = {
 
 async function get(req, res) {
   const { uuid } = req.params;
-  console.log(req.params);
   const file = await File.get(uuid);
   res.json(file);
 }

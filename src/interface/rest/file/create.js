@@ -13,7 +13,7 @@ async function create(req, res) {
   const createdFile = await File.create({
     file: req.files.file,
     name,
-    owner: res.userId,
+    owner: req.userId,
   });
   res.json(createdFile);
 }

@@ -15,7 +15,6 @@ class Encryption {
   async verifyToken(token) {
     // Assign jwt token
     const secret = this.jwtSecret;
-    console.log('Secret: ', secret);
     return jwt.verify(token, secret);
   }
 

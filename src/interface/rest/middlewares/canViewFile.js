@@ -5,7 +5,6 @@ async function canViewFile(req, res, next) {
   const { uuid } = req.params;
   const { userId } = req;
   const permission = await File.permission({ uuid, userId });
-  console.log(permission);
   if (permission.read) {
     next();
   } else {
