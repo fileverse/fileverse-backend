@@ -11,7 +11,7 @@ function setRead({ fileOwner, viewer, filePermission }) {
   return fileOwner.toString() === viewer.toString();
 }
 
-function setWrite({ fileOwner, viewer }) {
+function setEdit({ fileOwner, viewer }) {
   if (!fileOwner || !viewer) {
     return false;
   }
@@ -35,7 +35,7 @@ async function permission({ uuid, userId }) {
     viewer: userId,
     filePermission: file.permission,
   });
-  permission.write = setWrite({
+  permission.edit = setEdit({
     fileOwner: file.owner,
     viewer: userId,
     filePermission: file.permission,

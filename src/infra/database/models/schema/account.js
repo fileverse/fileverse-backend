@@ -7,7 +7,7 @@ _account.schema = new Schema(
   {
     username: { type: String, trim: true },
     name: { type: String, trim: true },
-    address: { type: String, required: true },
+    address: { type: String, required: true, lowercase: true },
     email: { type: String, trim: true, lowercase: true },
 
     // system generated

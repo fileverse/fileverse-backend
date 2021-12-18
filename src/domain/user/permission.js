@@ -4,7 +4,7 @@ function setRead() {
   return true;
 }
 
-function setWrite({ accountOwner, viewer }) {
+function setEdit({ accountOwner, viewer }) {
   if (!accountOwner || !viewer) {
     return false;
   }
@@ -21,7 +21,7 @@ async function permission({ address, userId }) {
     accountOwner: account && account._id,
     viewer: userId,
   });
-  permission.write = setWrite({
+  permission.edit = setEdit({
     accountOwner: account && account._id,
     viewer: userId,
   });
