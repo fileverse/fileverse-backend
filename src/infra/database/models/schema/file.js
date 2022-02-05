@@ -13,6 +13,7 @@ _file.schema = new Schema(
     uuid: { type: String },
     name: { type: String, trim: true },
     url: { type: String, trim: true },
+    s3Url: { type: String, trim: true },
     mimetype: { type: String, trim: true },
     currentVersion: { type: Number, default: 1 },
     permission: {
