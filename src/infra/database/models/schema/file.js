@@ -50,6 +50,7 @@ _file.schema.methods.safeObject = function () {
     'mimetype',
     'name',
     'permission',
+    's3Url',
     'owner',
     'public',
     'version',
