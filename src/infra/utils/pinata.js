@@ -12,7 +12,7 @@ class Pinata {
     return {
       ipfsHash: file.IpfsHash,
       pinSize: file.PinSize,
-      fileLink: `https://fileverse.mypinata.cloud/ipfs/${file.IpfsHash}`,
+      fileLink: `https://ipfs.fileverse.io/ipfs/${file.IpfsHash}`,
       timestamp: file.Timestamp,
     };
   }
