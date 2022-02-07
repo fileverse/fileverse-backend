@@ -1,4 +1,4 @@
-# QRL Backend
+# Fileverse Backend
 
 ## Run the project locally (Development)
 
