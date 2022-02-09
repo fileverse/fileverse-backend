@@ -39,6 +39,7 @@ class MoralisService {
         nft.name &&
         nft.symbol &&
         nft.image &&
+        // eslint-disable-next-line
         nft.name.match(new RegExp(search, 'i')),
     );
     return _.uniqBy(filteredNfts, 'contractAddress');
