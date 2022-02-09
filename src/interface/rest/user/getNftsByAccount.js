@@ -10,8 +10,8 @@ const getNftsByAccountValidation = {
 
 async function getNftsByAccount(req, res) {
   const { address } = req.params;
-  const { search, chain } = req.query;
-  const nfts = await User.getNfts(address, search || '', chain || 'eth');
+  const { search = '', chain = 'eth' } = req.query;
+  const nfts = await User.getNfts({ address, search, chain });
   res.json({ nft: nfts });
 }
 

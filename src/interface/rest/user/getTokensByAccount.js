@@ -10,8 +10,8 @@ const getTokensByAccountValidation = {
 
 async function getTokensByAccount(req, res) {
   const { address } = req.params;
-  const { search, chain } = req.query;
-  const tokens = await User.getTokens(address, search || '', chain || 'eth');
+  const { search = '', chain = 'eth' } = req.query;
+  const tokens = await User.getTokens({ address, search, chain });
   res.json({ token: tokens });
 }
 
