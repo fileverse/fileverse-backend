@@ -28,30 +28,26 @@ class MoralisService {
   }
 
   // get Nfts from Moralis and return only those with name, symbol and image and unique address.
-  async nftsFromMoralis(ethaddress, search) {
-    console.log({ search });
+  async nftsFromMoralis(ethaddress, chain) {
     const apiResponse = await axios.get(
-      `${this.baseAddress}/${ethaddress}/nft?chain=eth&format=decimal`,
+      `${this.baseAddress}/${ethaddress}/nft?chain=${chain}&format=decimal`,
     );
     const nfts = apiResponse.data.result.map((nft) => this.formatNft(nft));
     const filteredNfts = nfts.filter(
-      (nft) =>
-        nft.name &&
-        nft.symbol &&
-        nft.image &&
-        // eslint-disable-next-line
-        nft.name.match(new RegExp(search, 'i')),
+      (nft) => nft.name && nft.symbol && nft.image,
     );
     return _.uniqBy(filteredNfts, 'contractAddress');
   }
 
-  async tokensFromMoralis(ethaddress) {
+  async tokensFromMoralis(ethaddress, chain) {
     const apiResponse = await axios.get(
-      `${this.baseAddress}/${ethaddress}/erc20?chain=eth`,
+      `${this.baseAddress}/${ethaddress}/erc20?chain=${chain}`,
     );
     const tokens = apiResponse.data.map((token) => this.formatToken(token));
 
-    return tokens;
+    return tokens.filter(
+      (token) => token.name && token.symbol && token.thumbnail,
+    );
   }
 }
 

@@ -34,12 +34,12 @@ router.get(
 );
 router.get(
   '/:address/nfts',
-  asyncHandler(canViewAccount),
+  asyncHandler(canEditAccount),
   asyncHandlerArray(getNftsByAccount),
 );
 router.get(
   '/:address/tokens',
-  asyncHandler(canViewAccount),
+  asyncHandler(canEditAccount),
   asyncHandlerArray(getTokensByAccount),
 );
 
