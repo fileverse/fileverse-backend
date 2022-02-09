@@ -10,6 +10,8 @@ const login = require('./login');
 const getAccount = require('./getAccount');
 const editAccount = require('./editAccount');
 const getFilesByAccount = require('./getFilesByAccount');
+const getNftsByAccount = require('./getNftsByAccount');
+const getTokensByAccount = require('./getTokensByAccount');
 
 // middlewares
 const { canViewAccount, canEditAccount } = require('../middlewares');
@@ -29,6 +31,16 @@ router.get(
   '/:address/all',
   asyncHandler(canEditAccount),
   asyncHandlerArray(getFilesByAccount),
+);
+router.get(
+  '/:address/nfts',
+  asyncHandler(canViewAccount),
+  asyncHandlerArray(getNftsByAccount),
+);
+router.get(
+  '/:address/tokens',
+  asyncHandler(canViewAccount),
+  asyncHandlerArray(getTokensByAccount),
 );
 
 module.exports = router;
