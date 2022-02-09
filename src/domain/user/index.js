@@ -4,4 +4,6 @@ module.exports = {
   getAccount: require('./getAccount'),
   editAccount: require('./editAccount'),
   permission: require('./permission'),
+  getNfts: require('./getNfts'),
+  getTokens: require('./getTokens'),
 };
