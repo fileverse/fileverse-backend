@@ -34,7 +34,7 @@ router.get(
 );
 router.get(
   '/:address/nfts',
-  asyncHandler(canEditAccount),
+  asyncHandler(canViewAccount),
   asyncHandlerArray(getNftsByAccount),
 );
 router.get(

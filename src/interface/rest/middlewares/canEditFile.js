@@ -2,9 +2,9 @@ const ErrorHandler = require('../../../infra/utils/errorHandler');
 const { File } = require('../../../domain');
 
 async function canEditFile(req, res, next) {
-  const { uuid } = req.params;
-  const { userId } = req;
-  const permission = await File.permission({ uuid, userId });
+  const { uuid, chain = 'eth' } = req.params;
+  const { userId, address } = req;
+  const permission = await File.permission({ uuid, userId, address, chain });
   if (permission.edit) {
     next();
   } else {

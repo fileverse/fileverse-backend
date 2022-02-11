@@ -1,9 +1,15 @@
 const config = require('../../../config');
 const axios = require('axios');
 const _ = require('lodash');
+const MoralisSDK = require('moralis/node');
 
 class MoralisService {
   constructor() {
+    this.moralis = MoralisSDK;
+    this.moralis.start({
+      serverUrl: config.MORALIS_SERVER_URL,
+      appId: config.MORALIS_APP_ID,
+    });
     axios.defaults.headers.get['x-api-key'] = config.MORALIS_API_KEY;
     this.baseAddress = 'https://deep-index.moralis.io/api/v2';
   }
@@ -48,6 +54,39 @@ class MoralisService {
     return tokens.filter(
       (token) => token.name && token.symbol && token.thumbnail,
     );
+  }
+
+  async verifyOwnership({ address, contractAddress, chain, tokenType }) {
+    return (
+      this.getContractBalance(address, contractAddress, chain, tokenType) > 0
+    );
+  }
+
+  async getContractBalance({
+    address,
+    contractAddress,
+    chain = 'eth',
+    tokenType,
+  }) {
+    if (!contractAddress || !address) return 0;
+    let totBal = 0;
+    if (tokenType.toLowerCase() === 'erc20') {
+      const apiResponse = await axios.get(
+        `${this.baseAddress}/${address}/erc20?token_addresses=${contractAddress}&chain=${chain}`,
+      );
+      apiResponse.data.map((token) => {
+        totBal += parseInt(token.balance, 10);
+      });
+    }
+    if (tokenType.toLowerCase() === 'erc721') {
+      const apiResponse = await axios.get(
+        `${this.baseAddress}/${address}/nft/${contractAddress}?chain=${chain}&format=decimal`,
+      );
+      apiResponse.data.result.map((nft) => {
+        totBal += parseInt(nft.amount, 10);
+      });
+    }
+    return totBal;
   }
 }
 

@@ -1,12 +1,32 @@
 const ErrorHandler = require('../../infra/utils/errorHandler');
 const { File } = require('../../infra/database/models');
+const MoralisService = require('../../infra/utils/moralis');
 
-function setRead({ fileOwner, viewer, filePermission }) {
+const moralisService = new MoralisService();
+
+// if token-gated then check balance of user
+function setRead({
+  fileOwner,
+  viewer,
+  filePermission,
+  viewerAddress,
+  fileToken,
+  chain,
+}) {
   if (filePermission === 'public') {
     return true;
   }
   if (filePermission === 'unlisted') {
     return true;
+  }
+  if (filePermission === 'token-gated') {
+    const bal = moralisService.getContractBalance({
+      address: viewerAddress,
+      contractAddress: fileToken.contractAddress,
+      tokenType: fileToken.tokenType,
+      chain,
+    });
+    return bal >= fileToken.gateBalance;
   }
   return fileOwner.toString() === viewer.toString();
 }
@@ -15,10 +35,11 @@ function setEdit({ fileOwner, viewer }) {
   if (!fileOwner || !viewer) {
     return false;
   }
+
   return fileOwner.toString() === viewer.toString();
 }
 
-async function permission({ uuid, userId }) {
+async function permission({ uuid, userId, address, chain }) {
   const file = await File.findOne({ uuid });
   if (!file) {
     return ErrorHandler.throwError({
@@ -34,12 +55,16 @@ async function permission({ uuid, userId }) {
     fileOwner: file.owner,
     viewer: userId,
     filePermission: file.permission,
+    viewerAddress: address,
+    fileToken: file.token,
+    chain,
   });
   permission.edit = setEdit({
     fileOwner: file.owner,
     viewer: userId,
     filePermission: file.permission,
   });
+
   return permission;
 }
 
