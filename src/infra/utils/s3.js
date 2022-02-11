@@ -17,7 +17,7 @@ class S3Service {
 
   formatFile(file) {
     return {
-      fileLink: file.Location,
+      fileLink: `https://${config.S3_BUCKET_NAME}/${file.key}`,
     };
   }
 
@@ -29,7 +29,6 @@ class S3Service {
       Bucket: this.bucketName,
     };
     const file = await this.s3.upload(params).promise();
-    console.log(file);
     return this.formatFile(file);
   }
 }
