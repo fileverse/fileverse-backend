@@ -1,6 +1,7 @@
 const crypto = require('crypto');
-const algorithm = 'aes-256-ctr';
-const password = 'd6F3Efeq';
+const config = require('../../../config');
+const algorithm = config.ENCRYPTION_ALGORITHM;
+const password = config.ENCRYPTION_KEY;
 
 let encryptStream = (stream) => {
   let encrypt = crypto.createCipher(algorithm, password);

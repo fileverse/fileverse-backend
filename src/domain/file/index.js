@@ -3,6 +3,6 @@ module.exports = {
   edit: require('./edit'),
   get: require('./get'),
   getByAccount: require('./getByAccount'),
-  upload: require('./upload'),
+  upload: require('./upload.js'),
   permission: require('./permission'),
 };

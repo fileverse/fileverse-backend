@@ -26,6 +26,7 @@ async function upload(file) {
       mimetype,
     };
   } catch (err) {
+    console.log(err);
   }
 }
 
