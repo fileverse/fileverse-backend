@@ -10,6 +10,7 @@ const router = express.Router();
 const create = require('./create');
 const edit = require('./edit');
 const get = require('./get');
+const download = require('./download');
 // middlewares
 const { canEditFile, canViewFile, canCreateFile } = require('../middlewares');
 
@@ -19,7 +20,8 @@ router.post(
   fileUpload(),
   asyncHandlerArray(create),
 );
-router.get('/:uuid', asyncHandler(canViewFile), asyncHandlerArray(get));
+router.get('/download', asyncHandlerArray(download));
+router.get('/:uuid', asyncHandler(canViewFile), asyncHandler(get));
 router.post(
   '/:uuid/edit',
   asyncHandler(canEditFile),
