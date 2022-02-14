@@ -15,7 +15,6 @@ async function download(req, res) {
   try {
     await https.get(url, function (response) {
       let stream = Readable.from(response);
-      console.log(stream);
       let decryptedStream = Readable.from(decryptStream(stream));
       res.writeHead(200, {
         'Content-Type': 'image/jpeg',
