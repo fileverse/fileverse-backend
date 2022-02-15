@@ -5,8 +5,10 @@ const { Readable } = require('stream');
 
 async function download(req, res) {
   const url = req.query.url;
-  const address = 'https://ipfs.fileverse.io/ipfs';
-  if (!url.startsWith(address)) {
+  const ipfsAddress = 'https://ipfs.fileverse.io/ipfs';
+  const s3Address =
+    'https://s3.eu-west-2.amazonaws.com/dev-s3.fileverse.io/files';
+  if (!url.startsWith(ipfsAddress) && !url.startsWith(s3Address)) {
     return ErrorHandler.throwError({
       code: 404,
       message: 'URL invalid!',

@@ -20,10 +20,10 @@ router.post(
   fileUpload(),
   asyncHandlerArray(create),
 );
-router.get('/download', asyncHandler(canViewFile), asyncHandlerArray(download));
-router.get('/:uuid', asyncHandler(canViewFile), asyncHandler(get));
+router.get('/download', asyncHandlerArray(download));
+router.get('/view/:uuid', asyncHandler(canViewFile), asyncHandler(get));
 router.post(
-  '/:uuid/edit',
+  '/edit/:uuid',
   asyncHandler(canEditFile),
   fileUpload(),
   asyncHandlerArray(edit),

@@ -18,6 +18,7 @@ class Pinata {
   }
 
   async pinFileToIPFS(readableStreamForFile, { name, attributes }) {
+    console.log(readableStreamForFile);
     const keyvalues = {};
     (attributes || []).forEach((attribute) => {
       keyvalues[attribute.trait_type] = attribute.value;

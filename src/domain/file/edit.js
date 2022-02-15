@@ -1,5 +1,5 @@
 const ErrorHandler = require('../../infra/utils/errorHandler');
-const upload = require('./upload');
+const upload = require('./upload.js');
 const { File } = require('../../infra/database/models');
 
 async function edit(uuid, { name, file }) {

@@ -10,16 +10,22 @@ async function upload(file) {
   try {
     const { name, mimetype, data } = file;
     const stream = Readable.from(data);
+    const stream2 = Readable.from(data);
     stream.path = name;
+    stream2.path = name;
     const encryptedStream = Readable.from(encryptStream(stream));
     encryptedStream.path = name;
     const pinataFile = await pinata.pinFileToIPFS(encryptedStream, {
       name,
     });
-    const s3File = await s3.upload(data, {
-      name: pinataFile.ipfsHash,
+    const encryptedStream2 = Readable.from(encryptStream(stream2));
+    encryptedStream2.path = name;
+    const s3File = await s3.uploadFromStream(
+      encryptedStream2,
+      pinataFile.ipfsHash,
       mimetype,
-    });
+    );
+    console.log(s3File);
     return {
       url: pinataFile && pinataFile.fileLink,
       s3Url: s3File && s3File.fileLink,

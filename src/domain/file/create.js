@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const upload = require('./upload');
+const upload = require('./upload.js');
 const { File } = require('../../infra/database/models');
 
 async function create({ name, file, owner }) {

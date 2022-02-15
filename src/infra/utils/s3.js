@@ -29,7 +29,18 @@ class S3Service {
       Bucket: this.bucketName,
     };
     const file = await this.s3.upload(params).promise();
-    console.log(file);
+    return this.formatFile(file);
+  }
+
+  async uploadFromStream(stream, name, mimetype) {
+    console.log(stream);
+    const params = {
+      Bucket: this.bucketName,
+      Key: `files/${name}`,
+      Body: stream,
+      ContentType: mimetype,
+    };
+    const file = await this.s3.upload(params).promise();
     return this.formatFile(file);
   }
 }
