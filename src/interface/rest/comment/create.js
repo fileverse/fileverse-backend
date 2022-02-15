@@ -12,11 +12,9 @@ const createValidation = {
 };
 
 async function create(req, res) {
-  console.log('here');
   const { text } = req.body;
   const { userId } = req;
   const { uuid } = req.query;
-  console.log({ uuid, text, userId });
   const createdComment = await Comment.create({
     userId,
     text,

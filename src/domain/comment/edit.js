@@ -5,7 +5,7 @@ async function edit({ shortId, text, userId }) {
   const comment = await Comment.findOneAndUpdate(
     { shortId, userId },
     { $set: { text: text } },
-    { returnNewDocument: true },
+    { new: true },
   );
   if (!comment) {
     return ErrorHandler.throwError({
