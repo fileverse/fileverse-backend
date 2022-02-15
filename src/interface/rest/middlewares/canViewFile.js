@@ -2,7 +2,7 @@ const ErrorHandler = require('../../../infra/utils/errorHandler');
 const { File } = require('../../../domain');
 
 async function canViewFile(req, res, next) {
-  const { uuid } = req.params;
+  const uuid = req.params.uuid || req.query.uuid;
   const { userId } = req;
   const permission = await File.permission({ uuid, userId });
   if (permission.read) {

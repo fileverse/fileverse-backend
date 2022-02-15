@@ -3,13 +3,13 @@ const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
 const removeValidation = {
-  params: Joi.object({
+  query: Joi.object({
     uuid: Joi.string().required(),
   }),
 };
 
 async function remove(req, res) {
-  const { shortId } = req.params;
+  const { shortId } = req.query;
   const { userId } = req;
   await Comment.remove(shortId, userId);
   res.json({ message: 'deleted successfully' });

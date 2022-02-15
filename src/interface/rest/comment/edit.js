@@ -6,7 +6,7 @@ const editValidation = {
   body: Joi.object({
     text: Joi.string().required(),
   }),
-  params: Joi.object({
+  query: Joi.object({
     uuid: Joi.string().required(),
     shortId: Joi.string().required(),
   }),
@@ -15,7 +15,7 @@ const editValidation = {
 async function edit(req, res) {
   const { text } = req.body;
   const { userId } = req;
-  const { shortId } = req.params;
+  const { shortId } = req.query;
   const updatedComment = await Comment.edit({
     shortId,
     text,
