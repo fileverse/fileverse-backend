@@ -6,12 +6,14 @@ const _comment = {};
 _comment.schema = new Schema(
   {
     shortId: { type: String, required: true },
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
+      required: true,
       ref: 'accounts',
     },
-    file: {
+    fileId: {
       type: Schema.Types.ObjectId,
+      required: true,
       ref: 'files',
     },
     text: {

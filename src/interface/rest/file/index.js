@@ -6,6 +6,8 @@ const fileUpload = require('express-fileupload');
 const express = require('express');
 const router = express.Router();
 
+const comment = require('./../comment');
+
 // domain
 const create = require('./create');
 const edit = require('./edit');
@@ -26,5 +28,7 @@ router.post(
   fileUpload(),
   asyncHandlerArray(edit),
 );
+// File comments routes
+router.use('/:uuid/comment', comment);
 
 module.exports = router;
