@@ -3,4 +3,5 @@ module.exports = {
   edit: require('./edit'),
   get: require('./get'),
   remove: require('./remove'),
+  permission: require('./permission'),
 };
