@@ -2,12 +2,12 @@ const ErrorHandler = require('../../../infra/utils/errorHandler');
 const https = require('https');
 const { decryptStream } = require('../../../infra/utils/stream');
 const { Readable } = require('stream');
+const config = require('../../../../config');
 
 async function download(req, res) {
   const url = req.query.url;
-  const ipfsAddress = 'https://ipfs.fileverse.io/ipfs';
-  const s3Address =
-    'https://s3.eu-west-2.amazonaws.com/dev-s3.fileverse.io/files';
+  const ipfsAddress = config.IPFS_URL_SCHEMA;
+  const s3Address = config.S3_URL_SCHEMA;
   if (!url.startsWith(ipfsAddress) && !url.startsWith(s3Address)) {
     return ErrorHandler.throwError({
       code: 404,

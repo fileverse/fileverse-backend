@@ -40,6 +40,7 @@
     "lodash": "^4.17.21",
     "mongoose": "^6.0.14",
     "morgan": "^1.10.0",
+    "readable-stream-clone": "0.0.7",
     "s3-upload-stream": "^1.0.7",
     "uuid": "^8.3.2"
   },
