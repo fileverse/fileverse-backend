@@ -33,7 +33,6 @@ class S3Service {
   }
 
   async uploadFromStream(stream, name, mimetype) {
-    console.log(stream);
     const params = {
       Bucket: this.bucketName,
       Key: `files/${name}`,
