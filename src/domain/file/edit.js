@@ -10,7 +10,7 @@ async function edit(uuid, { name, file, token, address }) {
   if (!foundFile) {
     return ErrorHandler.throwError({
       code: 404,
-      message: 'Cannot find the file by this uuid',
+      message: 'You do not own this token!',
     });
   }
 
@@ -28,7 +28,9 @@ async function edit(uuid, { name, file, token, address }) {
       message: 'You are not owner for this address',
     });
   }
-
+  if (token) {
+    foundFile.token = token;
+  }
   if (file) {
     const oldVersion = {
       url: foundFile.url,
@@ -43,9 +45,6 @@ async function edit(uuid, { name, file, token, address }) {
   }
   if (name) {
     foundFile.name = name;
-  }
-  if (token) {
-    foundFile.token = token;
   }
   await foundFile.save();
   return foundFile.safeObject();

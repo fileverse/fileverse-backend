@@ -11,7 +11,6 @@ function setRead({
   filePermission,
   viewerAddress,
   fileToken,
-  chain,
 }) {
   if (filePermission === 'public') {
     return true;
@@ -24,7 +23,7 @@ function setRead({
       address: viewerAddress,
       contractAddress: fileToken.contractAddress,
       tokenType: fileToken.tokenType,
-      chain,
+      chain: fileToken.chain,
     });
     return bal >= fileToken.gateBalance;
   }
@@ -39,7 +38,7 @@ function setEdit({ fileOwner, viewer }) {
   return fileOwner.toString() === viewer.toString();
 }
 
-async function permission({ uuid, userId, address, chain }) {
+async function permission({ uuid, userId, address }) {
   const file = await File.findOne({ uuid });
   if (!file) {
     return ErrorHandler.throwError({
@@ -57,7 +56,6 @@ async function permission({ uuid, userId, address, chain }) {
     filePermission: file.permission,
     viewerAddress: address,
     fileToken: file.token,
-    chain,
   });
   permission.edit = setEdit({
     fileOwner: file.owner,
