@@ -7,11 +7,11 @@ async function setRead({ fileUuid, userId }) {
   return filePermission.read;
 }
 
-function setEdit({ commenter, editer }) {
-  if (!commenter || !editer) {
+function setEdit({ commenter, editor }) {
+  if (!commenter || !editor) {
     return false;
   }
-  return commenter.toString() === editer.toString();
+  return commenter.toString() === editor.toString();
 }
 
 async function permission({ uuid, userId, shortId }) {
@@ -39,7 +39,7 @@ async function permission({ uuid, userId, shortId }) {
   });
   permission.edit = setEdit({
     commenter: comment.userId,
-    editer: userId,
+    editor: userId,
   });
   return permission;
 }

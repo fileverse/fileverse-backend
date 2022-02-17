@@ -6,19 +6,20 @@ const createValidation = {
   body: Joi.object({
     text: Joi.string().required(),
   }),
-  query: Joi.object({
-    uuid: Joi.string().required(),
+  params: Joi.object({
+    fileUuid: Joi.string().required(),
   }),
 };
 
 async function create(req, res) {
   const { text } = req.body;
-  const { userId } = req;
-  const { uuid } = req.query;
+  const { userId, address } = req;
+  const { fileUuid } = req.params;
   const createdComment = await Comment.create({
     userId,
     text,
-    fileUuid: uuid,
+    fileUuid,
+    address,
   });
   res.json(createdComment);
 }

@@ -19,6 +19,7 @@ async function create({ userId, fileUuid, text }) {
     userId,
     fileId: file._id,
     text,
+    fileUuid: file.uuid,
   }).save();
 
   return comment.safeObject();
