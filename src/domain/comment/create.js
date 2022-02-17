@@ -2,7 +2,7 @@ const short = require('short-uuid');
 const { Comment, File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 
-async function create({ userId, fileUuid, text }) {
+async function create({ userId, fileUuid, text, address }) {
   const shortId = short.generate();
 
   const file = await File.findOne({ uuid: fileUuid });
@@ -20,6 +20,7 @@ async function create({ userId, fileUuid, text }) {
     fileId: file._id,
     text,
     fileUuid: file.uuid,
+    by: address,
   }).save();
 
   return comment.safeObject();
