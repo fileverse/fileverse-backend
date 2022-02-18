@@ -6,4 +6,5 @@ module.exports = {
   permission: require('./permission'),
   getNfts: require('./getNfts'),
   getTokens: require('./getTokens'),
+  addAvatar: require('./addAvatar'),
 };

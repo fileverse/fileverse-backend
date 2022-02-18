@@ -9,6 +9,7 @@ _account.schema = new Schema(
     name: { type: String, trim: true },
     address: { type: String, required: true, lowercase: true },
     email: { type: String, trim: true, lowercase: true },
+    image: { type: String },
 
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
