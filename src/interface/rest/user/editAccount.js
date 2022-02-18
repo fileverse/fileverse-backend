@@ -10,7 +10,7 @@ const editAccountValidation = {
     username: Joi.string().optional(),
     name: Joi.string().optional().allow(''),
     email: Joi.string().optional().allow(''),
-    description: Joi.string().optional().allow(''),
+    description: Joi.string().optional().allow('').max(200),
   }),
 };
 
