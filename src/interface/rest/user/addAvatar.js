@@ -9,8 +9,8 @@ const addAvatarValidation = {
 };
 
 async function addAvatar(req, res) {
-  const { userId, address } = req;
-
+  const { userId } = req;
+  const { address } = req.params;
   const imgLink = await User.addAvatar({
     userId,
     address,

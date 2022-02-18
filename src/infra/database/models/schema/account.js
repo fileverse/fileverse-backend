@@ -32,6 +32,7 @@ _account.schema.methods.safeObject = function () {
     'address',
     'email',
     'createdAt',
+    'image',
   ];
   const newSafeObject = {};
   safeFields.forEach((elem) => {

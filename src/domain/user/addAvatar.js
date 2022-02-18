@@ -10,14 +10,11 @@ async function addAvatar({ userId, address, image }) {
     name: hash,
     mimetype,
   });
-  await Account.updateOne(
-    { userId },
-    {
-      $set: {
-        image: fileLink,
-      },
+  await Account.findByIdAndUpdate(userId, {
+    $set: {
+      image: fileLink,
     },
-  );
+  });
   return { image: fileLink };
 }
 
