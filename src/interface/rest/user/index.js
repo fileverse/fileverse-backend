@@ -16,7 +16,11 @@ const getTokensByAccount = require('./getTokensByAccount');
 const addAvatar = require('./addAvatar');
 
 // middlewares
-const { canViewAccount, canEditAccount } = require('../middlewares');
+const {
+  canViewAccount,
+  canEditAccount,
+  isImagePresent,
+} = require('../middlewares');
 
 router.post('/:address/login', asyncHandlerArray(login));
 router.get(
@@ -48,6 +52,7 @@ router.post(
   '/:address/avatar',
   asyncHandler(canEditAccount),
   fileUpload(),
+  isImagePresent,
   asyncHandlerArray(addAvatar),
 );
 

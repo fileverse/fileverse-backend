@@ -6,4 +6,5 @@ module.exports = {
   canEditAccount: require('./canEditAccount'),
   errorHandler: require('./errorHandler'),
   validator: require('./validator'),
+  isImagePresent: require('./isImagePresent'),
 };

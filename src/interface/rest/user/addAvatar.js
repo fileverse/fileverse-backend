@@ -16,7 +16,6 @@ async function addAvatar(req, res) {
     address,
     image: req.files.image,
   });
-  console.log(imgLink);
   res.json(imgLink);
 }
 
