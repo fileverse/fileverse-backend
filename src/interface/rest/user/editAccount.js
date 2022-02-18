@@ -15,7 +15,7 @@ const editAccountValidation = {
 };
 
 async function editAccount(req, res) {
-  const { username, name, email } = req.body;
+  const { username, name, email, description } = req.body;
   const account = await User.editAccount(req.userId, {
     username,
     name,
