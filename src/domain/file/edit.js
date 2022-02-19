@@ -1,14 +1,35 @@
 const ErrorHandler = require('../../infra/utils/errorHandler');
 const upload = require('./upload');
 const { File } = require('../../infra/database/models');
+const MoralisService = require('../../infra/utils/moralis');
 
-async function edit(uuid, { name, file }) {
+const moralisService = new MoralisService();
+
+async function edit(uuid, { name, file, token, address }) {
   const foundFile = await File.findOne({ uuid });
   if (!foundFile) {
     return ErrorHandler.throwError({
       code: 404,
-      message: 'Cannot find the file by this uuid',
+      message: 'You do not own this token!',
     });
+  }
+
+  if (
+    token &&
+    !moralisService.verifyOwnership({
+      address,
+      contractAddress: token.contractAddress,
+      chain: token.chain,
+      tokenType: token.tokenType,
+    })
+  ) {
+    return ErrorHandler.throwError({
+      code: 403,
+      message: 'You are not owner for this address',
+    });
+  }
+  if (token) {
+    foundFile.token = token;
   }
   if (file) {
     const oldVersion = {
