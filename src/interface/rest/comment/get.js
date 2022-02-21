@@ -4,13 +4,13 @@ const { Joi, validate } = validator;
 
 const getValidation = {
   params: Joi.object({
-    fileUuid: Joi.string().required(),
+    uuid: Joi.string().required(),
   }),
 };
 
 async function get(req, res) {
-  const { fileUuid } = req.params;
-  const comments = await Comment.get(fileUuid);
+  const { uuid } = req.params;
+  const comments = await Comment.get(uuid);
   res.json(comments);
 }
 

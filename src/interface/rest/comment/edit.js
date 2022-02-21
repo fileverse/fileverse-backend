@@ -8,19 +8,19 @@ const editValidation = {
   }),
   params: Joi.object({
     shortId: Joi.string().required(),
-    fileUuid: Joi.string().required(),
+    uuid: Joi.string().required(),
   }),
 };
 
 async function edit(req, res) {
   const { text } = req.body;
   const { userId } = req;
-  const { shortId, fileUuid } = req.params;
+  const { shortId, uuid } = req.params;
   const updatedComment = await Comment.edit({
     shortId,
     text,
     userId,
-    fileUuid,
+    fileUuid: uuid,
   });
   res.json(updatedComment);
 }

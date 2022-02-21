@@ -5,14 +5,14 @@ const { Joi, validate } = validator;
 const removeValidation = {
   params: Joi.object({
     shortId: Joi.string().required(),
-    fileUuid: Joi.string().required(),
+    uuid: Joi.string().required(),
   }),
 };
 
 async function remove(req, res) {
-  const { shortId, fileUuid } = req.params;
+  const { shortId, uuid } = req.params;
   const { userId } = req;
-  await Comment.remove({ shortId, userId, fileUuid });
+  await Comment.remove({ shortId, userId, uuid });
   res.json({ message: 'deleted successfully' });
 }
 

@@ -2,9 +2,8 @@ const ErrorHandler = require('../../../infra/utils/errorHandler');
 const { Comment } = require('../../../domain');
 
 async function canEditComment(req, res, next) {
-  const uuid = req.query.uuid;
+  const { uuid, shortId } = req.params;
   const { userId } = req;
-  const { shortId } = req.params;
   const permission = await Comment.permission({ uuid, userId, shortId });
   if (permission.edit) {
     next();
