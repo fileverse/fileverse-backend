@@ -5,7 +5,7 @@ const MoralisService = require('../../infra/utils/moralis');
 
 const moralisService = new MoralisService();
 
-async function edit(uuid, { name, file, token, address }) {
+async function edit(uuid, { name, file, token, address, description }) {
   const foundFile = await File.findOne({ uuid });
   if (!foundFile) {
     return ErrorHandler.throwError({
@@ -45,6 +45,9 @@ async function edit(uuid, { name, file, token, address }) {
   }
   if (name) {
     foundFile.name = name;
+  }
+  if (description) {
+    foundFile.description = description;
   }
   await foundFile.save();
   return foundFile.safeObject();
