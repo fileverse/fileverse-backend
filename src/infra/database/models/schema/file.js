@@ -71,6 +71,7 @@ _file.schema.methods.safeObject = function () {
     'version',
     'createdAt',
     'token',
+    'description',
   ];
   const newSafeObject = {};
   safeFields.forEach((elem) => {
