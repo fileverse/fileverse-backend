@@ -3,7 +3,9 @@ const upload = require('./upload');
 const { File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 
-async function create({ name, file, owner, slug }) {
+
+async function create({ name, file, owner, slug, description }) {
+  const { url, s3Url, mimetype } = await upload(file);
   const uuid = uuidv4();
   // file's slug should not be equal to slug or uuid of any other file
   // give default slug to be uuid
@@ -28,6 +30,7 @@ async function create({ name, file, owner, slug }) {
     mimetype,
     owner,
     slug,
+    description,
     version: [],
   }).save();
   return savedFile.safeObject();

@@ -38,6 +38,7 @@ _file.schema = new Schema(
     },
     token: TokenSchema,
     slug: { type: String, trim: true, unique: true },
+    description: { type: String, trim: true },
 
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
@@ -71,7 +72,11 @@ _file.schema.methods.safeObject = function () {
     'version',
     'createdAt',
     'token',
+<<<<<<< HEAD
     'slug',
+=======
+    'description',
+>>>>>>> staging
   ];
   const newSafeObject = {};
   safeFields.forEach((elem) => {
