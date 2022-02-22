@@ -39,7 +39,7 @@ function setEdit({ fileOwner, viewer }) {
 }
 
 async function permission({ uuid, userId, address }) {
-  const file = await File.findOne({ uuid });
+  const file = await File.findOne({ $or: [{ uuid }, { slug: uuid }] });
   if (!file) {
     return ErrorHandler.throwError({
       code: 404,

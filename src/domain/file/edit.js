@@ -5,13 +5,27 @@ const MoralisService = require('../../infra/utils/moralis');
 
 const moralisService = new MoralisService();
 
-async function edit(uuid, { name, file, token, address }) {
+async function edit(uuid, { name, file, token, address, slug }) {
   const foundFile = await File.findOne({ uuid });
   if (!foundFile) {
     return ErrorHandler.throwError({
       code: 404,
       message: 'You do not own this token!',
     });
+  }
+
+  if (slug) {
+    // check for uniqueness of slug with other files. If it is unique then update it else throw error.
+    const fileWithSameSlug = await File.findOne({
+      $and: [{ slug }, { _id: { $ne: foundFile._id } }],
+    });
+    if (fileWithSameSlug) {
+      return ErrorHandler.throwError({
+        code: 403,
+        message: 'File with same slug already exists',
+      });
+    }
+    foundFile.slug = slug;
   }
 
   if (

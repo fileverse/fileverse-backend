@@ -8,6 +8,7 @@ const editValidation = {
   }),
   body: Joi.object({
     name: Joi.string().optional().allow(''),
+    slug: Joi.string().optional(),
     token: Joi.object({
       contractAddress: Joi.string().required(),
       chain: Joi.string(),
@@ -19,13 +20,14 @@ const editValidation = {
 
 async function edit(req, res) {
   const { uuid } = req.params;
-  const { name, token } = req.body;
+  const { name, token, slug } = req.body;
   const { address } = req;
   const updatedFile = await File.edit(uuid, {
     file: req.files && req.files.file,
     name,
     token,
     address,
+    slug,
   });
   res.json(updatedFile);
 }

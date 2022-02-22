@@ -1,15 +1,9 @@
 const config = require('../../../config');
 const axios = require('axios');
 const _ = require('lodash');
-const MoralisSDK = require('moralis/node');
 
 class MoralisService {
   constructor() {
-    this.moralis = MoralisSDK;
-    this.moralis.start({
-      serverUrl: config.MORALIS_SERVER_URL,
-      appId: config.MORALIS_APP_ID,
-    });
     axios.defaults.headers.get['x-api-key'] = config.MORALIS_API_KEY;
     this.baseAddress = 'https://deep-index.moralis.io/api/v2';
   }
