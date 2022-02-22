@@ -72,11 +72,8 @@ _file.schema.methods.safeObject = function () {
     'version',
     'createdAt',
     'token',
-<<<<<<< HEAD
     'slug',
-=======
     'description',
->>>>>>> staging
   ];
   const newSafeObject = {};
   safeFields.forEach((elem) => {
