@@ -2,9 +2,8 @@ const ErrorHandler = require('../../infra/utils/errorHandler');
 const { File } = require('../../infra/database/models');
 
 async function get(uuid) {
-  const foundFile = await File.findOne({
-    uuid,
-  });
+  console.log({ uuid });
+  const foundFile = await File.findOne({ $or: [{ uuid }, { slug: uuid }] });
   if (!foundFile) {
     return ErrorHandler.throwError({
       code: 404,

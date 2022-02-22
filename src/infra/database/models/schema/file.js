@@ -37,6 +37,7 @@ _file.schema = new Schema(
       ref: 'accounts',
     },
     token: TokenSchema,
+    slug: { type: String, trim: true, unique: true },
     description: { type: String, trim: true },
 
     // system generated
@@ -71,6 +72,7 @@ _file.schema.methods.safeObject = function () {
     'version',
     'createdAt',
     'token',
+    'slug',
     'description',
   ];
   const newSafeObject = {};
