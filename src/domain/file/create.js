@@ -3,7 +3,6 @@ const upload = require('./upload');
 const { File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 
-
 async function create({ name, file, owner, slug, description }) {
   const { url, s3Url, mimetype } = await upload(file);
   const uuid = uuidv4();
@@ -20,8 +19,6 @@ async function create({ name, file, owner, slug, description }) {
   } else {
     slug = uuid;
   }
-
-  const { url, s3Url, mimetype } = await upload(file);
   const savedFile = await new File({
     uuid,
     name,
