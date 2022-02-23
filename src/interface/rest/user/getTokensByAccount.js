@@ -6,6 +6,10 @@ const getTokensByAccountValidation = {
   params: Joi.object({
     address: Joi.string().required(),
   }),
+  query: Joi.object({
+    search: Joi.string().optional(),
+    chain: Joi.string().optional(),
+  }),
 };
 
 async function getTokensByAccount(req, res) {

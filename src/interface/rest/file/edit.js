@@ -8,15 +8,28 @@ const editValidation = {
   }),
   body: Joi.object({
     name: Joi.string().optional().allow(''),
+    slug: Joi.string().optional(),
+    description: Joi.string().optional().max(500),
+    token: Joi.object({
+      contractAddress: Joi.string().required(),
+      chain: Joi.string(),
+      tokenType: Joi.string().required().valid('erc20', 'erc721'),
+      gateBalance: Joi.number().required(),
+    }),
   }),
 };
 
 async function edit(req, res) {
   const { uuid } = req.params;
-  const { name } = req.body;
+  const { name, token, slug, description } = req.body;
+  const { address } = req;
   const updatedFile = await File.edit(uuid, {
-    file: req.files.file,
+    file: req.files && req.files.file,
     name,
+    token,
+    address,
+    slug,
+    description,
   });
   res.json(updatedFile);
 }
