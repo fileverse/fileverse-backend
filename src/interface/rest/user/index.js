@@ -4,6 +4,7 @@ const {
 } = require('../../../infra/utils/asyncHandler');
 const express = require('express');
 const router = express.Router();
+const fileUpload = require('express-fileupload');
 
 // domain
 const login = require('./login');
@@ -12,9 +13,14 @@ const editAccount = require('./editAccount');
 const getFilesByAccount = require('./getFilesByAccount');
 const getNftsByAccount = require('./getNftsByAccount');
 const getTokensByAccount = require('./getTokensByAccount');
+const addAvatar = require('./addAvatar');
 
 // middlewares
-const { canViewAccount, canEditAccount } = require('../middlewares');
+const {
+  canViewAccount,
+  canEditAccount,
+  isImagePresent,
+} = require('../middlewares');
 
 router.post('/:address/login', asyncHandlerArray(login));
 router.get(
@@ -41,6 +47,13 @@ router.get(
   '/:address/tokens',
   asyncHandler(canEditAccount),
   asyncHandlerArray(getTokensByAccount),
+);
+router.post(
+  '/:address/avatar',
+  asyncHandler(canEditAccount),
+  fileUpload(),
+  isImagePresent,
+  asyncHandlerArray(addAvatar),
 );
 
 module.exports = router;
