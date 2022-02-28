@@ -10,7 +10,7 @@ const getFilesByAccountValidation = {
 
 async function getFilesByAccount(req, res) {
   const { address } = req.params;
-  const files = await File.getByAccount(address);
+  const files = await File.getByAccount(address, req.userId);
   res.json({ file: files });
 }
 
