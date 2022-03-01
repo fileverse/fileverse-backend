@@ -15,7 +15,7 @@ async function edit(req, res) {
   const { uuid } = req.params;
   const { name } = req.body;
   const updatedFile = await File.edit(uuid, {
-    file: req.files.file,
+    file: req.files && req.files.file,
     name,
   });
   res.json(updatedFile);
