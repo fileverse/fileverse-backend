@@ -3,8 +3,8 @@ const { File } = require('../../../domain');
 
 async function canViewFile(req, res, next) {
   const { uuid } = req.params;
-  const { userId } = req;
-  const permission = await File.permission({ uuid, userId });
+  const { userId, address } = req;
+  const permission = await File.permission({ uuid, userId, address });
   if (permission.read) {
     next();
   } else {
