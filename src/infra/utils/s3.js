@@ -27,6 +27,7 @@ class S3Service {
       Key: `files/${name}`,
       ContentType: mimetype,
       Bucket: this.bucketName,
+      ContentDisposition: `attachment;`,
     };
     const file = await this.s3.upload(params).promise();
     return this.formatFile(file);
