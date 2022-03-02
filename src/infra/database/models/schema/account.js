@@ -9,6 +9,7 @@ _account.schema = new Schema(
     name: { type: String, trim: true },
     address: { type: String, required: true, lowercase: true },
     email: { type: String, trim: true, lowercase: true },
+    description: { type: String, trim: true },
     image: { type: String },
 
     // system generated
@@ -32,6 +33,7 @@ _account.schema.methods.safeObject = function () {
     'address',
     'email',
     'createdAt',
+    'description',
     'image',
   ];
   const newSafeObject = {};
