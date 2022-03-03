@@ -11,6 +11,11 @@ const getValidation = {
 async function get(req, res) {
   const { uuid } = req.params;
   const file = await File.get(uuid);
+  file.currentPermission = await File.permission({
+    uuid,
+    userId: req && req.userId,
+    address: req && req.address,
+  });
   res.json(file);
 }
 
