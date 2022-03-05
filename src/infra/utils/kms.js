@@ -1,4 +1,3 @@
-const crypto = require('crypto');
 const config = require('../../../config');
 const KMS = require('aws-sdk/clients/kms');
 
