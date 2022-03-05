@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 // Use default logger for now
 app.use(logger('combined'));
 app.use(cors());
-app.use(helmet());
+// app.use(helmet());
 app.use(auth.verifyToken);
 
 // This is to check if the service is online or not
