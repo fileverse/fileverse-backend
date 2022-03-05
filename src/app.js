@@ -9,7 +9,7 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const { errorHandler } = require('./interface/rest/middlewares');
 
 const auth = require('./infra/utils/auth');
