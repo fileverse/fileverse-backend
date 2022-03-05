@@ -6,16 +6,17 @@ const s3 = new S3();
 async function addAvatar({ userId, address, image }) {
   const { mimetype, data } = image;
   const hash = md5(address);
-  const { fileLink } = await s3.upload(data, {
+  const { s3Url } = await s3.upload(data, {
     name: hash,
     mimetype,
+    base: 'avatar',
   });
   await Account.findByIdAndUpdate(userId, {
     $set: {
-      image: fileLink,
+      image: s3Url,
     },
   });
-  return { image: fileLink };
+  return { image: s3Url };
 }
 
 module.exports = addAvatar;
