@@ -17,14 +17,6 @@ class Encryption {
     const secret = this.jwtSecret;
     return jwt.verify(token, secret);
   }
-
-  async verifyAccessToken(token) {
-    return { server: token };
-  }
-
-  static async validateAccessToken(token, secret) {
-    return secret === token;
-  }
 }
 
 module.exports = Encryption;

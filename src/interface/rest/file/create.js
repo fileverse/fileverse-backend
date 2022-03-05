@@ -13,7 +13,7 @@ const createValidation = {
 async function create(req, res) {
   const { name, slug, description } = req.body;
   const createdFile = await File.create({
-    file: req.files.file,
+    file: req.files && req.files.file,
     name,
     description,
     owner: req.userId,

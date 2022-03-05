@@ -1,7 +1,7 @@
 const ErrorHandler = require('../../infra/utils/errorHandler');
 const { File } = require('../../infra/database/models');
 
-async function get(uuid) {
+async function get(uuid, safe = true) {
   const foundFile = await File.findOne({ $or: [{ uuid }, { slug: uuid }] });
   if (!foundFile) {
     return ErrorHandler.throwError({
@@ -9,7 +9,10 @@ async function get(uuid) {
       message: 'Cannot find the file by this uuid',
     });
   }
-  return foundFile.safeObject();
+  if (safe) {
+    return foundFile.safeObject();
+  }
+  return foundFile.toObject();
 }
 
 module.exports = get;

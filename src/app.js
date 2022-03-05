@@ -9,7 +9,7 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const helmet = require('helmet');
+// const helmet = require('helmet');
 const { errorHandler } = require('./interface/rest/middlewares');
 
 const auth = require('./infra/utils/auth');
@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 // Use default logger for now
 app.use(logger('combined'));
 app.use(cors());
-app.use(helmet());
+// app.use(helmet());
 app.use(auth.verifyToken);
 
 // This is to check if the service is online or not
