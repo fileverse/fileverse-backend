@@ -17,7 +17,8 @@ class S3Service {
 
   formatFile(file) {
     return {
-      fileLink: `https://${config.S3_BUCKET_NAME}/${file.key}`,
+      s3Key: file.key,
+      s3Url: `https://${config.S3_BUCKET_NAME}/${file.key}`,
     };
   }
 
@@ -30,6 +31,18 @@ class S3Service {
     };
     const file = await this.s3.upload(params).promise();
     return this.formatFile(file);
+  }
+
+  async get({ s3Key }) {
+    if (!s3Key) {
+      return null;
+    }
+    const params = {
+      Key: s3Key,
+      Bucket: this.bucketName,
+    };
+    const file = await this.s3.getObject(params).promise();
+    return file && file.Body;
   }
 }
 

@@ -4,7 +4,11 @@ const { Schema } = mongoose;
 const _file = {};
 
 const VersionSchema = new Schema({
-  url: { type: String },
+  ipfsUrl: { type: String, trim: true },
+  ipfsHash: { type: String, trim: true },
+  s3Url: { type: String, trim: true },
+  s3Key: { type: String, trim: true },
+  mimetype: { type: String, trim: true },
   version: { type: Number },
 });
 
@@ -23,7 +27,11 @@ _file.schema = new Schema(
     uuid: { type: String },
     name: { type: String, trim: true },
     url: { type: String, trim: true },
+    ipfsUrl: { type: String, trim: true },
+    ipfsHash: { type: String, trim: true },
     s3Url: { type: String, trim: true },
+    s3Key: { type: String, trim: true },
+    encryptedDataKey: { type: String, trim: true },
     mimetype: { type: String, trim: true },
     currentVersion: { type: Number, default: 1 },
     permission: {
@@ -66,6 +74,9 @@ _file.schema.methods.safeObject = function () {
     'mimetype',
     'name',
     'permission',
+    'ipfsUrl',
+    'ipfsHash',
+    's3Key',
     's3Url',
     'owner',
     'public',

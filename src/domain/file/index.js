@@ -5,4 +5,5 @@ module.exports = {
   getByAccount: require('./getByAccount'),
   upload: require('./upload'),
   permission: require('./permission'),
+  content: require('./content'),
 };
