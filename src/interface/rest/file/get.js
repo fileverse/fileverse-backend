@@ -29,7 +29,7 @@ async function get(req, res) {
     userId: req && req.userId,
     address: req && req.address,
   });
-  res.json(addSessionToFileUrl(file));
+  res.json(addSessionToFileUrl(file, req.sessionId));
 }
 
 module.exports = [validate(getValidation), get];
