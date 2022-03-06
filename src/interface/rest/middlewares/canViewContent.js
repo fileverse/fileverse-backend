@@ -16,6 +16,7 @@ async function canViewContent(req, res, next) {
     return ErrorHandler.throwError({
       code: statusCode,
       message: `You do not have permission to view this file: ${uuid}`,
+      token: permission.token,
       req,
     });
   }
