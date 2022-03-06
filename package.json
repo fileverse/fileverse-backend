@@ -44,6 +44,7 @@
     "morgan": "^1.10.0",
     "readable-stream-clone": "^0.0.7",
     "short-uuid": "^4.2.0",
+    "url-parse": "^1.5.10",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
