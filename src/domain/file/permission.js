@@ -5,7 +5,7 @@ const MoralisService = require('../../infra/utils/moralis');
 const moralisService = new MoralisService();
 
 // if token-gated then check balance of user
-function setRead({
+async function setRead({
   fileOwner,
   viewer,
   filePermission,
@@ -19,18 +19,20 @@ function setRead({
     return true;
   }
   if (filePermission === 'token-gated') {
-    const bal = moralisService.getContractBalance({
+    const bal = await moralisService.getContractBalance({
       address: viewerAddress,
       contractAddress: fileToken.contractAddress,
       tokenType: fileToken.tokenType,
       chain: fileToken.chain,
     });
-    return bal >= fileToken.gateBalance;
+    return (
+      fileOwner.toString() === viewer.toString() || bal >= fileToken.gateBalance
+    );
   }
   return fileOwner.toString() === viewer.toString();
 }
 
-function setEdit({ fileOwner, viewer }) {
+async function setEdit({ fileOwner, viewer }) {
   if (!fileOwner || !viewer) {
     return false;
   }
@@ -50,14 +52,14 @@ async function permission({ uuid, userId, address }) {
     read: false,
     edit: false,
   };
-  permission.read = setRead({
+  permission.read = await setRead({
     fileOwner: file.owner,
     viewer: userId,
     filePermission: file.permission,
     viewerAddress: address,
     fileToken: file.token,
   });
-  permission.edit = setEdit({
+  permission.edit = await setEdit({
     fileOwner: file.owner,
     viewer: userId,
     filePermission: file.permission,
