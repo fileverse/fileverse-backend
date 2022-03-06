@@ -8,8 +8,8 @@ const router = express.Router();
 // domain
 const get = require('./get');
 // middlewares
-const { canViewFile } = require('../middlewares');
+const { canViewContent } = require('../middlewares');
 
-router.get('/:uuid', asyncHandler(canViewFile), asyncHandlerArray(get));
+router.get('/:uuid', asyncHandler(canViewContent), asyncHandlerArray(get));
 
 module.exports = router;

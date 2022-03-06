@@ -7,4 +7,6 @@ module.exports = {
   getNfts: require('./getNfts'),
   getTokens: require('./getTokens'),
   addAvatar: require('./addAvatar'),
+  getSession: require('./getSession'),
+  createSession: require('./createSession'),
 };

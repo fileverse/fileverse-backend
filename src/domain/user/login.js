@@ -1,3 +1,4 @@
+const createSession = require('./createSession');
 const createAccount = require('./createAccount');
 const { ethers } = require('ethers');
 const config = require('../../../config');
@@ -8,10 +9,13 @@ async function verifySignature({ address, message, signature }) {
   return adr.toLowerCase() === address.toLowerCase();
 }
 
-async function getAuthToken({ address }) {
-  const userId = await createAccount({ address });
+async function getAuthToken({ address, userId, sessionId }) {
   const encryption = new Encryption(config.JWT_SECRET);
-  return encryption.signToken({ address: address.toLowerCase(), userId });
+  return encryption.signToken({
+    address: address.toLowerCase(),
+    userId,
+    sessionId,
+  });
 }
 
 async function login({ address, signature, message }) {
@@ -23,7 +27,9 @@ async function login({ address, signature, message }) {
   if (!isSignatureValid) {
     return null;
   }
-  return { token: await getAuthToken({ address }) };
+  const userId = await createAccount({ address });
+  const sessionId = await createSession({ address, userId });
+  return { token: await getAuthToken({ address, userId, sessionId }) };
 }
 
 module.exports = login;

@@ -1,6 +1,19 @@
+const parse = require('url-parse');
 const { File } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
+
+function addSessionToFileUrl(file, sessionId) {
+  if (!file || !file.url || !sessionId) {
+    return file;
+  }
+  const url = parse(file.url, true);
+  const query = url.query;
+  query.sessionId = sessionId;
+  url.set('query', query);
+  file.url = url.toString();
+  return file;
+}
 
 const getValidation = {
   params: Joi.object({
@@ -16,7 +29,7 @@ async function get(req, res) {
     userId: req && req.userId,
     address: req && req.address,
   });
-  res.json(file);
+  res.json(addSessionToFileUrl(file, req.sessionId));
 }
 
 module.exports = [validate(getValidation), get];

@@ -7,4 +7,5 @@ module.exports = {
   errorHandler: require('./errorHandler'),
   validator: require('./validator'),
   isImagePresent: require('./isImagePresent'),
+  canViewContent: require('./canViewContent'),
 };
