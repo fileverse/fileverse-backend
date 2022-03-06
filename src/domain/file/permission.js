@@ -64,7 +64,7 @@ async function permission({ uuid, userId, address }) {
     viewer: userId,
     filePermission: file.permission,
   });
-
+  permission.token = file.token;
   return permission;
 }
 

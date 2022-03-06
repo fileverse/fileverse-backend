@@ -14,9 +14,10 @@ _errorHandler.formatGQLError = function (err) {
   return responseData;
 };
 
-_errorHandler.throwError = ({ code = 500, message, req = {} }) => {
+_errorHandler.throwError = ({ code = 500, message, token, req = {} }) => {
   const error = new Error(message);
   error.code = code;
+  error.token = token;
   error.req = req;
   error.address = req.address;
   throw error;
