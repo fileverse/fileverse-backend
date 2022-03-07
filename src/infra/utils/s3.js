@@ -22,10 +22,10 @@ class S3Service {
     };
   }
 
-  async upload(data, { name, mimetype }) {
+  async upload(data, { name, mimetype, base = 'files' }) {
     const params = {
       Body: data,
-      Key: `files/${name}`,
+      Key: `${base}/${name}`,
       ContentType: mimetype,
       Bucket: this.bucketName,
     };
