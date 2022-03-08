@@ -19,6 +19,9 @@ async function setRead({
     return true;
   }
   if (filePermission === 'token-gated') {
+    if (!viewer) {
+      return false;
+    }
     const bal = await moralisService.getContractBalance({
       address: viewerAddress,
       contractAddress: fileToken.contractAddress,
