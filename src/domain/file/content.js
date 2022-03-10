@@ -13,10 +13,12 @@ async function content(uuid) {
   const { name, s3Key, s3Url, ipfsHash, ipfsUrl, mimetype, encryptedDataKey } =
     file;
   let fileContent = await s3.get({ s3Key, s3Url });
-  if (!fileContent) {
-    fileContent = await pinata.get({ ipfsUrl, ipfsHash });
+  let stream = null;
+  if (fileContent) {
+    stream = Readable.from(fileContent);
+  } else {
+    stream = await pinata.get({ ipfsUrl, ipfsHash });
   }
-  const stream = Readable.from(fileContent);
   const dataKeyPlain = await kms.decrypt({ encryptedDataKey });
   const decryptedStream = Readable.from(decryptStream(stream, dataKeyPlain));
   return {

@@ -1,3 +1,5 @@
+const PassThrough = require('stream').PassThrough;
+const request = require('request');
 const config = require('../../../config');
 const pinataSDK = require('@pinata/sdk');
 
@@ -42,7 +44,9 @@ class Pinata {
     if (!ipfsUrl) {
       return null;
     }
-    return ipfsUrl;
+    const ipfsStream = new PassThrough();
+    request(ipfsUrl).pipe(ipfsStream);
+    return ipfsStream;
   }
 }
 
