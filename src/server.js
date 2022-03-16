@@ -1,3 +1,4 @@
+require('newrelic');
 const config = require('../config');
 const logger = require('./infra/utils/logger');
 
