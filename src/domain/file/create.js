@@ -5,6 +5,13 @@ const { File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 
 async function create({ name, file, owner, slug, description }) {
+  if (file.size > (parseInt(config.FILE_SIZE_LIMIT, 10) || 10 * 1024 * 1024)) {
+    return ErrorHandler.throwError({
+      code: 403,
+      message: 'File size cannot exceed 10 MB.',
+    });
+  }
+
   const uuid = uuidv4();
   // file's slug should not be equal to slug or uuid of any other file
   // give default slug to be uuid
