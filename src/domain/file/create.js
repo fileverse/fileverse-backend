@@ -5,6 +5,7 @@ const { File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 
 async function create({ name, file, owner, slug, description }) {
+  console.log(file.size);
   if (file.size > (parseInt(config.FILE_SIZE_LIMIT, 10) || 10 * 1024 * 1024)) {
     return ErrorHandler.throwError({
       code: 403,
