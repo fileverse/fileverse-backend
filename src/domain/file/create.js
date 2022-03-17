@@ -1,16 +1,28 @@
 const config = require('../../../config');
 const { v4: uuidv4 } = require('uuid');
 const upload = require('./upload');
-const { File } = require('../../infra/database/models');
+const { File, Account } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 
 async function create({ name, file, owner, slug, description }) {
-  console.log(file.size);
   if (file.size > (parseInt(config.FILE_SIZE_LIMIT, 10) || 10 * 1024 * 1024)) {
     return ErrorHandler.throwError({
       code: 403,
       message: 'File size cannot exceed 10 MB.',
     });
+  }
+
+  if (owner) {
+    const user = await Account.findById(owner);
+    if (!user.isAdmin) {
+      const fileCount = await File.find({ owner }).count();
+      if (fileCount > (parseInt(config.FILE_AMOUNT_LIMIT, 10) || 10)) {
+        return ErrorHandler.throwError({
+          code: 403,
+          message: 'Only 10 Files per user are allowed',
+        });
+      }
+    }
   }
 
   const uuid = uuidv4();
