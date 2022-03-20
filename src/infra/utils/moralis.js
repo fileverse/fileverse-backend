@@ -1,5 +1,6 @@
 const config = require('../../../config');
 const axios = require('axios');
+const Big = require('big.js');
 const _ = require('lodash');
 
 class MoralisService {
@@ -81,6 +82,37 @@ class MoralisService {
       });
     }
     return totBal;
+  }
+
+  async checkContractBalance({
+    address,
+    contractAddress,
+    chain = 'eth',
+    tokenType,
+    balance,
+  }) {
+    if (!contractAddress || !address || !balance) return false;
+    let totBal = 0;
+    if (tokenType.toLowerCase() === 'erc20') {
+      const apiResponse = await axios.get(
+        `${this.baseAddress}/${address}/erc20?token_addresses=${contractAddress}&chain=${chain}`,
+      );
+      apiResponse.data.map((token) => {
+        const baseNumber = new Big(token.balance);
+        const divideBy = new Big(10).pow(parseInt(token.decimal, 10));
+        const correectedBalance = baseNumber.div(divideBy).toFixed(4);
+        totBal.plus(correectedBalance);
+      });
+    }
+    if (tokenType.toLowerCase() === 'erc721') {
+      const apiResponse = await axios.get(
+        `${this.baseAddress}/${address}/nft/${contractAddress}?chain=${chain}&format=decimal`,
+      );
+      apiResponse.data.result.map((nft) => {
+        totBal += parseInt(nft.amount, 10);
+      });
+    }
+    return balance && balance >= totBal;
   }
 }
 

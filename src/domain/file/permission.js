@@ -22,15 +22,14 @@ async function setRead({
     if (!viewer) {
       return false;
     }
-    const bal = await moralisService.getContractBalance({
+    const hasAccess = await moralisService.checkContractBalance({
       address: viewerAddress,
       contractAddress: fileToken.contractAddress,
       tokenType: fileToken.tokenType,
       chain: fileToken.chain,
+      balance: fileToken.gateBalance,
     });
-    return (
-      fileOwner.toString() === viewer.toString() || bal >= fileToken.gateBalance
-    );
+    return fileOwner.toString() === viewer.toString() || hasAccess;
   }
   return fileOwner.toString() === viewer.toString();
 }
