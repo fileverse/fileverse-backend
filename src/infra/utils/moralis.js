@@ -89,19 +89,19 @@ class MoralisService {
     contractAddress,
     chain = 'eth',
     tokenType,
-    balance,
+    gateBalance,
   }) {
-    if (!contractAddress || !address || !balance) return false;
-    let totBal = 0;
+    if (!contractAddress || !address || !gateBalance) return false;
+    let currentBal = 0;
     if (tokenType.toLowerCase() === 'erc20') {
       const apiResponse = await axios.get(
         `${this.baseAddress}/${address}/erc20?token_addresses=${contractAddress}&chain=${chain}`,
       );
       apiResponse.data.map((token) => {
         const baseNumber = new Big(token.balance);
-        const divideBy = new Big(10).pow(parseInt(token.decimal, 10));
-        const correectedBalance = baseNumber.div(divideBy).toFixed(4);
-        totBal.plus(correectedBalance);
+        const divideBy = new Big(10).pow(parseInt(token.decimals, 10));
+        const correctedBalance = Number(baseNumber.div(divideBy).toFixed(4));
+        currentBal += correctedBalance;
       });
     }
     if (tokenType.toLowerCase() === 'erc721') {
@@ -109,10 +109,10 @@ class MoralisService {
         `${this.baseAddress}/${address}/nft/${contractAddress}?chain=${chain}&format=decimal`,
       );
       apiResponse.data.result.map((nft) => {
-        totBal += parseInt(nft.amount, 10);
+        currentBal += parseInt(nft.amount, 10);
       });
     }
-    return balance && balance >= totBal;
+    return gateBalance && currentBal >= gateBalance;
   }
 }
 
