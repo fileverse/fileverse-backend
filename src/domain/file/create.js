@@ -4,14 +4,36 @@ const upload = require('./upload');
 const { File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 
+async function checkLimits({ owner }) {
+  if (!owner) {
+    const createdFiles = await File.find({ owner }).count();
+    if (createdFiles > 10) {
+      return ErrorHandler.throwError({
+        code: 429,
+        message: 'You seem to have hit our limits! We are currently in beta.',
+      });
+    }
+    return;
+  }
+  const createdFiles = await File.find({ owner }).count();
+  if (createdFiles > 10) {
+    return ErrorHandler.throwError({
+      code: 429,
+      message: 'Currently in beta we only allow 10 files per account!',
+    });
+  }
+  return;
+}
+
 async function create({ name, file, owner, slug, description }) {
-  console.log(file.size);
   if (file.size > (parseInt(config.FILE_SIZE_LIMIT, 10) || 10 * 1024 * 1024)) {
     return ErrorHandler.throwError({
       code: 403,
       message: 'File size cannot exceed 10 MB.',
     });
   }
+
+  await checkLimits({ owner });
 
   const uuid = uuidv4();
   // file's slug should not be equal to slug or uuid of any other file
