@@ -12,6 +12,9 @@ async function checkLimits({ owner }) {
       message: 'You seem to have hit our limits! We are currently in beta.',
     });
   }
+  if (!owner) {
+    return;
+  }
   const createdFiles = await File.find({ owner }).count();
   if (createdFiles > 10) {
     return ErrorHandler.throwError({
