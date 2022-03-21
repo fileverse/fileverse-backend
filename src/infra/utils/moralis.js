@@ -14,8 +14,8 @@ class MoralisService {
     const metadata = JSON.parse(nft.metadata);
     return {
       contractAddress: nft.token_address,
-      name: metadata ? metadata.name : nft.name,
-      image: metadata ? metadata.image : nft.image,
+      name: (metadata && metadata.name) || nft.name,
+      image: (metadata && metadata.image) || nft.image,
       symbol: nft.symbol,
     };
   }
