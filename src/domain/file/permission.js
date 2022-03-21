@@ -66,7 +66,10 @@ async function permission({ uuid, userId, address }) {
     viewer: userId,
     filePermission: file.permission,
   });
-  permission.token = file.token;
+  permission.token = file.token.toJSON();
+  if (file.token) {
+    permission.token.etherScanUrl = `https://etherscan.io/token/${file.token.contractAddress}`;
+  }
   return permission;
 }
 
