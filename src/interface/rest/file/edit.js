@@ -14,7 +14,6 @@ const editValidation = {
       name: Joi.string().optional(),
       image: Joi.string().optional(),
       contractAddress: Joi.string().required(),
-      chain: Joi.string(),
       tokenType: Joi.string().required().valid('erc20', 'erc721'),
       gateBalance: Joi.number().required(),
     }),

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const config = require('../../../../../config');
 const { Schema } = mongoose;
 
 const _file = {};
@@ -21,7 +22,7 @@ const TokenSchema = new Schema({
     type: String,
     enum: ['erc20', 'erc721'],
   },
-  chain: { type: String, trim: true, default: 'eth' },
+  chain: { type: String, trim: true, default: config.CHAIN },
 });
 
 _file.schema = new Schema(

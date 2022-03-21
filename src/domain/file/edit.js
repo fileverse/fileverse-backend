@@ -2,6 +2,7 @@ const ErrorHandler = require('../../infra/utils/errorHandler');
 const upload = require('./upload');
 const { File } = require('../../infra/database/models');
 const MoralisService = require('../../infra/utils/moralis');
+const config = require('../../../config');
 
 const moralisService = new MoralisService();
 
@@ -33,7 +34,6 @@ async function edit(uuid, { name, file, token, address, slug, description }) {
     !moralisService.verifyOwnership({
       address,
       contractAddress: token.contractAddress,
-      chain: token.chain,
       tokenType: token.tokenType,
     })
   ) {
@@ -43,6 +43,7 @@ async function edit(uuid, { name, file, token, address, slug, description }) {
     });
   }
   if (token) {
+    token.chain = config.CHAIN;
     foundFile.token = token;
   }
   if (file) {

@@ -8,14 +8,13 @@ const getTokensByAccountValidation = {
   }),
   query: Joi.object({
     search: Joi.string().optional(),
-    chain: Joi.string().optional(),
   }),
 };
 
 async function getTokensByAccount(req, res) {
   const { address } = req.params;
-  const { search = '', chain = 'eth' } = req.query;
-  const tokens = await User.getTokens({ address, search, chain });
+  const { search = '' } = req.query;
+  const tokens = await User.getTokens({ address, search });
   res.json({ token: tokens });
 }
 
