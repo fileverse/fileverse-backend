@@ -42,7 +42,7 @@ async function setEdit({ fileOwner, viewer }) {
 }
 
 async function permission({ uuid, userId, address }) {
-  const file = await File.findOne({ $or: [{ uuid }, { slug: uuid }] });
+  const file = await File.findOne({ $or: [{ uuid }, { slug: uuid }] }).lean();
   if (!file) {
     return ErrorHandler.throwError({
       code: 404,
@@ -65,7 +65,7 @@ async function permission({ uuid, userId, address }) {
     viewer: userId,
     filePermission: file.permission,
   });
-  permission.token = file.token.toJSON();
+  permission.token = file.token;
   if (file.token) {
     permission.token.etherScanUrl = `https://etherscan.io/token/${file.token.contractAddress}`;
   }
