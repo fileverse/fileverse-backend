@@ -26,7 +26,6 @@ async function setRead({
       address: viewerAddress,
       contractAddress: fileToken.contractAddress,
       tokenType: fileToken.tokenType,
-      chain: fileToken.chain,
       gateBalance: fileToken.gateBalance,
     });
     return fileOwner.toString() === viewer.toString() || hasAccess;
