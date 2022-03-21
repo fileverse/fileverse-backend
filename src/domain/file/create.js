@@ -5,15 +5,12 @@ const { File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 
 async function checkLimits({ owner }) {
-  if (!owner) {
-    const createdFiles = await File.find({ owner }).count();
-    if (createdFiles > 10000) {
-      return ErrorHandler.throwError({
-        code: 429,
-        message: 'You seem to have hit our limits! We are currently in beta.',
-      });
-    }
-    return;
+  const allCreatedFiles = await File.find({}).count();
+  if (allCreatedFiles > 10000) {
+    return ErrorHandler.throwError({
+      code: 429,
+      message: 'You seem to have hit our limits! We are currently in beta.',
+    });
   }
   const createdFiles = await File.find({ owner }).count();
   if (createdFiles > 10) {
