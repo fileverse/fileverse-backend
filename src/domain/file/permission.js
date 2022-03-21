@@ -26,7 +26,6 @@ async function setRead({
       address: viewerAddress,
       contractAddress: fileToken.contractAddress,
       tokenType: fileToken.tokenType,
-      chain: fileToken.chain,
       gateBalance: fileToken.gateBalance,
     });
     return fileOwner.toString() === viewer.toString() || hasAccess;
@@ -43,7 +42,7 @@ async function setEdit({ fileOwner, viewer }) {
 }
 
 async function permission({ uuid, userId, address }) {
-  const file = await File.findOne({ $or: [{ uuid }, { slug: uuid }] });
+  const file = await File.findOne({ $or: [{ uuid }, { slug: uuid }] }).lean();
   if (!file) {
     return ErrorHandler.throwError({
       code: 404,
@@ -67,6 +66,9 @@ async function permission({ uuid, userId, address }) {
     filePermission: file.permission,
   });
   permission.token = file.token;
+  if (file.token) {
+    permission.token.etherScanUrl = `https://etherscan.io/token/${file.token.contractAddress}`;
+  }
   return permission;
 }
 
