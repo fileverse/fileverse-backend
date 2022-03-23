@@ -36,7 +36,7 @@ router.post(
 );
 router.get(
   '/:address/all',
-  asyncHandlerArray([canEditAccount, validateRecaptcha]),
+  asyncHandlerArray([validateRecaptcha, canEditAccount]),
   asyncHandlerArray(getFilesByAccount),
 );
 router.get(

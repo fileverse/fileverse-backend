@@ -20,11 +20,15 @@ const {
 
 router.post(
   '/create',
-  asyncHandlerArray([canCreateFile, validateRecaptcha]),
+  asyncHandlerArray([validateRecaptcha, canCreateFile]),
   fileUpload(),
   asyncHandlerArray(create),
 );
-router.get('/:uuid', asyncHandler(canViewFile), asyncHandlerArray(get));
+router.get(
+  '/:uuid',
+  asyncHandlerArray([validateRecaptcha, canViewFile]),
+  asyncHandlerArray(get),
+);
 router.post(
   '/:uuid/edit',
   asyncHandler(canEditFile),
