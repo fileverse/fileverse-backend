@@ -11,11 +11,16 @@ const create = require('./create');
 const edit = require('./edit');
 const get = require('./get');
 // middlewares
-const { canEditFile, canViewFile, canCreateFile } = require('../middlewares');
+const {
+  canEditFile,
+  canViewFile,
+  canCreateFile,
+  validateRecaptcha,
+} = require('../middlewares');
 
 router.post(
   '/create',
-  asyncHandler(canCreateFile),
+  asyncHandlerArray([canCreateFile, validateRecaptcha]),
   fileUpload(),
   asyncHandlerArray(create),
 );

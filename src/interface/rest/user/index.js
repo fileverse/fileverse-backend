@@ -20,6 +20,7 @@ const {
   canViewAccount,
   canEditAccount,
   isImagePresent,
+  validateRecaptcha,
 } = require('../middlewares');
 
 router.post('/:address/login', asyncHandlerArray(login));
@@ -35,7 +36,7 @@ router.post(
 );
 router.get(
   '/:address/all',
-  asyncHandler(canEditAccount),
+  asyncHandlerArray([canEditAccount, validateRecaptcha]),
   asyncHandlerArray(getFilesByAccount),
 );
 router.get(
