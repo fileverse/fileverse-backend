@@ -8,4 +8,5 @@ module.exports = {
   validator: require('./validator'),
   isImagePresent: require('./isImagePresent'),
   canViewContent: require('./canViewContent'),
+  validateRecaptcha: require('./validateRecaptcha'),
 };
