@@ -26,7 +26,8 @@ router.post(
 );
 router.get(
   '/:uuid',
-  asyncHandlerArray([validateRecaptcha, canViewFile]),
+  asyncHandler(canViewFile),
+  // asyncHandlerArray([validateRecaptcha, canViewFile]),
   asyncHandlerArray(get),
 );
 router.post(
