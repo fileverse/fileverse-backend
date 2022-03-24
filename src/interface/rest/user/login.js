@@ -15,7 +15,11 @@ const loginValidation = {
 async function login(req, res) {
   const { address } = req.params;
   const { message, signature } = req.body;
-  const { token } = await User.login({ message, signature, address });
+  const { token } = await User.login({
+    message,
+    signature,
+    address: address.toLowerCase(),
+  });
   res.json({ token });
 }
 

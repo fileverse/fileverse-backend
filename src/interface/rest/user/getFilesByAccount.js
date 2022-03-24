@@ -23,7 +23,7 @@ const getFilesByAccountValidation = {
 
 async function getFilesByAccount(req, res) {
   const { address } = req.params;
-  const files = await File.getByAccount(address);
+  const files = await File.getByAccount(address.toLowerCase());
   res.json({
     file: files.map((file) => addSessionToFileUrl(file, req.sessionId)),
   });
