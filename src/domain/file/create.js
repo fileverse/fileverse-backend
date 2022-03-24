@@ -15,9 +15,9 @@ async function checkLimits({ owner }) {
   if (!owner) {
     return;
   }
-  const account = await Account.find({ _id: owner });
+  const account = await Account.findOne({ _id: owner });
   const createdFiles = await File.find({ owner }).count();
-  const limit = account.isPaid === true ? 10000 : 10;
+  const limit = account && account.isPaid === true ? 1000 : 10;
   if (createdFiles > limit) {
     return ErrorHandler.throwError({
       code: 429,
