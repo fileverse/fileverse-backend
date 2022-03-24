@@ -35,9 +35,7 @@ class MoralisService {
       `${this.baseAddress}/${ethaddress}/nft?chain=${this.chain}&format=decimal`,
     );
     const nfts = apiResponse.data.result.map((nft) => this.formatNft(nft));
-    const filteredNfts = nfts.filter(
-      (nft) => nft.name && nft.symbol && nft.image,
-    );
+    const filteredNfts = nfts.filter((nft) => nft.name && nft.symbol);
     return _.uniqBy(filteredNfts, 'contractAddress');
   }
 
@@ -47,9 +45,7 @@ class MoralisService {
     );
     const tokens = apiResponse.data.map((token) => this.formatToken(token));
 
-    return tokens.filter(
-      (token) => token.name && token.symbol && token.thumbnail,
-    );
+    return tokens.filter((token) => token.name && token.symbol);
   }
 
   async verifyOwnership({ address, contractAddress, tokenType }) {
