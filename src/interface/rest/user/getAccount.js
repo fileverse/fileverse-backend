@@ -10,7 +10,7 @@ const getAccountValidation = {
 
 async function getAccount(req, res) {
   const { address } = req.params;
-  const account = await User.getAccount({ address });
+  const account = await User.getAccount({ address: address.toLowerCase() });
   res.json(account);
 }
 
