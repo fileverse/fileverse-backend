@@ -47,9 +47,7 @@ class MoralisService {
     );
     const tokens = apiResponse.data.map((token) => this.formatToken(token));
 
-    return tokens.filter(
-      (token) => token.name && token.symbol && token.thumbnail,
-    );
+    return tokens.filter((token) => token.name && token.symbol);
   }
 
   async verifyOwnership({ address, contractAddress, tokenType }) {
