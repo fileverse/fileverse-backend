@@ -1,7 +1,7 @@
 const { Session } = require('../../infra/database/models');
 
 async function getSession({ sessionId }) {
-  const session = await Session.findOne({ sessionId }).lean();
+  const session = await Session.findOne({ _id: sessionId }).lean();
   return session || {};
 }
 
