@@ -1,7 +1,7 @@
 const config = require('../../../config');
 const { v4: uuidv4 } = require('uuid');
 const upload = require('./upload');
-const { File } = require('../../infra/database/models');
+const { File, Account } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 
 async function checkLimits({ owner }) {
@@ -15,8 +15,10 @@ async function checkLimits({ owner }) {
   if (!owner) {
     return;
   }
+  const account = await Account.findOne({ _id: owner });
   const createdFiles = await File.find({ owner }).count();
-  if (createdFiles > 10) {
+  const limit = account && account.isPaid === true ? 1000 : 10;
+  if (createdFiles > limit) {
     return ErrorHandler.throwError({
       code: 429,
       message: 'Currently in beta we only allow 10 files per account!',

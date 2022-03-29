@@ -11,6 +11,7 @@ _account.schema = new Schema(
     email: { type: String, trim: true, lowercase: true },
     description: { type: String, trim: true },
     image: { type: String },
+    isPaid: { type: Boolean, default: false },
 
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
