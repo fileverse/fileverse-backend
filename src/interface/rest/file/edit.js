@@ -12,7 +12,7 @@ const editValidation = {
     description: Joi.string().optional().max(500),
     token: Joi.object({
       name: Joi.string().optional(),
-      image: Joi.string().optional(),
+      image: Joi.string().optional().allow(null, ''),
       contractAddress: Joi.string().required(),
       tokenType: Joi.string().required().valid('erc20', 'erc721'),
       gateBalance: Joi.number().required(),
