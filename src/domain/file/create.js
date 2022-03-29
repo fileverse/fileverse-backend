@@ -32,7 +32,6 @@ async function create({ name, file, owner, slug, description }) {
       message: 'File size cannot exceed 10 MB.',
     });
   }
-
   await checkLimits({ owner });
 
   const uuid = uuidv4();
