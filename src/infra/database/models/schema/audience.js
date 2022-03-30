@@ -6,9 +6,7 @@ const _audience = {};
 _audience.schema = new Schema(
   {
     owner: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: 'accounts',
+      type: String,
     },
     members: [
       {
