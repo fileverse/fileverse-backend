@@ -1,5 +1,6 @@
-const { Web3Storage, Blob } = require('web3.storage');
+const { Web3Storage, Blob, File } = require('web3.storage');
 const config = require('./../../../config');
+const { Readable } = require('stream');
 
 class Web3StorageService {
   constructor() {
@@ -7,12 +8,53 @@ class Web3StorageService {
     this.client = new Web3Storage({ token: config.WEB3STORAGE_TOKEN });
   }
 
-  async upload(file) {
-    let buffer = Buffer.from(file.data);
-    let arraybuffer = Uint8Array.from(buffer).buffer;
-    let blob = new Blob([arraybuffer], { type: file.mimetype });
-    const cid = await this.client.put([blob], { name: file.name });
-    return cid;
+  async getCid(data, name, mimetype, uuid) {
+    let blob = new File([data], uuid, { type: mimetype });
+    const cid = await this.client.put([blob], { name: uuid });
+    this.retrieve(cid);
+    console.log('\n\n', { cid });
+  }
+
+  async upload(readableStreamForFile, { name, mimetype, uuid }) {
+    let data = '';
+    let chunk;
+
+    readableStreamForFile.on('readable', function () {
+      while ((chunk = readableStreamForFile.read()) != null) {
+        data += chunk;
+      }
+    });
+
+    readableStreamForFile.on('end', async function () {
+      const web3 = new Web3StorageService();
+      web3.getCid(data, name, mimetype, uuid);
+    });
+  }
+
+  async retrieve(cid) {
+    const res = await this.client.get(cid);
+    console.log(`Got a response! [${res.status}] ${res.statusText}`);
+    console.log(res);
+    if (!res.ok) {
+      throw new Error(`failed to get ${cid}`);
+    }
+
+    // request succeeded! do something with the response object here...
+    const files = await res.files();
+    for (const file of files) {
+      console.log(`${file.cid} -- ${file.path} -- ${file.size}`);
+      console.log(file);
+      let chunk = '';
+      let data = '';
+      file.on('readable', function () {
+        while ((chunk = file.read()) != null) {
+          data += chunk;
+        }
+      });
+      file.on('end', function () {
+        console.log(data);
+      });
+    }
   }
 }
 
