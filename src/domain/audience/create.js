@@ -47,8 +47,9 @@ async function getMembersFromCSV(data) {
 async function getAddressFromEnsName(members) {
   console.log(typeof members);
   for (let i = 0; i < members.length; ++i) {
-    if (members[i].ensName)
-      members[i].address = await provider.resolveName(members[i].ensName);
+    const ensName = members[parseInt(i, 10)].ensName;
+    if (ensName)
+      members[parseInt(i, 10)].address = await provider.resolveName(ensName);
   }
 
   return members;
