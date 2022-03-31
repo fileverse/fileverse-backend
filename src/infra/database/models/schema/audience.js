@@ -8,6 +8,11 @@ _audience.schema = new Schema(
     owner: {
       type: String,
     },
+    uuid: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     members: [
       {
         ensName: { type: String, trim: true },
@@ -29,7 +34,14 @@ _audience.schema.pre('save', function (next) {
 });
 
 _audience.schema.methods.safeObject = function () {
-  const safeFields = ['_id', 'owner', 'members', 'createdAt', 'updatedAt'];
+  const safeFields = [
+    '_id',
+    'uuid',
+    'owner',
+    'members',
+    'createdAt',
+    'updatedAt',
+  ];
   const newSafeObject = {};
   safeFields.forEach((elem) => {
     // eslint-disable-next-line security/detect-object-injection

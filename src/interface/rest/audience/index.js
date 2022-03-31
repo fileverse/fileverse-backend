@@ -18,6 +18,10 @@ router.post(
   asyncHandlerArray(create),
 );
 
-router.get('/', asyncHandler(canEditAccount), asyncHandlerArray(get));
+router.get(
+  '/:uuid',
+  asyncHandler(canEditAccount),
+  asyncHandlerArray(get),
+);
 
 module.exports = router;

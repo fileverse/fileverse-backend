@@ -4,6 +4,7 @@ const csv = require('csv-parser');
 const { Audience } = require('../../infra/database/models');
 const { utils, getDefaultProvider } = require('ethers');
 const config = require('./../../../config');
+const { v4: uuidv4 } = require('uuid');
 
 const provider = getDefaultProvider('homestead', {
   etherscan: config.ETHERSCAN_API_KEY,
@@ -36,7 +37,6 @@ async function getMembersFromCSV(data) {
       })
       .on('end', () => {
         resolve(result);
-        console.log('CSV file successfully processed');
       })
       .on('error', () => {
         reject([]);
@@ -45,7 +45,6 @@ async function getMembersFromCSV(data) {
 }
 
 async function getAddressFromEnsName(members) {
-  console.log(typeof members);
   for (let i = 0; i < members.length; ++i) {
     const ensName = members[parseInt(i, 10)].ensName;
     if (ensName)
@@ -62,11 +61,12 @@ async function create(owner, file) {
       message: 'CSV file not found',
     });
   }
-
+  const uuid = uuidv4();
+  console.log({ uuid });
   let members = await getMembersFromCSV(file.data);
   members = await getAddressFromEnsName(members);
-  const createdAudience = new Audience({ owner, members });
-  return createdAudience;
+  const createdAudience = await new Audience({ uuid, owner, members }).save();
+  return createdAudience.safeObject();
 }
 
 module.exports = create;
