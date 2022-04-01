@@ -45,13 +45,11 @@ async function getMembersFromCSV(data) {
 }
 
 async function getAddressFromEnsName(members) {
-  for (let i = 0; i < members.length; ++i) {
-    const ensName = members[parseInt(i, 10)].ensName;
-    if (ensName)
-      members[parseInt(i, 10)].address = await provider.resolveName(ensName);
-  }
-
-  return members;
+  const allMemeberPromises = members.map(async ({ ensName, address }) => ({
+    address: address ? address : await provider.resolveName(ensName),
+    ensName,
+  }));
+  return await Promise.all(allMemeberPromises);
 }
 
 async function create(owner, file) {
@@ -62,7 +60,6 @@ async function create(owner, file) {
     });
   }
   const uuid = uuidv4();
-  console.log({ uuid });
   let members = await getMembersFromCSV(file.data);
   members = await getAddressFromEnsName(members);
   const createdAudience = await new Audience({ uuid, owner, members }).save();
