@@ -17,7 +17,7 @@ async function getMembersFromCSV(data) {
     stream
       .pipe(csv())
       .on('data', async (row) => {
-        const address = row.address;
+        const address = row.address || '';
         if (utils.isAddress(address)) {
           result.push({
             ensName: '',
