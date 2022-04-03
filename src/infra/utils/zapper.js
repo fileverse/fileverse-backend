@@ -30,7 +30,6 @@ class ZapperService {
       `${this.baseUrl}?addresses[]=${address}&network=${chain}`,
       options,
     );
-    console.log(apiResponse);
     // eslint-disable-next-line security/detect-object-injection
     const products = apiResponse.data[address.toLowerCase()].products;
     const tokenProduct = products.find((elem) => elem.label === 'Tokens');
