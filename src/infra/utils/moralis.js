@@ -8,12 +8,22 @@ class MoralisService {
     this.baseAddress = 'https://deep-index.moralis.io/api/v2';
   }
 
+  getChainCode({ chain }) {
+    if (chain === 'rinkeby') {
+      return '0x4';
+    } else if (chain === 'polygon_mainnet') {
+      return '0x89';
+    }
+    return '0x1';
+  }
+
   async getContractBalance({ address, contractAddress, tokenType, chain }) {
+    const chainCode = this.getChainCode({ chain });
     if (!contractAddress || !address) return 0;
     let currentBal = 0;
     if (tokenType.toLowerCase() === 'erc20') {
       const apiResponse = await axios.get(
-        `${this.baseAddress}/${address}/erc20?token_addresses=${contractAddress}&chain=${chain}`,
+        `${this.baseAddress}/${address}/erc20?token_addresses=${contractAddress}&chain=${chainCode}`,
       );
       apiResponse.data.map((token) => {
         const baseNumber = new Big(token.balance);
@@ -24,7 +34,7 @@ class MoralisService {
     }
     if (tokenType.toLowerCase() === 'erc721') {
       const apiResponse = await axios.get(
-        `${this.baseAddress}/${address}/nft/${contractAddress}?chain=${chain}&format=decimal`,
+        `${this.baseAddress}/${address}/nft/${contractAddress}?chain=${chainCode}&format=decimal`,
       );
       apiResponse.data.result.map((nft) => {
         currentBal += parseInt(nft.amount, 10);

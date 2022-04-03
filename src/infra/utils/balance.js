@@ -1,35 +1,24 @@
-const Moralis = require('./moralis');
+const Alchemy = require('./alchemy');
 
-const moralisInstance = new Moralis();
+const alchemyInstance = new Alchemy();
 
 class Balance {
   constructor() {}
 
-  getChainCode({ chain }) {
-    if (chain === 'rinkeby') {
-      return '0x4';
-    } else if (chain === 'polygon_mainnet') {
-      return '0x89';
-    }
-    return '0x1';
-  }
-
   async getTokenBalance({ contractAddress, chain, address }) {
-    const chainCode = this.getNetworkName({ chain });
-    return moralisInstance.getContractBalance({
+    return alchemyInstance.getContractBalance({
       address,
       contractAddress,
-      chain: chainCode,
+      chain,
       tokenType: 'erc20',
     });
   }
 
   async getNFTBalance({ contractAddress, chain, address }) {
-    const chainCode = this.getNetworkName({ chain });
-    return moralisInstance.getContractBalance({
+    return alchemyInstance.getContractBalance({
       address,
       contractAddress,
-      chain: chainCode,
+      chain,
       tokenType: 'erc721',
     });
   }
