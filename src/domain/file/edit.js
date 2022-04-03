@@ -1,12 +1,9 @@
 const ErrorHandler = require('../../infra/utils/errorHandler');
 const upload = require('./upload');
 const { File } = require('../../infra/database/models');
-const MoralisService = require('../../infra/utils/moralis');
 const config = require('../../../config');
 
-const moralisService = new MoralisService();
-
-async function edit(uuid, { name, file, token, address, slug, description }) {
+async function edit(uuid, { name, file, token, slug, description }) {
   const foundFile = await File.findOne({ uuid });
   if (!foundFile) {
     return ErrorHandler.throwError({
@@ -29,19 +26,6 @@ async function edit(uuid, { name, file, token, address, slug, description }) {
     foundFile.slug = slug;
   }
 
-  if (
-    token &&
-    !moralisService.verifyOwnership({
-      address,
-      contractAddress: token.contractAddress,
-      tokenType: token.tokenType,
-    })
-  ) {
-    return ErrorHandler.throwError({
-      code: 403,
-      message: 'You are not owner for this address',
-    });
-  }
   if (token) {
     token.chain = config.CHAIN;
     foundFile.token = token;

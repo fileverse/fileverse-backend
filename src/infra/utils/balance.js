@@ -118,7 +118,7 @@ class Balance {
 
   async verifyGreaterBalance({
     contractAddress,
-    chain,
+    chain = 'ethereum',
     address,
     type,
     gateBalance,
