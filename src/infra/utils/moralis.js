@@ -67,8 +67,9 @@ class MoralisService {
 
   // get Nfts from Moralis and return only those with name, symbol and image and unique address.
   async getOwnedNFTs(address, chain) {
+    const chainCode = this.getChainCode({ chain });
     const apiResponse = await axios.get(
-      `${this.baseAddress}/${address}/nft?chain=${chain}&format=decimal`,
+      `${this.baseAddress}/${address}/nft?chain=${chainCode}&format=decimal`,
     );
     const nfts = apiResponse.data.result.map((nft) =>
       this.formatNft(nft, chain),
@@ -78,8 +79,9 @@ class MoralisService {
   }
 
   async getOwnedTokens(address, chain) {
+    const chainCode = this.getChainCode({ chain });
     const apiResponse = await axios.get(
-      `${this.baseAddress}/${address}/erc20?chain=${chain}`,
+      `${this.baseAddress}/${address}/erc20?chain=${chainCode}`,
     );
     const tokens = apiResponse.data.map((token) =>
       this.formatToken(token, chain),

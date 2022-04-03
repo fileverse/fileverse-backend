@@ -8,7 +8,7 @@ class NFT {
   constructor() {}
 
   async getOwnedNFTs({ chain, address }) {
-    if (chain === 'rinkeby') {
+    if (chain === 'rinkeby' || chain === 'ethereum') {
       return moralisInstance.getOwnedNFTs(address, chain);
     } else {
       return nftPortInstance.getOwnedNFTs(address, chain);
