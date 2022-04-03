@@ -25,9 +25,9 @@ async function setRead({
     const hasAccess = await balanceInstance.verifyGreaterBalance({
       address: viewerAddress,
       contractAddress: fileToken.contractAddress,
-      type: fileToken.tokenType,
+      tokenType: fileToken.tokenType,
       gateBalance: fileToken.gateBalance,
-      chain: 'ethereum',
+      chain: fileToken.chain,
     });
     return fileOwner.toString() === viewer.toString() || hasAccess;
   }
