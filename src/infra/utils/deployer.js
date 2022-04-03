@@ -4,7 +4,6 @@ const Big = require('big.js');
 
 class TokenService {
   constructor() {
-    this.gnosis = config.GNOSIS_MAINNET_NETWORK_PROVIDER;
     this.rinkeby = config.ETHEREUM_RINKEBY_NETWORK_PROVIDER;
     this.ethereum = config.ETHEREUM_MAINNET_NETWORK_PROVIDER;
     this.polygon_mainnet = config.POLYGON_MAINNET_NETWORK_PROVIDER;
@@ -12,8 +11,6 @@ class TokenService {
 
   getNetworkProviderURL({ chain }) {
     if (chain === 'rinkeby') {
-      return this.rinkeby;
-    } else if (chain === 'gnosis') {
       return this.rinkeby;
     } else if (chain === 'polygon_mainnet') {
       return this.polygon_mainnet;
