@@ -1,12 +1,12 @@
-const Alchemy = require('./alchemy');
+const Moralis = require('./moralis');
 
-const alchemyInstance = new Alchemy();
+const moralisInstance = new Moralis();
 
 class Balance {
   constructor() {}
 
   async getTokenBalance({ contractAddress, chain, address }) {
-    return alchemyInstance.getContractBalance({
+    return moralisInstance.getContractBalance({
       address,
       contractAddress,
       chain,
@@ -15,7 +15,7 @@ class Balance {
   }
 
   async getNFTBalance({ contractAddress, chain, address }) {
-    return alchemyInstance.getContractBalance({
+    return moralisInstance.getContractBalance({
       address,
       contractAddress,
       chain,
