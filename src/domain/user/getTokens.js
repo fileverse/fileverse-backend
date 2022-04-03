@@ -6,7 +6,7 @@ const tokenInstance = new Token();
 async function getTokens({ address, search }) {
   const tokens = await tokenInstance.getOwnedTokens({
     address,
-    chain: config.chain,
+    chain: config.CHAIN,
   });
   return tokens.filter((token) =>
     // eslint-disable-next-line
