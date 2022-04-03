@@ -1,6 +1,7 @@
 const config = require('../../../config');
 const axios = require('axios');
 const Big = require('big.js');
+const _ = require('lodash');
 
 class MoralisService {
   constructor() {
@@ -41,6 +42,49 @@ class MoralisService {
       });
     }
     return currentBal;
+  }
+
+  formatNft(nft, chain) {
+    const metadata = JSON.parse(nft.metadata);
+    return {
+      contractAddress: nft.token_address,
+      name: (metadata && metadata.name) || nft.name,
+      image: (metadata && metadata.image) || nft.image,
+      symbol: nft.symbol,
+      chain,
+    };
+  }
+
+  formatToken(token, chain) {
+    return {
+      contractAddress: token.token_address,
+      name: token.name,
+      symbol: token.symbol,
+      thumbnail: token.thumbnail,
+      chain,
+    };
+  }
+
+  // get Nfts from Moralis and return only those with name, symbol and image and unique address.
+  async getOwnedNFTs(address, chain) {
+    const apiResponse = await axios.get(
+      `${this.baseAddress}/${address}/nft?chain=${chain}&format=decimal`,
+    );
+    const nfts = apiResponse.data.result.map((nft) =>
+      this.formatNft(nft, chain),
+    );
+    const filteredNfts = nfts.filter((nft) => nft.name && nft.symbol);
+    return _.uniqBy(filteredNfts, 'contractAddress');
+  }
+
+  async getOwnedTokens(address, chain) {
+    const apiResponse = await axios.get(
+      `${this.baseAddress}/${address}/erc20?chain=${chain}`,
+    );
+    const tokens = apiResponse.data.map((token) =>
+      this.formatToken(token, chain),
+    );
+    return tokens.filter((token) => token.name && token.symbol);
   }
 }
 
