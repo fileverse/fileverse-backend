@@ -27,11 +27,11 @@ class Balance {
     contractAddress,
     chain = 'ethereum',
     address,
-    type,
+    tokenType,
     gateBalance,
   }) {
     let balance = 0;
-    if (type === 'erc20') {
+    if (tokenType === 'erc20') {
       balance = await this.getTokenBalance({ contractAddress, chain, address });
     } else {
       balance = await this.getNFTBalance({ contractAddress, chain, address });

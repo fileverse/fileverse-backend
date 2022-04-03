@@ -120,11 +120,11 @@ class TokenService {
     contractAddress,
     chain,
     address,
-    type,
+    tokenType,
     gateBalance,
   }) {
     let balance = 0;
-    if (type === 'erc20') {
+    if (tokenType === 'erc20') {
       balance = this.getTokenBalance({ contractAddress, chain, address });
     } else {
       balance = this.getNFTBalance({ contractAddress, chain, address });
