@@ -19,6 +19,7 @@ class NFTPortService {
   }
 
   async getOwnedNFTs(address, chain = 'ethereum') {
+    if (chain === 'eth') chain = 'ethereum';
     const options = {
       headers: { Authorization: this.apiKey },
     };
