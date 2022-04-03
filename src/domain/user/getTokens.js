@@ -1,9 +1,9 @@
-const MoralisService = require('./../../infra/utils/moralis');
+const Zapper = require('./../../infra/utils/zapper');
 
-const moralisService = new MoralisService();
+const zapperInstance = new Zapper();
 
 async function getTokens({ address, search }) {
-  const tokens = await moralisService.tokensFromMoralis(address);
+  const tokens = await zapperInstance.getOwnedTokens(address);
   return tokens.filter((token) =>
     // eslint-disable-next-line
     token.name.match(new RegExp(search, 'i')),
