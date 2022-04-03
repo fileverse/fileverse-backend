@@ -1,7 +1,6 @@
 const config = require('../../../config');
 const axios = require('axios');
 const Big = require('big.js');
-const _ = require('lodash');
 
 class MoralisService {
   constructor() {
@@ -9,12 +8,7 @@ class MoralisService {
     this.baseAddress = 'https://deep-index.moralis.io/api/v2';
   }
 
-  async getContractBalance({
-    address,
-    contractAddress,
-    tokenType,
-    chain,
-  }) {
+  async getContractBalance({ address, contractAddress, tokenType, chain }) {
     if (!contractAddress || !address) return 0;
     let currentBal = 0;
     if (tokenType.toLowerCase() === 'erc20') {
