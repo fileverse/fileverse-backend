@@ -20,7 +20,6 @@ async function get(req, res) {
     'Content-Type': mimetype,
   };
   if (download) {
-    console.log(filename);
     header['Content-Disposition'] = `attachment; filename="${qs.escape(
       filename,
     )}"`;
