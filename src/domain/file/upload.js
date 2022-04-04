@@ -30,29 +30,28 @@ async function upload(file, uuid) {
   encryptedStreamWeb3Storage.path = name;
   console.log(file);
 
-  const files = await web3Storage.upload(encryptedStreamWeb3Storage, {
+  const w3File = await web3Storage.upload(encryptedStreamWeb3Storage, {
     name,
     mimetype,
     uuid,
   });
-  console.log({ files });
-  return;
+  console.log({ w3File });
 
-  // const encryptedStreamS3 = new ReadableStreamClone(encryptedStreamPinata);
-  // encryptedStreamS3.path = name;
+  const encryptedStreamS3 = new ReadableStreamClone(encryptedStreamPinata);
+  encryptedStreamS3.path = name;
   // const pinataFile = await pinata.upload(encryptedStreamPinata, {
   //   name,
   //   mimetype,
   // });
   // upload to s3
   const s3File = await s3.upload(encryptedStreamS3, {
-    name: pinataFile.ipfsHash,
+    name: w3File.ipfsHash,
     mimetype,
   });
   // full file
   return {
-    ipfsUrl: pinataFile && pinataFile.ipfsUrl,
-    ipfsHash: pinataFile && pinataFile.ipfsHash,
+    ipfsUrl: w3File && w3File.ipfsUrl,
+    ipfsHash: w3File && w3File.ipfsHash,
     s3Url: s3File && s3File.s3Url,
     s3Key: s3File && s3File.s3Key,
     encryptedDataKey: dataKey.CiphertextBlob,

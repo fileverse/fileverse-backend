@@ -1,6 +1,5 @@
-const { Web3Storage, Blob, File } = require('web3.storage');
+const { Web3Storage, File } = require('web3.storage');
 const config = require('./../../../config');
-const { Readable } = require('stream');
 
 class Web3StorageService {
   constructor() {
@@ -11,23 +10,29 @@ class Web3StorageService {
   async getCid(data, name, mimetype, uuid) {
     let blob = new File([data], uuid, { type: mimetype });
     const cid = await this.client.put([blob], { name: uuid });
-    this.retrieve(cid);
     console.log('\n\n', { cid });
   }
 
   async upload(readableStreamForFile, { name, mimetype, uuid }) {
-    let data = '';
-    let chunk;
+    return new Promise((resolve, reject) => {
+      let data = '';
+      let chunk;
 
-    readableStreamForFile.on('readable', function () {
-      while ((chunk = readableStreamForFile.read()) != null) {
-        data += chunk;
-      }
-    });
+      readableStreamForFile.on('readable', () => {
+        while ((chunk = readableStreamForFile.read()) != null) {
+          data += chunk;
+        }
+      });
 
-    readableStreamForFile.on('end', async function () {
-      const web3 = new Web3StorageService();
-      web3.getCid(data, name, mimetype, uuid);
+      readableStreamForFile.on('end', async () => {
+        const web3 = new Web3StorageService();
+        const cid = await web3.getCid(data, name, mimetype, uuid);
+        resolve(cid);
+      });
+
+      readableStreamForFile.on('error', () => {
+        reject(null);
+      });
     });
   }
 
@@ -39,21 +44,10 @@ class Web3StorageService {
       throw new Error(`failed to get ${cid}`);
     }
 
-    // request succeeded! do something with the response object here...
     const files = await res.files();
     for (const file of files) {
       console.log(`${file.cid} -- ${file.path} -- ${file.size}`);
       console.log(file);
-      let chunk = '';
-      let data = '';
-      file.on('readable', function () {
-        while ((chunk = file.read()) != null) {
-          data += chunk;
-        }
-      });
-      file.on('end', function () {
-        console.log(data);
-      });
     }
   }
 }
