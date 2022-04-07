@@ -19,7 +19,8 @@ module.exports = {
         "prettier/prettier": ["error", {
             "singleQuote": true,
             "parser": "flow",
-            "trailingComma": "all"
+            "trailingComma": "all",
+            "endOfLine": "auto"
         }],
         "no-unused-vars": ["error", {
             "varsIgnorePattern": "should|expect"
