@@ -50,8 +50,7 @@ class S3Service {
       Key: s3Key,
       Bucket: this.bucketName,
     };
-    const result = await this.s3.deleteObject(params).promise();
-    console.log(result);
+    await this.s3.deleteObject(params).promise();
   }
 }
 
