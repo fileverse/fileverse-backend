@@ -15,7 +15,7 @@ const airdropValidation = {
 async function airdrop(req, res) {
   const { uuid } = req.params;
   const foundAudience = await Audience.get(uuid);
-  res.json(foundAudience);
+  res.json({ audience: foundAudience, token: null });
 }
 
 module.exports = [validate(airdropValidation), airdrop];
