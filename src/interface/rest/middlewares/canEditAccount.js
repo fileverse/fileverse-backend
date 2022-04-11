@@ -2,7 +2,7 @@ const ErrorHandler = require('../../../infra/utils/errorHandler');
 const { User } = require('../../../domain');
 
 async function canEditAccount(req, res, next) {
-  const { address } = req.params;
+  const { address = req.address } = req.params;
   const { userId } = req;
   const permission = await User.permission({ address, userId });
   if (permission.edit) {

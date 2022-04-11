@@ -1,8 +1,8 @@
 const ErrorHandler = require('../../infra/utils/errorHandler');
 const { File } = require('../../infra/database/models');
-const MoralisService = require('../../infra/utils/moralis');
+const Balance = require('../../infra/utils/balance');
 
-const moralisService = new MoralisService();
+const balanceInstance = new Balance();
 
 // if token-gated then check balance of user
 async function setRead({
@@ -22,11 +22,12 @@ async function setRead({
     if (!viewer) {
       return false;
     }
-    const hasAccess = await moralisService.checkContractBalance({
+    const hasAccess = await balanceInstance.verifyGreaterBalance({
       address: viewerAddress,
       contractAddress: fileToken.contractAddress,
       tokenType: fileToken.tokenType,
       gateBalance: fileToken.gateBalance,
+      chain: fileToken.chain,
     });
     return fileOwner.toString() === viewer.toString() || hasAccess;
   }

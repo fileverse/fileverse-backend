@@ -23,8 +23,8 @@ async function validateRecaptcha(req, res, next) {
     next();
   } else {
     return ErrorHandler.throwError({
-      code: 401,
-      message: `RecaptchValidation Failed`,
+      code: 403,
+      message: `Too Many Requests`,
       req,
     });
   }

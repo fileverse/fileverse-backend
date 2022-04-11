@@ -11,7 +11,6 @@ const kms = new KMS();
 async function upload(file) {
   const { name, mimetype, data } = file;
   const dataKey = await kms.generateDataKey();
-  console.log(dataKey);
   // upload to pinata
   const stream = Readable.from(data);
   const encryptedStreamPinata = Readable.from(
