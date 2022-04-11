@@ -4,7 +4,10 @@ const { Joi, validate } = validator;
 
 const createValidation = {
   body: Joi.object({
-    inputType: Joi.string().valid('csv', 'list').optional().default('csv'),
+    inputType: Joi.string()
+      .valid('csv', 'addressList')
+      .optional()
+      .default('csv'),
     addressList: Joi.array().items(Joi.string()).optional(),
   }),
 };
