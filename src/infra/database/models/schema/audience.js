@@ -22,7 +22,7 @@ _audience.schema = new Schema(
         ensName: { type: String, trim: true },
         address: { type: String },
         airdropped: { type: Boolean, default: false },
-        airdropTx: { type: String },
+        airdropTxHash: { type: String },
       },
     ],
     token: {
@@ -36,6 +36,7 @@ _audience.schema = new Schema(
         default: 'erc721',
       },
       chain: { type: String, trim: true },
+      creationTxHash: { type: String },
       createdOnFileverse: { type: Boolean, default: true },
       managedOnFileverse: { type: Boolean, default: true },
     },
