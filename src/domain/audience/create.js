@@ -74,8 +74,8 @@ async function getAddressFromEnsName(members) {
   return await Promise.all(allMemeberPromises);
 }
 
-async function create(owner, file, addressList) {
-  if (!file || !addressList) {
+async function create({ owner, csv, addressList }) {
+  if (!csv || !addressList) {
     return ErrorHandler.throwError({
       code: 404,
       message: 'Not a valid input!',
@@ -83,8 +83,8 @@ async function create(owner, file, addressList) {
   }
   const uuid = uuidv4();
   let members = null;
-  if (file) {
-    members = await getMembersFromCSV(file.data);
+  if (csv) {
+    members = await getMembersFromCSV(csv.data);
   } else if (addressList) {
     members = await getMembersFromInput(addressList);
   }

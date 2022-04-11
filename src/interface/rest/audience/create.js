@@ -14,12 +14,13 @@ const createValidation = {
 
 async function create(req, res) {
   const { address } = req;
-  const { addressList } = req.body;
-  const result = await Audience.create(
-    address,
-    req.files && req.files.file,
+  const { addressList, inputType } = req.body;
+  const result = await Audience.create({
+    owner: address,
+    csv: req.files && req.files.file,
     addressList,
-  );
+    inputType,
+  });
   res.json(result);
 }
 

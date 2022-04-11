@@ -5,6 +5,10 @@ const _audience = {};
 
 _audience.schema = new Schema(
   {
+    inputType: {
+      type: String,
+      default: 'csv',
+    },
     owner: {
       type: String,
     },
