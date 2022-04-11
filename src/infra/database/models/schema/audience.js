@@ -21,8 +21,21 @@ _audience.schema = new Schema(
       {
         ensName: { type: String, trim: true },
         address: { type: String },
+        airdropped: { type: Boolean, default: false },
       },
     ],
+    token: {
+      contractAddress: { type: String, trim: true },
+      name: { type: String, trim: true },
+      image: { type: String, trim: true },
+      gateBalance: { type: Number, default: 1 },
+      tokenType: {
+        type: String,
+        enum: ['erc20', 'erc721'],
+        default: 'erc721',
+      },
+      chain: { type: String, trim: true },
+    },
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
     updatedAt: { type: Number, default: Date.now },
