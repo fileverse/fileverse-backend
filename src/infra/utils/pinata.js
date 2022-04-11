@@ -48,6 +48,14 @@ class Pinata {
     request(ipfsUrl).pipe(ipfsStream);
     return ipfsStream;
   }
+
+  async unPinFile(ipfsHash) {
+    try {
+      await this.pinata.unpin(ipfsHash);
+    } catch (e) {
+      console.log(e.reason);
+    }
+  }
 }
 
 module.exports = Pinata;
