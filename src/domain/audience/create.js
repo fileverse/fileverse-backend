@@ -74,7 +74,7 @@ async function getAddressFromEnsName(members) {
   return await Promise.all(allMemeberPromises);
 }
 
-async function create({ owner, csv, addressList }) {
+async function create({ inputType, owner, csv, addressList }) {
   if (!csv || !addressList) {
     return ErrorHandler.throwError({
       code: 404,
@@ -95,7 +95,12 @@ async function create({ owner, csv, addressList }) {
     });
   }
   members = await getAddressFromEnsName(members);
-  const createdAudience = await new Audience({ uuid, owner, members }).save();
+  const createdAudience = await new Audience({
+    uuid,
+    owner,
+    members,
+    inputType,
+  }).save();
   return createdAudience.safeObject();
 }
 
