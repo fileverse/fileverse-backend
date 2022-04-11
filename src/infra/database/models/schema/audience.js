@@ -57,8 +57,10 @@ _audience.schema.methods.safeObject = function () {
   const safeFields = [
     '_id',
     'uuid',
+    'inputType',
     'owner',
     'members',
+    'token',
     'createdAt',
     'updatedAt',
   ];
