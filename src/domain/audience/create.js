@@ -75,7 +75,7 @@ async function getAddressFromEnsName(members) {
 }
 
 async function create({ inputType, owner, csv, addressList }) {
-  if (!csv || !addressList) {
+  if (!csv && !addressList) {
     return ErrorHandler.throwError({
       code: 404,
       message: 'Not a valid input!',
