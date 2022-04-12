@@ -3,15 +3,13 @@ const Token = require('./../../infra/utils/token');
 
 const tokenInstance = new Token();
 
-async function getTokens({ address, search }) {
+async function getTokens({ address, search, chain }) {
   const tokens = await tokenInstance.getOwnedTokens({
     address,
-    chain: config.CHAIN,
+    chain: chain || config.CHAIN,
   });
-  return tokens.filter((token) =>
-    // eslint-disable-next-line
-    token.name.match(new RegExp(search, 'i')),
-  );
+  // eslint-disable-next-line
+  return tokens.filter((token) => token.name.match(new RegExp(search, 'i')));
 }
 
 module.exports = getTokens;

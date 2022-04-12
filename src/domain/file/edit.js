@@ -27,7 +27,7 @@ async function edit(uuid, { name, file, token, slug, description }) {
   }
 
   if (token) {
-    token.chain = config.CHAIN;
+    token.chain = token.chain || config.CHAIN;
     foundFile.token = token;
   }
   if (file) {

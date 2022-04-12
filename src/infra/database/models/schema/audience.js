@@ -5,6 +5,10 @@ const _audience = {};
 
 _audience.schema = new Schema(
   {
+    inputType: {
+      type: String,
+      default: 'csv',
+    },
     owner: {
       type: String,
     },
@@ -17,8 +21,25 @@ _audience.schema = new Schema(
       {
         ensName: { type: String, trim: true },
         address: { type: String },
+        airdropped: { type: Boolean, default: false },
+        airdropTxHash: { type: String },
       },
     ],
+    token: {
+      contractAddress: { type: String, trim: true },
+      name: { type: String, trim: true },
+      image: { type: String, trim: true },
+      gateBalance: { type: Number, default: 1 },
+      tokenType: {
+        type: String,
+        enum: ['erc20', 'erc721'],
+        default: 'erc721',
+      },
+      chain: { type: String, trim: true },
+      creationTxHash: { type: String },
+      createdOnFileverse: { type: Boolean, default: true },
+      managedOnFileverse: { type: Boolean, default: true },
+    },
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
     updatedAt: { type: Number, default: Date.now },
@@ -37,8 +58,10 @@ _audience.schema.methods.safeObject = function () {
   const safeFields = [
     '_id',
     'uuid',
+    'inputType',
     'owner',
     'members',
+    'token',
     'createdAt',
     'updatedAt',
   ];

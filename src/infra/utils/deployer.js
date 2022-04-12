@@ -1,12 +1,15 @@
 const config = require('../../../config');
+const { abi, bytecode } = require('../../../contracts/FileverseNFT_v1.json');
 const ethers = require('ethers');
-const Big = require('big.js');
 
-class TokenService {
-  constructor() {
+class DeployerService {
+  constructor({ chain, type }) {
     this.rinkeby = config.ETHEREUM_RINKEBY_NETWORK_PROVIDER;
     this.ethereum = config.ETHEREUM_MAINNET_NETWORK_PROVIDER;
     this.polygon_mainnet = config.POLYGON_MAINNET_NETWORK_PROVIDER;
+    this.privateKey = config.SIGNER_PRIVATE_KEY;
+    this.chain = chain;
+    this.type = type;
   }
 
   getNetworkProviderURL({ chain }) {
@@ -25,109 +28,71 @@ class TokenService {
   }
 
   async getContractABI() {
-    return [
-      {
-        constant: true,
-        inputs: [
-          {
-            name: '_owner',
-            type: 'address',
-          },
-        ],
-        name: 'balanceOf',
-        outputs: [
-          {
-            name: 'balance',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      {
-        constant: true,
-        inputs: [],
-        name: 'decimals',
-        outputs: [
-          {
-            name: '',
-            type: 'uint8',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-    ];
+    if (this.type === 'erc721') {
+      return abi;
+    }
+    return abi;
   }
 
-  async getContractInstance({ contractAddress, chain, type }) {
-    const networkProvider = await this.getNetworkProvider({ chain });
-    const abi = await this.getContractABI({ type });
-    console.log({ networkProvider, abi });
-    const contractInstance = new ethers.Contract(
-      contractAddress,
+  async getSigner() {
+    const networkProvider = await this.getNetworkProvider(this.chain);
+    const signer = new ethers.Wallet(this.privateKey, networkProvider);
+    return signer;
+  }
+
+  async deployContractInstance({ name, symbol }) {
+    const abi = await this.getContractABI();
+    const signer = await this.getSigner();
+    const contractFactoryInstance = new ethers.ContractFactory(
       abi,
-      networkProvider,
+      bytecode,
+      signer,
     );
-    return contractInstance;
+    const contract = await contractFactoryInstance.deploy(name, symbol);
+    await contract.deployed();
+    return contract;
   }
 
-  async getTokenBalance({ contractAddress, chain, address }) {
-    const contractInstance = await this.getContractInstance({
-      contractAddress,
-      chain,
-      type: 'erc20',
-    });
-    let balance = 0;
-    let decimals = 1;
+  async isOwner({ contractAddress }) {
+    const abi = await this.getContractABI();
+    const signer = await this.getSigner();
+    const contractInstance = new ethers.Contract(contractAddress, abi, signer);
     try {
-      const rawBalance = await contractInstance.balanceOf(address);
-      decimals = await contractInstance.decimals();
-      const baseNumber = new Big(rawBalance);
-      const divideBy = new Big(10).pow(decimals);
-      balance = Number(baseNumber.div(divideBy).toFixed(2));
+      const ownerAddress = await contractInstance.owner();
+      return ownerAddress.toLowerCase() === signer.address.toLowerCase();
     } catch (error) {
       console.log(error);
-      balance = 0;
-      decimals = 1;
+      return null;
     }
-    return balance;
   }
 
-  async getNFTBalance({ contractAddress, chain, address }) {
-    const contractInstance = await this.getContractInstance({
-      contractAddress,
-      chain,
-      type: 'nft',
-    });
-    let balance = 0;
+  async mint({ contractAddress, address }) {
+    const abi = await this.getContractABI();
+    const signer = await this.getSigner();
+    const contractInstance = new ethers.Contract(contractAddress, abi, signer);
     try {
-      const rawBalance = await contractInstance.balanceOf(address);
-      balance = Number(new Big(rawBalance).toFixed(0));
+      const tx = await contractInstance.mintTo(address);
+      await tx.wait();
+      return tx;
     } catch (error) {
       console.log(error);
-      balance = 0;
+      return null;
     }
-    return balance;
   }
 
-  async verifyGreaterBalance({
-    contractAddress,
-    chain,
-    address,
-    tokenType,
-    gateBalance,
-  }) {
-    let balance = 0;
-    if (tokenType === 'erc20') {
-      balance = this.getTokenBalance({ contractAddress, chain, address });
-    } else {
-      balance = this.getNFTBalance({ contractAddress, chain, address });
+  async transferOwnership({ contractAddress, address }) {
+    const abi = await this.getContractABI();
+    const signer = await this.getSigner();
+    const contractInstance = new ethers.Contract(contractAddress, abi, signer);
+    try {
+      const tx = await contractInstance.transferOwnership(address);
+      await tx.wait();
+      return tx;
+    } catch (error) {
+      console.log(error);
+      return null;
     }
-    return balance >= gateBalance;
   }
 }
 
-module.exports = TokenService;
+module.exports = DeployerService;

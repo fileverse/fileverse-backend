@@ -44,6 +44,28 @@ async function getMembersFromCSV(data) {
   });
 }
 
+async function getMembersFromInput(addressList) {
+  const members = addressList.map((address) => {
+    if (utils.isAddress(address)) {
+      return {
+        ensName: '',
+        address: address,
+      };
+    } else if (address.includes('.eth')) {
+      return {
+        address: '',
+        ensName: address,
+      };
+    } else {
+      return {
+        ensName: '',
+        address: '',
+      };
+    }
+  });
+  return members;
+}
+
 async function getAddressFromEnsName(members) {
   const allMemeberPromises = members.map(async ({ ensName, address }) => ({
     address: address ? address : await provider.resolveName(ensName),
@@ -52,17 +74,33 @@ async function getAddressFromEnsName(members) {
   return await Promise.all(allMemeberPromises);
 }
 
-async function create(owner, file) {
-  if (!file) {
+async function create({ inputType, owner, csv, addressList }) {
+  if (!csv && !addressList) {
     return ErrorHandler.throwError({
       code: 404,
-      message: 'CSV file not found',
+      message: 'Not a valid input!',
     });
   }
   const uuid = uuidv4();
-  let members = await getMembersFromCSV(file.data);
+  let members = null;
+  if (csv) {
+    members = await getMembersFromCSV(csv.data);
+  } else if (addressList) {
+    members = await getMembersFromInput(addressList);
+  }
+  if (!members) {
+    return ErrorHandler.throwError({
+      code: 404,
+      message: 'Not a valid input!',
+    });
+  }
   members = await getAddressFromEnsName(members);
-  const createdAudience = await new Audience({ uuid, owner, members }).save();
+  const createdAudience = await new Audience({
+    uuid,
+    owner,
+    members,
+    inputType,
+  }).save();
   return createdAudience.safeObject();
 }
 
