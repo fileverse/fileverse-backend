@@ -66,12 +66,12 @@ class DeployerService {
     }
   }
 
-  async mint({ contractAddress, address }) {
+  async mint({ contractAddress, addressList }) {
     const abi = await this.getContractABI();
     const signer = await this.getSigner();
     const contractInstance = new ethers.Contract(contractAddress, abi, signer);
     try {
-      const tx = await contractInstance.mintTo(address);
+      const tx = await contractInstance.batchMint(addressList);
       await tx.wait();
       return tx;
     } catch (error) {
