@@ -77,7 +77,7 @@ class DeployerService {
     return contractInstance;
   }
 
-  async getContractBalance({ contractAddress, address, tokenType }) {
+  async getContractBalance({ contractAddress, address }) {
     const contractInstance = await this.getContractIntance({ contractAddress });
     let rawBalance = 0;
     let balance = 0;
@@ -87,7 +87,7 @@ class DeployerService {
       console.log(error);
       rawBalance = 0;
     }
-    if (tokenType === 'erc721') {
+    if (this.type === 'erc721') {
       balance = Number(new Big(rawBalance).toFixed(0));
       return balance;
     }

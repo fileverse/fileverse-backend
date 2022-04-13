@@ -2,6 +2,7 @@ const config = require('../../../../config');
 const agenda = require('../index');
 const jobs = require('../jobs');
 const Deployer = require('../../../infra/utils/deployer');
+
 const instance = new Deployer({
   chain: config.DEPLOYER_TOKEN_CHAIN,
   type: config.DEPLOYER_TOKEN_TYPE,
