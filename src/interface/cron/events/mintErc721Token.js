@@ -30,9 +30,24 @@ async function run({ audienceUuid }) {
   if (audience.token && audience.token.contractAddress) {
     return;
   }
-  const addressList = await instance.mint({
-    addressList: audience.members.map((elem) => elem.address),
+  const newMembers = audience.members.filter((elem) => elem.airdropped);
+  const currentBatch = newMembers.slice(0, 15);
+  const aidropTxHash = await instance.mint({
+    addressList: currentBatch.map((elem) => elem.address),
     contractAddress: audience.token.contractAddress,
   });
-  return addressList;
+  const updatedMembers = audience.members.map((elem) => {
+    const foundElem = currentBatch.find(
+      (currentBatchElem) =>
+        currentBatchElem._id.toString() === elem._id.toString(),
+    );
+    if (foundElem) {
+      elem.airdropped = true;
+      elem.aidropTxHash = aidropTxHash;
+    }
+    return elem;
+  });
+  audience.members = updatedMembers;
+  await audience.save();
+  return currentBatch;
 }

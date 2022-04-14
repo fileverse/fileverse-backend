@@ -111,7 +111,7 @@ class DeployerService {
     try {
       const tx = await contractInstance.batchMint(addressList);
       await tx.wait();
-      return tx;
+      return tx.hash;
     } catch (error) {
       console.log(error);
       return null;
