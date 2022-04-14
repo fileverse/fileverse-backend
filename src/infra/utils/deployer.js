@@ -57,7 +57,7 @@ class DeployerService {
     return contract;
   }
 
-  async isOwner({ contractAddress }) {
+  async isFilverseManaged({ contractAddress }) {
     const abi = await this.getContractABI();
     const signer = await this.getSigner();
     const contractInstance = new ethers.Contract(contractAddress, abi, signer);

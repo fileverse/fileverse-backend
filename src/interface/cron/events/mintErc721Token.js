@@ -1,34 +1,38 @@
 const config = require('../../../../config');
 const agenda = require('../index');
 const jobs = require('../jobs');
+const { Audience } = require('../../../infra/database/models');
 const Deployer = require('../../../infra/utils/deployer');
+
 const instance = new Deployer({
   chain: config.DEPLOYER_TOKEN_CHAIN,
   type: config.DEPLOYER_TOKEN_TYPE,
 });
 
 agenda.define(jobs.MINT_ERC721_TOKEN, async (job, done) => {
-  const { contractAddress, addressList } = job.attrs.data;
+  const { audienceUuid } = job.attrs.data;
   try {
-    await run({ contractAddress, addressList });
-    await job.remove();
+    await run({ audienceUuid });
     done();
   } catch (err) {
     console.error(
-      'Error removing job from collection',
+      'Error performing job from collection',
       jobs.MINT_ERC721_TOKEN,
-      addressList,
-      contractAddress,
+      audienceUuid,
       err,
     );
     done(err);
   }
 });
 
-async function run({ addressList, contractAddress }) {
-  const contract = await instance.mint({
-    addressList,
-    contractAddress,
+async function run({ audienceUuid }) {
+  const audience = await Audience.findOne({ uuid: audienceUuid });
+  if (audience.token && audience.token.contractAddress) {
+    return;
+  }
+  const addressList = await instance.mint({
+    addressList: audience.members.map((elem) => elem.address),
+    contractAddress: audience.token.contractAddress,
   });
-  return contract;
+  return addressList;
 }

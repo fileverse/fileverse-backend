@@ -1,4 +1,3 @@
-const config = require('../config');
 const agenda = require('./interface/cron');
 
 async function graceful() {
@@ -18,7 +17,6 @@ async function graceful() {
     require('./interface/cron/events/mintErc721Token');
     require('./interface/cron/events/transferErc721Contract');
     console.log('started cron job successfully');
-    console.log(config);
   } catch (err) {
     console.log(err.stack);
     await graceful();

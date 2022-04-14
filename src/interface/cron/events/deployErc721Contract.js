@@ -2,6 +2,8 @@ const config = require('../../../../config');
 const agenda = require('../index');
 const jobs = require('../jobs');
 const Deployer = require('../../../infra/utils/deployer');
+const { File } = require('../../../domain');
+const { Audience } = require('../../../infra/database/models');
 
 const instance = new Deployer({
   chain: config.DEPLOYER_TOKEN_CHAIN,
@@ -9,29 +11,63 @@ const instance = new Deployer({
 });
 
 agenda.define(jobs.DEPLOY_ERC721_CONTRACT, async (job, done) => {
-  const { owner, name, symbol } = job.attrs.data;
+  const { name, symbol, image, audienceUuid } = job.attrs.data;
   try {
-    await run({ owner, name, symbol });
-    await job.remove();
+    await run({ name, symbol, audienceUuid, image });
+    await postRun({ audienceUuid });
     done();
   } catch (err) {
     console.error(
       'Error removing job from collection',
       jobs.DEPLOY_ERC721_CONTRACT,
-      owner,
+      audienceUuid,
       name,
       symbol,
+      image,
       err,
     );
     done(err);
   }
 });
 
-async function run({ owner, name, symbol }) {
+async function run({ audienceUuid, name, symbol, image }) {
+  const audience = await Audience.findOne({ uuid: audienceUuid });
+  if (audience.token && audience.token.contractAddress) {
+    return;
+  }
   const contract = await instance.deployContractInstance({
-    owner,
+    owner: audience.ownerAddress,
     name,
     symbol,
+    image,
   });
-  return contract;
+  audience.token = {
+    contractAddress: contract.address,
+    name: symbol,
+    image,
+    gateBalance: 1,
+    tokenType: config.DEPLOYER_TOKEN_TYPE,
+    chain: config.DEPLOYER_TOKEN_CHAIN,
+    creationTxHash: contract.deployTransaction.hash,
+    createdOnFileverse: true,
+    managedOnFileverse: true,
+  };
+  await audience.save();
+  return audience.uuid;
+}
+
+async function postRun({ audienceUuid }) {
+  const audience = await Audience.findOne({ uuid: audienceUuid });
+  const permission = await File.permission({
+    uuid: audience.fileUuid,
+    userId: audience.owner,
+    address: audience.ownerAddress,
+  });
+  if (permission.edit) {
+    await File.edit(audience.fileUuid, { token: audience.token });
+  }
+  agenda.now(jobs.MINT_ERC721_TOKEN, {
+    audienceUuid: audience.uuid,
+  });
+  return audience;
 }
