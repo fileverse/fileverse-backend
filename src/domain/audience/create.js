@@ -74,7 +74,14 @@ async function getAddressFromEnsName(members) {
   return await Promise.all(allMemeberPromises);
 }
 
-async function create({ inputType, owner, ownerAddress, csv, addressList }) {
+async function create({
+  inputType,
+  owner,
+  ownerAddress,
+  csv,
+  addressList,
+  fileUuid,
+}) {
   if (!csv && !addressList) {
     return ErrorHandler.throwError({
       code: 404,
@@ -101,6 +108,7 @@ async function create({ inputType, owner, ownerAddress, csv, addressList }) {
     ownerAddress,
     members,
     inputType,
+    fileUuid,
   }).save();
   return createdAudience.safeObject();
 }

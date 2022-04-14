@@ -5,6 +5,9 @@ const _audience = {};
 
 _audience.schema = new Schema(
   {
+    fileUuid: {
+      type: String,
+    },
     inputType: {
       type: String,
       default: 'csv',
