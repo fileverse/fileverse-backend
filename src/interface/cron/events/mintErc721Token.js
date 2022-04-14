@@ -27,15 +27,18 @@ agenda.define(jobs.MINT_ERC721_TOKEN, async (job, done) => {
 
 async function run({ audienceUuid }) {
   const audience = await Audience.findOne({ uuid: audienceUuid });
-  if (audience.token && audience.token.contractAddress) {
+  if (audience.token && !audience.token.contractAddress) {
     return;
   }
-  const newMembers = audience.members.filter((elem) => elem.airdropped);
+  const newMembers = audience.members.filter((elem) => !elem.airdropped);
   const currentBatch = newMembers.slice(0, 15);
   const aidropTxHash = await instance.mint({
     addressList: currentBatch.map((elem) => elem.address),
     contractAddress: audience.token.contractAddress,
   });
+  if (!aidropTxHash) {
+    throw new Error('There is some issue with airdrop script!');
+  }
   const updatedMembers = audience.members.map((elem) => {
     const foundElem = currentBatch.find(
       (currentBatchElem) =>
