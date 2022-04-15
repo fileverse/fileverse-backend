@@ -23,6 +23,7 @@ const TokenSchema = new Schema({
     enum: ['erc20', 'erc721'],
   },
   chain: { type: String, trim: true, default: config.CHAIN },
+  audienceUuid: { type: String },
 });
 
 _file.schema = new Schema(
