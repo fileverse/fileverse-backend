@@ -1,21 +1,22 @@
 const Moralis = require('./moralis');
 const Deployer = require('./deployer');
+const config = require('../../../config');
 
 const moralisInstance = new Moralis();
 const deployerNFTInstance = new Deployer({
-  chain: 'gnosis',
-  type: 'erc721',
+  chain: config.DEPLOYER_TOKEN_CHAIN,
+  type: config.DEPLOYER_TOKEN_TYPE,
 });
 const deployerTokenInstance = new Deployer({
-  chain: 'gnosis',
-  type: 'erc20',
+  chain: config.DEPLOYER_TOKEN_CHAIN,
+  type: config.DEPLOYER_TOKEN_TYPE,
 });
 
 class Balance {
   constructor() {}
 
   async getTokenBalance({ contractAddress, chain, address }) {
-    if (chain === 'gnosis') {
+    if (chain === config.DEPLOYER_TOKEN_CHAIN) {
       return deployerTokenInstance.getContractBalance({
         address,
         contractAddress,
@@ -30,7 +31,7 @@ class Balance {
   }
 
   async getNFTBalance({ contractAddress, chain, address }) {
-    if (chain === 'gnosis') {
+    if (chain === config.DEPLOYER_TOKEN_CHAIN) {
       return deployerNFTInstance.getContractBalance({
         address,
         contractAddress,

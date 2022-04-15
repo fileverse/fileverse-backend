@@ -13,6 +13,7 @@ agenda.define(jobs.MINT_ERC721_TOKEN, async (job, done) => {
   const { audienceUuid } = job.attrs.data;
   try {
     await run({ audienceUuid });
+    await postRun({ audienceUuid });
     done();
   } catch (err) {
     console.error(
@@ -53,4 +54,14 @@ async function run({ audienceUuid }) {
   audience.members = updatedMembers;
   await audience.save();
   return currentBatch;
+}
+
+async function postRun({ audienceUuid }) {
+  const audience = await Audience.findOne({ uuid: audienceUuid });
+  if (audience.members.find((elem) => !elem.airdropped)) {
+    agenda.now(jobs.MINT_ERC721_TOKEN, {
+      audienceUuid: audience.uuid,
+    });
+  }
+  return audience;
 }
