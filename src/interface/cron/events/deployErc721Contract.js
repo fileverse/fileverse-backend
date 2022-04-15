@@ -63,8 +63,10 @@ async function postRun({ audienceUuid }) {
     userId: audience.owner,
     address: audience.ownerAddress,
   });
+  const token = audience.token;
+  token.audienceUuid = audience.uuid;
   if (permission.edit) {
-    await File.edit(audience.fileUuid, { token: audience.token });
+    await File.edit(audience.fileUuid, { token });
   }
   agenda.now(jobs.MINT_ERC721_TOKEN, {
     audienceUuid: audience.uuid,
