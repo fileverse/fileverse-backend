@@ -14,7 +14,8 @@ const airdropValidation = {
 
 async function airdrop(req, res) {
   const { uuid } = req.params;
-  const foundAudience = await Audience.get(uuid);
+  const { name, symbol } = req.body;
+  const foundAudience = await Audience.airdrop({ uuid, name, symbol });
   res.json({ audience: foundAudience, token: null });
 }
 

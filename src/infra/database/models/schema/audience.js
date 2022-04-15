@@ -5,12 +5,21 @@ const _audience = {};
 
 _audience.schema = new Schema(
   {
+    fileUuid: {
+      type: String,
+    },
     inputType: {
       type: String,
       default: 'csv',
     },
     owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'accounts',
+    },
+    ownerAddress: {
       type: String,
+      lowercase: true,
+      trim: true,
     },
     uuid: {
       type: String,
@@ -20,7 +29,7 @@ _audience.schema = new Schema(
     members: [
       {
         ensName: { type: String, trim: true },
-        address: { type: String },
+        address: { type: String, lowercase: true, trim: true },
         airdropped: { type: Boolean, default: false },
         airdropTxHash: { type: String },
       },

@@ -9,17 +9,20 @@ const createValidation = {
       .optional()
       .default('csv'),
     addressList: Joi.array().items(Joi.string()).optional(),
+    fileUuid: Joi.string().optional(),
   }),
 };
 
 async function create(req, res) {
-  const { address } = req;
-  const { addressList, inputType } = req.body;
+  const { address, userId } = req;
+  const { addressList, inputType, fileUuid } = req.body;
   const result = await Audience.create({
-    owner: address,
+    owner: userId,
+    ownerAddress: address,
     csv: req.files && req.files.file,
     addressList,
     inputType,
+    fileUuid,
   });
   res.json(result);
 }
