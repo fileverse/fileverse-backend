@@ -57,7 +57,7 @@ async function run({ audienceUuid, name, symbol, image }) {
 }
 
 async function postRun({ audienceUuid }) {
-  const audience = await Audience.findOne({ uuid: audienceUuid });
+  const audience = await Audience.findOne({ uuid: audienceUuid }).lean();
   const permission = await File.permission({
     uuid: audience.fileUuid,
     userId: audience.owner,

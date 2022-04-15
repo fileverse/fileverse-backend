@@ -68,6 +68,7 @@ _audience.schema.methods.safeObject = function () {
     '_id',
     'uuid',
     'inputType',
+    'fileUuid',
     'owner',
     'members',
     'token',
