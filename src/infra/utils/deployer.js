@@ -110,7 +110,7 @@ class DeployerService {
     const contractInstance = new ethers.Contract(contractAddress, abi, signer);
     try {
       const tx = await contractInstance.batchMint(addressList, {
-        gasLimit: 100000,
+        gasLimit: 2000000,
       });
       await tx.wait();
       return tx.hash;
