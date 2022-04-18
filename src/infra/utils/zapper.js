@@ -31,13 +31,18 @@ class ZapperService {
       options,
     );
     // eslint-disable-next-line security/detect-object-injection
-    const products = apiResponse.data[address.toLowerCase()].products;
+    const products = apiResponse.data.balances[address.toLowerCase()].products;
     const tokenProduct = products.find((elem) => elem.label === 'Tokens');
     const tokens =
       (tokenProduct &&
         tokenProduct.assets.map((token) => this.formatToken(token, chain))) ||
       [];
-    return tokens.filter((token) => token.name && token.symbol);
+    return tokens.filter(
+      (token) =>
+        token.name &&
+        token.symbol &&
+        token.contractAddress !== '0x0000000000000000000000000000000000000000',
+    );
   }
 }
 
