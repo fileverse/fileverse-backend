@@ -47,7 +47,7 @@ class DeployerService {
     return signer;
   }
 
-  async deployContractInstance({ name, symbol }) {
+  async deployContractInstance({ name, symbol, ownerAddress, baseUri = '' }) {
     const abi = await this.getContractABI();
     const signer = await this.getSigner();
     const contractFactoryInstance = new ethers.ContractFactory(
@@ -55,22 +55,14 @@ class DeployerService {
       bytecode,
       signer,
     );
-    const contract = await contractFactoryInstance.deploy(name, symbol);
+    const contract = await contractFactoryInstance.deploy(
+      name,
+      symbol,
+      ownerAddress,
+      baseUri,
+    );
     await contract.deployed();
     return contract;
-  }
-
-  async isFilverseManaged({ contractAddress }) {
-    const abi = await this.getContractABI();
-    const signer = await this.getSigner();
-    const contractInstance = new ethers.Contract(contractAddress, abi, signer);
-    try {
-      const ownerAddress = await contractInstance.owner();
-      return ownerAddress.toLowerCase() === signer.address.toLowerCase();
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
   }
 
   async getContractIntance({ contractAddress }) {
@@ -112,25 +104,11 @@ class DeployerService {
     const signer = await this.getSigner();
     const contractInstance = new ethers.Contract(contractAddress, abi, signer);
     try {
-      const tx = await contractInstance.batchMint(addressList, {
+      const tx = await contractInstance.safeBatchMint(addressList, {
         gasLimit: 2000000,
       });
       await tx.wait();
       return tx.hash;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  }
-
-  async transferOwnership({ contractAddress, address }) {
-    const abi = await this.getContractABI();
-    const signer = await this.getSigner();
-    const contractInstance = new ethers.Contract(contractAddress, abi, signer);
-    try {
-      const tx = await contractInstance.transferOwnership(address);
-      await tx.wait();
-      return tx;
     } catch (error) {
       console.log(error);
       return null;

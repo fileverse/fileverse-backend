@@ -36,10 +36,10 @@ async function run({ audienceUuid, name, symbol, image }) {
     return;
   }
   const contract = await instance.deployContractInstance({
-    owner: audience.ownerAddress,
+    ownerAddress: audience.ownerAddress,
     name,
     symbol,
-    image,
+    baseUri: `https://api.fileverse.io/tokens/${audience.uuid}/`,
   });
   audience.token = {
     contractAddress: contract.address,
