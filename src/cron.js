@@ -15,7 +15,6 @@ async function graceful() {
     }
     require('./interface/cron/events/deployErc721Contract');
     require('./interface/cron/events/mintErc721Token');
-    require('./interface/cron/events/transferErc721Contract');
     console.log('started cron job successfully');
   } catch (err) {
     console.log(err.stack);
