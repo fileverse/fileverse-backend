@@ -1,6 +1,9 @@
 const Big = require('big.js');
 const config = require('../../../config');
-const { abi, bytecode } = require('../../../contracts/FileverseNFT_v1.json');
+const {
+  abi,
+  bytecode,
+} = require('../../../contracts/FileverseTokenTemplate_v1.json');
 const ethers = require('ethers');
 
 class DeployerService {
