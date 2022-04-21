@@ -1,13 +1,15 @@
-const MoralisService = require('./../../infra/utils/moralis');
+const config = require('../../../config');
+const Token = require('./../../infra/utils/token');
 
-const moralisService = new MoralisService();
+const tokenInstance = new Token();
 
-async function getTokens({ address, search }) {
-  const tokens = await moralisService.tokensFromMoralis(address);
-  return tokens.filter((token) =>
-    // eslint-disable-next-line
-    token.name.match(new RegExp(search, 'i')),
-  );
+async function getTokens({ address, search, chain }) {
+  const tokens = await tokenInstance.getOwnedTokens({
+    address,
+    chain: chain || config.CHAIN,
+  });
+  // eslint-disable-next-line
+  return tokens.filter((token) => token.name.match(new RegExp(search, 'i')));
 }
 
 module.exports = getTokens;

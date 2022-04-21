@@ -9,11 +9,15 @@ const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-// const helmet = require('helmet');
-const { errorHandler } = require('./interface/rest/middlewares');
+const helmet = require('helmet');
+const basicAuth = require('express-basic-auth');
+const Agendash = require('agendash');
 
+const config = require('../config');
+const { errorHandler } = require('./interface/rest/middlewares');
 const auth = require('./infra/utils/auth');
 const router = require('./interface/rest');
+const agenda = require('./interface/cron/index');
 
 // Express App
 const app = express();
@@ -27,7 +31,19 @@ app.use(bodyParser.json());
 // Use default logger for now
 app.use(logger('combined'));
 app.use(cors());
-// app.use(helmet());
+app.use(helmet());
+
+app.use(
+  '/dash',
+  basicAuth({
+    users: {
+      admin: config.AGENDA_CRON_PASSWORD,
+    },
+    challenge: true,
+  }),
+  Agendash(agenda),
+);
+
 app.use(auth.verifyToken);
 
 // This is to check if the service is online or not

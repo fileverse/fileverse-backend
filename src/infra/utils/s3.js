@@ -44,6 +44,14 @@ class S3Service {
     const file = await this.s3.getObject(params).promise();
     return file && file.Body;
   }
+
+  async remove({ s3Key }) {
+    const params = {
+      Key: s3Key,
+      Bucket: this.bucketName,
+    };
+    await this.s3.deleteObject(params).promise();
+  }
 }
 
 module.exports = S3Service;
