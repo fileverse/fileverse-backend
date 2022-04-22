@@ -8,7 +8,7 @@ class Token {
   constructor() {}
 
   async getOwnedTokens({ chain, address }) {
-    if (chain === 'rinkeby') {
+    if (chain === 'rinkeby' || chain === 'ethereum' || chain === 'polygon') {
       return moralisInstance.getOwnedTokens(address, chain);
     } else {
       return zapperInstance.getOwnedTokens(address, chain);
