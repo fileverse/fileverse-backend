@@ -12,7 +12,7 @@ class MoralisService {
   getChainCode({ chain }) {
     if (chain === 'rinkeby') {
       return '0x4';
-    } else if (chain === 'polygon') {
+    } else if (chain === 'polygon' || chain === 'polygon_mainnet') {
       return '0x89';
     }
     return '0x1';
