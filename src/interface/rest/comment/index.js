@@ -14,19 +14,19 @@ const remove = require('./remove');
 const edit = require('./edit');
 const canEditComment = require('../middlewares/canEditComment');
 
-router.get(':uuid/all', asyncHandler(canViewFile), asyncHandlerArray(get));
+router.get('/:uuid/all', asyncHandler(canViewFile), asyncHandlerArray(get));
 router.post(
-  ':uuid/create',
+  '/:uuid/create',
   asyncHandler(canViewFile),
   asyncHandlerArray(create),
 );
 router.put(
-  ':uuid/:shortId/edit',
+  '/:uuid/:shortId/edit',
   asyncHandler(canEditComment),
   asyncHandlerArray(edit),
 );
 router.delete(
-  ':uuid/:shortId/remove',
+  '/:uuid/:shortId/remove',
   asyncHandler(canEditComment),
   asyncHandlerArray(remove),
 );
