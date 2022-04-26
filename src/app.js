@@ -31,7 +31,12 @@ app.use(bodyParser.json());
 // Use default logger for now
 app.use(logger('combined'));
 app.use(cors());
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+    frameguard: false,
+  }),
+);
 
 app.use(
   '/dash',
