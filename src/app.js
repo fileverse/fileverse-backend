@@ -34,6 +34,7 @@ app.use(cors());
 app.use(
   helmet({
     contentSecurityPolicy: false,
+    frameguard: false,
   }),
 );
 
