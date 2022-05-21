@@ -1,48 +1,28 @@
 const { Readable } = require('stream');
-const Pinata = require('../../infra/utils/pinata');
 const S3 = require('../../infra/utils/s3');
 const ReadableStreamClone = require('readable-stream-clone');
 const { encryptStream } = require('../../infra/utils/stream');
 const KMS = require('../../infra/utils/kms');
 const Web3StorageService = require('./../../infra/utils/web3storage');
-const streamToBlob = require('stream-to-blob');
-const pinata = new Pinata();
 const s3 = new S3();
 const kms = new KMS();
 const web3Storage = new Web3StorageService();
 
-async function upload(file, uuid) {
+async function upload(file) {
   const { name, mimetype, data } = file;
   const dataKey = await kms.generateDataKey();
-  // upload to pinata
   const stream = Readable.from(data);
-  const encryptedStreamPinata = Readable.from(
+  const encryptedStreamWeb3Storage = Readable.from(
     encryptStream(stream, dataKey.Plaintext),
   );
-  encryptedStreamPinata.path = name;
-
-  console.log(encryptedStreamPinata);
-
-  const encryptedStreamWeb3Storage = new ReadableStreamClone(
-    encryptedStreamPinata,
-  );
   encryptedStreamWeb3Storage.path = name;
-  console.log(file);
 
-  const w3File = await web3Storage.upload(encryptedStreamWeb3Storage, {
-    name,
-    mimetype,
-    uuid,
-  });
+  const w3File = await web3Storage.upload(encryptedStreamWeb3Storage, name);
+
   console.log({ w3File });
 
-  const encryptedStreamS3 = new ReadableStreamClone(encryptedStreamPinata);
+  const encryptedStreamS3 = new ReadableStreamClone(encryptedStreamWeb3Storage);
   encryptedStreamS3.path = name;
-  // const pinataFile = await pinata.upload(encryptedStreamPinata, {
-  //   name,
-  //   mimetype,
-  // });
-  // upload to s3
   const s3File = await s3.upload(encryptedStreamS3, {
     name: w3File.ipfsHash,
     mimetype,

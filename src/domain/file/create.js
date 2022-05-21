@@ -51,7 +51,7 @@ async function create({ name, file, owner, slug, description }) {
     slug = uuid;
   }
   const { s3Url, s3Key, ipfsHash, ipfsUrl, mimetype, encryptedDataKey } =
-    await upload(file, uuid);
+    await upload(file);
   const savedFile = await new File({
     uuid,
     name,
