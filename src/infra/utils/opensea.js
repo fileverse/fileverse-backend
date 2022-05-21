@@ -3,22 +3,21 @@ const axios = require('axios');
 
 class OpenSea {
   constructor() {
-    // this.api = sdk;
+    this.url = '';
   }
 
-  static formatNFT(nft) {
+  static formatNFT(nft, chain) {
     const nftObject = {
       contractAddress: nft.asset_contract && nft.asset_contract.address,
-      tokenId: nft.token_id,
-      name: nft.name,
-      description: nft.description,
+      name: nft.asset_contract && nft.asset_contract.name,
       image: nft.image_url,
-      owner: nft.owner && nft.owner.address,
+      symbol: nft.asset_contract && nft.asset_contract.symbol,
+      chain,
     };
     return nftObject;
   }
 
-  getNFTs(address, { offset }) {
+  getOwnedNFTs(address, { offset }) {
     return axios
       .get(`https://${config.OPENSEA_ENV}.opensea.io/api/v1/assets`, {
         params: {

@@ -6,4 +6,5 @@ module.exports = {
   upload: require('./upload'),
   permission: require('./permission'),
   content: require('./content'),
+  remove: require('./remove'),
 };

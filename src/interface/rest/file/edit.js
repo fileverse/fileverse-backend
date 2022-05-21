@@ -16,6 +16,7 @@ const editValidation = {
       contractAddress: Joi.string().required(),
       tokenType: Joi.string().required().valid('erc20', 'erc721'),
       gateBalance: Joi.number().required(),
+      chain: Joi.string().valid('ethereum', 'polygon', 'rinkeby').optional(),
     }),
   }),
 };

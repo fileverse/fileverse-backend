@@ -10,6 +10,7 @@ const router = express.Router();
 const create = require('./create');
 const edit = require('./edit');
 const get = require('./get');
+const remove = require('./remove');
 // middlewares
 const {
   canEditFile,
@@ -36,6 +37,12 @@ router.post(
   asyncHandler(canEditFile),
   fileUpload(),
   asyncHandlerArray(edit)
+);
+
+router.delete(
+  '/:uuid/remove',
+  asyncHandler(canEditFile),
+  asyncHandlerArray(remove),
 );
 
 module.exports = router;
