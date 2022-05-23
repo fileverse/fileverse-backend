@@ -62,3 +62,4 @@ development.env
 # next.js build output
 .next
 *.log.*
+.gitsigners
