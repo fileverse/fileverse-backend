@@ -20,7 +20,7 @@ class DeployerService {
   getNetworkProviderURL({ chain }) {
     if (chain === 'rinkeby') {
       return this.rinkeby;
-    } else if (chain === 'polygon_mainnet') {
+    } else if (chain === 'polygon' || chain === 'polygon_mainnet') {
       return this.polygon_mainnet;
     } else if (chain === 'gnosis') {
       return this.gnosis;
