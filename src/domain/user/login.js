@@ -3,6 +3,7 @@ const createAccount = require('./createAccount');
 const { ethers } = require('ethers');
 const config = require('../../../config');
 const Encryption = require('../../infra/utils/encryption');
+const ErrorHandler = require('../../infra/utils/errorHandler');
 
 async function verifySignature({ address, message, signature }) {
   const adr = await ethers.utils.verifyMessage(message, signature);
@@ -25,7 +26,10 @@ async function login({ address, signature, message }) {
     signature,
   });
   if (!isSignatureValid) {
-    return null;
+    return ErrorHandler.throwError({
+      code: 400,
+      message: `Signature is not valid for address: ${address}`,
+    });
   }
   const userId = await createAccount({ address });
   const sessionId = await createSession({ address, userId });

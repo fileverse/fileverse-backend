@@ -43,7 +43,7 @@ async function run({ audienceUuid, name, symbol, image }) {
   });
   audience.token = {
     contractAddress: contract.address,
-    name: symbol,
+    name: name || symbol,
     image,
     gateBalance: 1,
     tokenType: config.DEPLOYER_TOKEN_TYPE,
