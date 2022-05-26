@@ -12,7 +12,6 @@ class Web3StorageService {
     const cid = await this.client.put([
       { name, stream: () => readableStreamForFile },
     ]);
-    console.log({ cid });
     if (!cid) return null;
     return {
       ipfsUrl: `https://ipfs.io/ipfs/${cid}/${name}`,
@@ -34,7 +33,8 @@ class Web3StorageService {
     if (!ipfsHash) {
       return null;
     }
-    return null;
+    const hashes = ipfsHash.split('/');
+    return await this.client.delete(hashes[0]);
   }
 }
 
