@@ -1,3 +1,4 @@
+const qs = require('querystring');
 const mime = require('mime-types');
 const { File } = require('../../../domain');
 const { validator } = require('../middlewares');
@@ -19,7 +20,9 @@ async function get(req, res) {
     'Content-Type': mimetype,
   };
   if (download) {
-    header['Content-Disposition'] = `attachment; filename="${filename}"`;
+    header['Content-Disposition'] = `attachment; filename="${qs.escape(
+      filename,
+    )}"`;
   }
   res.writeHead(200, header);
   contentStream.pipe(res);

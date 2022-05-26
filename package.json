@@ -54,8 +54,10 @@
     "readable-stream-clone": "^0.0.7",
     "request": "^2.88.2",
     "short-uuid": "^4.2.0",
+    "stream-to-blob": "^2.0.1",
     "url-parse": "^1.5.10",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "web3.storage": "^4.0.0"
   },
   "devDependencies": {
     "chai": "^4.3.4",
