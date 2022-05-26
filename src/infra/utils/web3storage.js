@@ -1,3 +1,5 @@
+const PassThrough = require('stream').PassThrough;
+const request = require('request');
 const { Web3Storage } = require('web3.storage');
 const config = require('./../../../config');
 
@@ -14,22 +16,25 @@ class Web3StorageService {
     if (!cid) return null;
     return {
       ipfsUrl: `https://ipfs.io/ipfs/${cid}/${name}`,
-      ipfsHash: cid,
+      ipfsHash: `${cid}/${name}`,
+      ipfsStorage: 'web3.storage',
     };
   }
 
-  // need to figure out
-  async retrieve(cid) {
-    const res = await this.client.get(cid);
-    if (!res.ok) {
-      throw new Error(`failed to get ${cid}`);
+  async get({ ipfsUrl }) {
+    if (!ipfsUrl) {
+      return null;
     }
+    const ipfsStream = new PassThrough();
+    request(ipfsUrl).pipe(ipfsStream);
+    return ipfsStream;
+  }
 
-    const files = await res.files();
-    for (const file of files) {
-      console.log(`${file.cid} -- ${file.path} -- ${file.size}`);
-      console.log(file);
+  async remove({ ipfsHash }) {
+    if (!ipfsHash) {
+      return null;
     }
+    return null;
   }
 }
 
