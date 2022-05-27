@@ -21,22 +21,21 @@ const {
 
 router.post(
   '/create',
-  asyncHandlerArray([canCreateFile]),
-  // asyncHandlerArray([validateRecaptcha, canCreateFile]),
+  asyncHandlerArray([validateRecaptcha, canCreateFile]),
   fileUpload(),
-  asyncHandlerArray(create)
+  asyncHandlerArray(create),
 );
 router.get(
   '/:uuid',
   asyncHandler(canViewFile),
   // asyncHandlerArray([validateRecaptcha, canViewFile]),
-  asyncHandlerArray(get)
+  asyncHandlerArray(get),
 );
 router.post(
   '/:uuid/edit',
   asyncHandler(canEditFile),
   fileUpload(),
-  asyncHandlerArray(edit)
+  asyncHandlerArray(edit),
 );
 
 router.delete(
