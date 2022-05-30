@@ -110,7 +110,8 @@ async function create({
     inputType,
     fileUuid,
   });
-  return createdAudience;
+  await createdAudience.save();
+  return createdAudience.safeObject();
 }
 
 module.exports = create;
