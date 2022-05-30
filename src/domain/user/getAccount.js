@@ -1,7 +1,12 @@
 const { Account } = require('../../infra/database/models');
 
 async function getAccount({ address }) {
-  const foundAccount = await Account.findOne({ address });
+  let foundAccount = await Account.findOne({ address });
+  if (foundAccount) {
+    return foundAccount.safeObject();
+  }
+  // find by username
+  foundAccount = await Account.findOne({ username: address });
   if (foundAccount) {
     return foundAccount.safeObject();
   }

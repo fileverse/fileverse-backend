@@ -33,7 +33,7 @@ async function login({ address, signature, message }) {
   }
   const userId = await createAccount({ address });
   const sessionId = await createSession({ address, userId });
-  return { token: await getAuthToken({ address, userId, sessionId }) };
+  return { token: await getAuthToken({ address, userId, sessionId }), userId };
 }
 
 module.exports = login;
