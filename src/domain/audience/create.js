@@ -84,7 +84,7 @@ async function create({
 }) {
   if (!csv && !addressList) {
     return ErrorHandler.throwError({
-      code: 404,
+      code: 400,
       message: 'Not a valid input!',
     });
   }
@@ -97,19 +97,20 @@ async function create({
   }
   if (!members) {
     return ErrorHandler.throwError({
-      code: 404,
+      code: 400,
       message: 'Not a valid input!',
     });
   }
   members = await getAddressFromEnsName(members);
-  const createdAudience = await new Audience({
+  const createdAudience = new Audience({
     uuid,
     owner,
     ownerAddress,
     members,
     inputType,
     fileUuid,
-  }).save();
+  });
+  await createdAudience.save();
   return createdAudience.safeObject();
 }
 

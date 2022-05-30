@@ -1,16 +1,27 @@
 const jobs = require('../../interface/cron/jobs');
 const cron = require('../../interface/cron');
+const create = require('./create');
 const { Audience } = require('../../infra/database/models');
-const ErrorHandler = require('../../infra/utils/errorHandler');
 
-async function airdrop({ uuid, name, symbol }) {
+async function airdrop({
+  name,
+  symbol,
+  inputType,
+  owner,
+  ownerAddress,
+  csv,
+  addressList,
+  fileUuid,
+}) {
+  const { uuid } = await create({
+    inputType,
+    owner,
+    ownerAddress,
+    csv,
+    addressList,
+    fileUuid,
+  });
   const audience = await Audience.findOne({ uuid });
-  if (!audience) {
-    return ErrorHandler.throwError({
-      code: 404,
-      message: 'Cound not find the audience by this uuid',
-    });
-  }
   cron.now(jobs.DEPLOY_ERC721_CONTRACT, {
     audienceUuid: audience.uuid,
     name,

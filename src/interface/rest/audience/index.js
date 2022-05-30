@@ -22,7 +22,7 @@ router.post(
 router.get('/:uuid', asyncHandler(canEditAccount), asyncHandlerArray(get));
 
 router.post(
-  '/:uuid/airdrop',
+  '/airdrop',
   asyncHandler(canEditAccount),
   asyncHandlerArray(airdrop),
 );
