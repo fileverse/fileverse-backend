@@ -7,6 +7,7 @@ const _file = {};
 const VersionSchema = new Schema({
   ipfsUrl: { type: String, trim: true },
   ipfsHash: { type: String, trim: true },
+  ipfsStorage: { type: String, trim: true },
   s3Url: { type: String, trim: true },
   s3Key: { type: String, trim: true },
   mimetype: { type: String, trim: true },
@@ -33,6 +34,7 @@ _file.schema = new Schema(
     url: { type: String, trim: true },
     ipfsUrl: { type: String, trim: true },
     ipfsHash: { type: String, trim: true },
+    ipfsStorage: { type: String, trim: true },
     s3Url: { type: String, trim: true },
     s3Key: { type: String, trim: true },
     encryptedDataKey: { type: String, trim: true },

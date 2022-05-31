@@ -33,7 +33,7 @@ router.get(
 );
 router.post(
   '/:uuid/edit',
-  asyncHandler(canEditFile),
+  asyncHandlerArray([validateRecaptcha, canEditFile]),
   fileUpload(),
   asyncHandlerArray(edit),
 );

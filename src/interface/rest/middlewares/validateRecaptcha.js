@@ -6,7 +6,7 @@ async function validateRecaptcha(req, res, next) {
   const recaptchaToken = req.headers['recaptchatoken'];
   if (!recaptchaToken)
     return ErrorHandler.throwError({
-      code: 404,
+      code: 401,
       message: `Recaptcha Token Missing`,
       req,
     });
@@ -14,11 +14,12 @@ async function validateRecaptcha(req, res, next) {
   const threshold = 0.5;
   const { data } = await axios.post(url);
   if (
-    data.success &&
-    data.score &&
-    data.action &&
-    data.score >= threshold &&
-    data.action === 'file'
+    (data.success &&
+      data.score &&
+      data.action &&
+      data.score >= threshold &&
+      data.action === 'file') ||
+    data.action === 'lock'
   ) {
     next();
   } else {

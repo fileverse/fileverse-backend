@@ -14,6 +14,7 @@ class Pinata {
     return {
       ipfsUrl: `https://ipfs.fileverse.io/ipfs/${file.IpfsHash}`,
       ipfsHash: file.IpfsHash,
+      ipfsStorage: 'pinata',
       pinSize: file.PinSize,
       timestamp: file.Timestamp,
     };
@@ -55,6 +56,13 @@ class Pinata {
     } catch (e) {
       console.log(e.reason);
     }
+  }
+
+  async remove({ ipfsHash }) {
+    if (!ipfsHash) {
+      return null;
+    }
+    return this.unPinFile(ipfsHash);
   }
 }
 
