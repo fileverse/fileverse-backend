@@ -25,6 +25,7 @@ _audience.schema = new Schema(
       type: String,
       required: true,
       trim: true,
+      index: true,
     },
     members: [
       {
