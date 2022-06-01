@@ -24,6 +24,7 @@ router.get('/:uuid', asyncHandler(canEditAccount), asyncHandlerArray(get));
 router.post(
   '/airdrop',
   asyncHandler(canEditAccount),
+  fileUpload(),
   asyncHandlerArray(airdrop),
 );
 
