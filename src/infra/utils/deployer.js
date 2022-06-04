@@ -47,7 +47,13 @@ class DeployerService {
     return signer;
   }
 
-  async deployContractInstance({ name, symbol, ownerAddress, baseUri = '' }) {
+  async deployContractInstance({
+    name,
+    symbol,
+    image,
+    ownerAddress,
+    baseUri = '',
+  }) {
     const abi = await this.getContractABI();
     const signer = await this.getSigner();
     const contractFactoryInstance = new ethers.ContractFactory(
@@ -58,6 +64,7 @@ class DeployerService {
     const contract = await contractFactoryInstance.deploy(
       name,
       symbol,
+      image,
       ownerAddress,
       baseUri,
     );

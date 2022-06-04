@@ -39,6 +39,7 @@ async function run({ audienceUuid, name, symbol, image }) {
     ownerAddress: audience.ownerAddress,
     name,
     symbol,
+    image,
     baseUri: `https://api.fileverse.io/tokens/${audience.uuid}/`,
   });
   audience.token = {

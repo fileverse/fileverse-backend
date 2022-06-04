@@ -10,7 +10,7 @@ const airdropValidation = {
       .valid('csv', 'addressList')
       .optional()
       .default('csv'),
-    addressList: Joi.array().items(Joi.string()).optional(),
+    addressList: Joi.string().optional(),
     fileUuid: Joi.string().optional(),
   }),
 };
@@ -27,6 +27,7 @@ async function airdrop(req, res) {
     addressList,
     inputType,
     fileUuid,
+    tokenImage: req.files && req.files.tokenImage,
   });
   res.json({ audience: foundAudience, token: null });
 }
