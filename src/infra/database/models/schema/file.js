@@ -18,6 +18,7 @@ const TokenSchema = new Schema({
   contractAddress: { type: String, trim: true },
   name: { type: String, trim: true },
   image: { type: String, trim: true },
+  description: { type: String, trim: true },
   gateBalance: { type: Number, default: 0 },
   tokenType: {
     type: String,

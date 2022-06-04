@@ -10,6 +10,7 @@ const s3 = new S3();
 async function airdrop({
   name,
   symbol,
+  description,
   inputType,
   owner,
   ownerAddress,
@@ -46,19 +47,26 @@ async function airdrop({
     fileUuid,
   });
 
-  const { data, mimetype } = tokenImage;
-  const { s3Url } = await s3.upload(data, {
-    name: uuid,
-    mimetype,
-  });
+  let tokenImageUrl = null;
+  if (tokenImage) {
+    const { data, mimetype } = tokenImage;
+    const { s3Url } = await s3.upload(data, {
+      name: uuid,
+      mimetype,
+    });
+    tokenImageUrl = s3Url;
+  }
 
   const audience = await Audience.findOne({ uuid });
   cron.now(jobs.DEPLOY_ERC721_CONTRACT, {
     audienceUuid: audience.uuid,
     name,
     symbol,
-    image: s3Url,
+    description,
+    image: tokenImageUrl && tokenImageUrl,
   });
+
+  console.log(audience.token);
   audience.airdropInProgress = true;
   await audience.save();
   return audience.safeObject();

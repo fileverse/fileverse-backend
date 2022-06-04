@@ -11,9 +11,9 @@ const instance = new Deployer({
 });
 
 agenda.define(jobs.DEPLOY_ERC721_CONTRACT, async (job, done) => {
-  const { name, symbol, image, audienceUuid } = job.attrs.data;
+  const { name, symbol, image, description, audienceUuid } = job.attrs.data;
   try {
-    await run({ name, symbol, audienceUuid, image });
+    await run({ name, symbol, audienceUuid, description, image });
     await postRun({ audienceUuid });
     done();
   } catch (err) {
@@ -24,13 +24,14 @@ agenda.define(jobs.DEPLOY_ERC721_CONTRACT, async (job, done) => {
       name,
       symbol,
       image,
+      description,
       err,
     );
     done(err);
   }
 });
 
-async function run({ audienceUuid, name, symbol, image }) {
+async function run({ audienceUuid, name, symbol, image, description }) {
   const audience = await Audience.findOne({ uuid: audienceUuid });
   if (audience.token && audience.token.contractAddress) {
     return;
@@ -39,6 +40,7 @@ async function run({ audienceUuid, name, symbol, image }) {
     ownerAddress: audience.ownerAddress,
     name,
     symbol,
+    description,
     image,
     baseUri: `https://api.fileverse.io/tokens/${audience.uuid}/`,
   });
@@ -47,6 +49,7 @@ async function run({ audienceUuid, name, symbol, image }) {
     name: name || symbol,
     symbol,
     image,
+    description,
     gateBalance: 1,
     tokenType: config.DEPLOYER_TOKEN_TYPE,
     chain: config.DEPLOYER_TOKEN_CHAIN,

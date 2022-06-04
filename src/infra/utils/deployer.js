@@ -51,6 +51,7 @@ class DeployerService {
     name,
     symbol,
     image,
+    description,
     ownerAddress,
     baseUri = '',
   }) {
@@ -65,6 +66,7 @@ class DeployerService {
       name,
       symbol,
       image,
+      description,
       ownerAddress,
       baseUri,
     );

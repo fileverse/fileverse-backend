@@ -6,6 +6,7 @@ const airdropValidation = {
   body: Joi.object({
     name: Joi.string().required(),
     symbol: Joi.string().required(),
+    description: Joi.string().optional(),
     inputType: Joi.string()
       .valid('csv', 'addressList')
       .optional()
@@ -17,10 +18,13 @@ const airdropValidation = {
 
 async function airdrop(req, res) {
   const { address, userId } = req;
-  const { name, symbol, addressList, inputType, fileUuid } = req.body;
+  const { name, symbol, addressList, description, inputType, fileUuid } =
+    req.body;
+
   const foundAudience = await Audience.airdrop({
     name,
     symbol,
+    description,
     owner: userId,
     ownerAddress: address,
     csv: req.files && req.files.file,
