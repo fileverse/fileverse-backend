@@ -34,7 +34,6 @@ async function create({ name, file, owner, slug, description }) {
       message: 'File size cannot exceed 10 MB.',
     });
   }
-
   await checkLimits({ owner });
 
   const uuid = uuidv4();
@@ -51,8 +50,15 @@ async function create({ name, file, owner, slug, description }) {
   } else {
     slug = uuid;
   }
-  const { s3Url, s3Key, ipfsHash, ipfsUrl, mimetype, encryptedDataKey } =
-    await upload(file);
+  const {
+    s3Url,
+    s3Key,
+    ipfsHash,
+    ipfsUrl,
+    ipfsStorage,
+    mimetype,
+    encryptedDataKey,
+  } = await upload(file);
   const savedFile = await new File({
     uuid,
     name,
@@ -61,6 +67,7 @@ async function create({ name, file, owner, slug, description }) {
     s3Key,
     ipfsHash,
     ipfsUrl,
+    ipfsStorage,
     encryptedDataKey,
     mimetype,
     owner,

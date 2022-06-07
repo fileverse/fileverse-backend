@@ -25,6 +25,7 @@ _audience.schema = new Schema(
       type: String,
       required: true,
       trim: true,
+      index: true,
     },
     members: [
       {
@@ -38,6 +39,7 @@ _audience.schema = new Schema(
       contractAddress: { type: String, trim: true },
       name: { type: String, trim: true },
       image: { type: String, trim: true },
+      description: { type: String, trim: true },
       gateBalance: { type: Number, default: 1 },
       tokenType: {
         type: String,

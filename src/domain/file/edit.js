@@ -32,13 +32,31 @@ async function edit(uuid, { name, file, token, slug, description }) {
   }
   if (file) {
     const oldVersion = {
-      url: foundFile.url,
+      s3Url: foundFile.s3Url,
+      s3Key: foundFile.s3Key,
+      ipfsHash: foundFile.ipfsHash,
+      ipfsUrl: foundFile.ipfsUrl,
+      ipfsStorage: foundFile.ipfsStorage,
       mimetype: foundFile.mimetype,
+      encryptedDataKey: foundFile.encryptedDataKey,
       version: foundFile.currentVersion,
     };
-    const { url, mimetype } = await upload(file);
-    foundFile.url = url;
+    const {
+      s3Url,
+      s3Key,
+      ipfsHash,
+      ipfsUrl,
+      ipfsStorage,
+      mimetype,
+      encryptedDataKey,
+    } = await upload(file);
+    foundFile.s3Url = s3Url;
+    foundFile.s3Key = s3Key;
+    foundFile.ipfsHash = ipfsHash;
+    foundFile.ipfsUrl = ipfsUrl;
+    foundFile.ipfsStorage = ipfsStorage;
     foundFile.mimetype = mimetype;
+    foundFile.encryptedDataKey = encryptedDataKey;
     foundFile.currentVersion = foundFile.currentVersion + 1;
     foundFile.version.push(oldVersion);
   }

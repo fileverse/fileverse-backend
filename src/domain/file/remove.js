@@ -1,9 +1,9 @@
 const { File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 const S3Service = require('./../../infra/utils/s3');
-const Pinata = require('../../infra/utils/pinata');
+const IPFS = require('../../infra/utils/ipfs');
 const s3 = new S3Service();
-const pinata = new Pinata();
+const ipfs = new IPFS();
 
 async function remove(uuid) {
   const foundFile = await File.findOne({ uuid });
@@ -14,7 +14,10 @@ async function remove(uuid) {
     });
   }
   await s3.remove({ s3Key: foundFile.s3Key });
-  await pinata.unPinFile(foundFile.ipfsHash);
+  await ipfs.remove({
+    ipfsHash: foundFile.ipfsHash,
+    ipfsStorage: foundFile.ipfsStorage,
+  });
   await File.deleteOne({ uuid });
   return 'ok';
 }

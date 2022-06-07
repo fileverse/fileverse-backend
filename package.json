@@ -1,7 +1,7 @@
 {
-  "name": "qrl-be",
-  "version": "0.0.1",
-  "description": "API server using express",
+  "name": "fileverse",
+  "version": "1.0.0",
+  "description": "API server for fileverse",
   "main": "src/server.js",
   "scripts": {
     "test": "NODE_ENV=test mocha $(find tests -name '*.spec.js') --recursive --exit",
@@ -17,7 +17,7 @@
     "dev:cron": "nodemon src/cron.js"
   },
   "keywords": [
-    "graphql",
+    "rest",
     "express",
     "node",
     "mongodb"
@@ -54,8 +54,10 @@
     "readable-stream-clone": "^0.0.7",
     "request": "^2.88.2",
     "short-uuid": "^4.2.0",
+    "stream-to-blob": "^2.0.1",
     "url-parse": "^1.5.10",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "web3.storage": "^4.0.0"
   },
   "devDependencies": {
     "chai": "^4.3.4",
