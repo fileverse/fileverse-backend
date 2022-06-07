@@ -2,17 +2,42 @@ const jobs = require('../../interface/cron/jobs');
 const cron = require('../../interface/cron');
 const create = require('./create');
 const { Audience } = require('../../infra/database/models');
+const ErrorHandler = require('../../infra/utils/errorHandler');
+const S3 = require('../../infra/utils/s3');
+
+const s3 = new S3();
 
 async function airdrop({
   name,
   symbol,
+  description,
   inputType,
   owner,
   ownerAddress,
   csv,
   addressList,
   fileUuid,
+  tokenImage,
 }) {
+  if ((!csv && !addressList) || (csv != null && addressList != null)) {
+    return ErrorHandler.throwError({
+      code: 400,
+      message: 'Only one of CSV or addressList is needed.',
+    });
+  }
+
+  if (addressList) {
+    try {
+      addressList = JSON.parse(addressList);
+    } catch (e) {
+      return ErrorHandler.throwError({
+        code: 400,
+        message:
+          'Not a valid addressList!, expects addresslist array in string format',
+      });
+    }
+  }
+
   const { uuid } = await create({
     inputType,
     owner,
@@ -21,12 +46,27 @@ async function airdrop({
     addressList,
     fileUuid,
   });
+
+  let tokenImageUrl = null;
+  if (tokenImage) {
+    const { data, mimetype } = tokenImage;
+    const { s3Url } = await s3.upload(data, {
+      name: uuid,
+      mimetype,
+    });
+    tokenImageUrl = s3Url;
+  }
+
   const audience = await Audience.findOne({ uuid });
   cron.now(jobs.DEPLOY_ERC721_CONTRACT, {
     audienceUuid: audience.uuid,
     name,
     symbol,
+    description,
+    image: tokenImageUrl && tokenImageUrl,
   });
+
+  console.log(audience.token);
   audience.airdropInProgress = true;
   await audience.save();
   return audience.safeObject();
