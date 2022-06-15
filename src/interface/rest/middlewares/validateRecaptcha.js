@@ -14,12 +14,11 @@ async function validateRecaptcha(req, res, next) {
   const threshold = 0.5;
   const { data } = await axios.post(url);
   if (
-    (data.success &&
-      data.score &&
-      data.action &&
-      data.score >= threshold &&
-      data.action === 'file') ||
-    data.action === 'lock'
+    data.success &&
+    data.score &&
+    data.action &&
+    data.score >= threshold &&
+    (data.action === 'file' || data.action === 'lock' || data.action === 'edit')
   ) {
     next();
   } else {
