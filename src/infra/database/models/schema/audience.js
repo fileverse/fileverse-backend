@@ -47,6 +47,7 @@ _audience.schema = new Schema(
         default: 'erc721',
       },
       chain: { type: String, trim: true },
+      explorerLink: { type: String },
       creationTxHash: { type: String },
       createdOnFileverse: { type: Boolean, default: true },
       managedOnFileverse: { type: Boolean, default: true },
@@ -74,6 +75,7 @@ _audience.schema.methods.safeObject = function () {
     'owner',
     'members',
     'token',
+    'explorerLink',
     'createdAt',
     'updatedAt',
   ];

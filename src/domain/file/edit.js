@@ -3,6 +3,19 @@ const upload = require('./upload');
 const { File } = require('../../infra/database/models');
 const config = require('../../../config');
 
+function getExplorerLink(contractAddress, chain) {
+  if (chain === 'gnosis') {
+    return `https://blockscout.com/xdai/mainnet/address/${contractAddress}/transactions`;
+  } else if (chain === 'rinkeby') {
+    return `https://rinkeby.etherscan.io/address/${contractAddress}`;
+  } else if (chain === 'polygon') {
+    return `https://polygonscan.com/address/${contractAddress}`;
+  } else if (chain === 'ethereum') {
+    return `https://etherscan.io/address/${contractAddress}`;
+  }
+  return '';
+}
+
 async function edit(uuid, { name, file, token, slug, description }) {
   const foundFile = await File.findOne({ uuid });
   if (!foundFile) {
@@ -28,6 +41,7 @@ async function edit(uuid, { name, file, token, slug, description }) {
 
   if (token) {
     token.chain = token.chain || config.CHAIN;
+    token.explorerLink = getExplorerLink(token.contractAddress, token.chain);
     foundFile.token = token;
   }
   if (file) {

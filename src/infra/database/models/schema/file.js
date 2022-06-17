@@ -20,6 +20,7 @@ const TokenSchema = new Schema({
   image: { type: String, trim: true },
   description: { type: String, trim: true },
   gateBalance: { type: Number, default: 0 },
+  explorerLink: { type: String },
   tokenType: {
     type: String,
     enum: ['erc20', 'erc721'],
@@ -92,6 +93,7 @@ _file.schema.methods.safeObject = function () {
     'token',
     'slug',
     'description',
+    'explorerLink',
   ];
   const newSafeObject = {};
   safeFields.forEach((elem) => {
