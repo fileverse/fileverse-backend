@@ -31,6 +31,19 @@ agenda.define(jobs.DEPLOY_ERC721_CONTRACT, async (job, done) => {
   }
 });
 
+function getExplorerLink(contractAddress, chain) {
+  if (chain === 'gnosis') {
+    return `https://blockscout.com/xdai/mainnet/address/${contractAddress}/transactions`;
+  } else if (chain === 'rinkeby') {
+    return `https://rinkeby.etherscan.io/address/${contractAddress}`;
+  } else if (chain === 'polygon') {
+    return `https://polygonscan.com/address/${contractAddress}`;
+  } else if (chain === 'ethereum') {
+    return `https://etherscan.io/address/${contractAddress}`;
+  }
+  return '';
+}
+
 async function run({ audienceUuid, name, symbol, image, description }) {
   const audience = await Audience.findOne({ uuid: audienceUuid });
   if (audience.token && audience.token.contractAddress) {
@@ -52,6 +65,10 @@ async function run({ audienceUuid, name, symbol, image, description }) {
     tokenType: config.DEPLOYER_TOKEN_TYPE,
     chain: config.DEPLOYER_TOKEN_CHAIN,
     creationTxHash: contract.deployTransaction.hash,
+    explorerLink: getExplorerLink(
+      contract.address,
+      config.DEPLOYER_TOKEN_CHAIN,
+    ),
     createdOnFileverse: true,
     managedOnFileverse: true,
   };
