@@ -40,6 +40,7 @@ _file.schema = new Schema(
     s3Url: { type: String, trim: true },
     s3Key: { type: String, trim: true },
     encryptedDataKey: { type: String, trim: true },
+    encryptedChatKey: { type: String, trim: true },
     mimetype: { type: String, trim: true },
     currentVersion: { type: Number, default: 1 },
     permission: {

@@ -18,8 +18,11 @@ _comment.schema = new Schema(
     },
     text: {
       type: String,
-      required: true,
+      trim: true,
     },
+    ipfsUrl: { type: String, trim: true },
+    ipfsHash: { type: String, trim: true },
+    ipfsStorage: { type: String, trim: true },
     fileUuid: { type: String },
     by: { type: String },
     // system generated
@@ -45,6 +48,9 @@ _comment.schema.methods.safeObject = function () {
     'text',
     'fileUuid',
     'by',
+    'ipfsUrl',
+    'ipfsHash',
+    'ipfsStorage',
     'createdAt',
     'updatedAt',
   ];

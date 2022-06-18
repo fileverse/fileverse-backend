@@ -8,7 +8,8 @@ class Web3StorageService {
     this.client = new Web3Storage({ token: config.WEB3STORAGE_TOKEN });
   }
 
-  async upload(readableStreamForFile, name) {
+  async upload(readableStreamForFile, { name }) {
+    console.log({ name });
     const cid = await this.client.put([
       { name, stream: () => readableStreamForFile },
     ]);
