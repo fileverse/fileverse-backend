@@ -28,10 +28,10 @@ async function checkLimits({ owner }) {
 }
 
 async function create({ name, file, owner, slug, description }) {
-  if (file.size > (parseInt(config.FILE_SIZE_LIMIT, 10) || 10 * 1024 * 1024)) {
+  if (file.size > (parseInt(config.FILE_SIZE_LIMIT, 10) || 20 * 1024 * 1024)) {
     return ErrorHandler.throwError({
       code: 403,
-      message: 'File size cannot exceed 10 MB.',
+      message: 'File size cannot exceed 20 MB.',
     });
   }
   await checkLimits({ owner });

@@ -8,13 +8,13 @@ class Web3StorageService {
     this.client = new Web3Storage({ token: config.WEB3STORAGE_TOKEN });
   }
 
-  async upload(readableStreamForFile, name) {
+  async upload(readableStreamForFile, { name }) {
     const cid = await this.client.put([
       { name, stream: () => readableStreamForFile },
     ]);
     if (!cid) return null;
     return {
-      ipfsUrl: `https://ipfs.io/ipfs/${cid}/${name}`,
+      ipfsUrl: `https://dweb.link/ipfs/${cid}/${name}`,
       ipfsHash: `${cid}/${name}`,
       ipfsStorage: 'web3.storage',
     };

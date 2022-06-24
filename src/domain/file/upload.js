@@ -18,7 +18,7 @@ async function upload(file) {
   encryptedStreamWeb3Storage.path = name;
   const encryptedStreamS3 = new ReadableStreamClone(encryptedStreamWeb3Storage);
   encryptedStreamS3.path = name;
-  const ipfsFile = await ipfs.upload(encryptedStreamWeb3Storage, name);
+  const ipfsFile = await ipfs.upload(encryptedStreamWeb3Storage, { name });
   const s3File = await s3.upload(encryptedStreamS3, {
     name: ipfsFile.ipfsHash,
     mimetype,
