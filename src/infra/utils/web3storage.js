@@ -14,7 +14,7 @@ class Web3StorageService {
     ]);
     if (!cid) return null;
     return {
-      ipfsUrl: `https://ipfs.io/ipfs/${cid}/${name}`,
+      ipfsUrl: `https://dweb.link/ipfs/${cid}/${name}`,
       ipfsHash: `${cid}/${name}`,
       ipfsStorage: 'web3.storage',
     };
