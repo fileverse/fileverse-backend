@@ -14,6 +14,7 @@ const editAccount = require('./editAccount');
 const getFilesByAccount = require('./getFilesByAccount');
 const getNftsByAccount = require('./getNftsByAccount');
 const getTokensByAccount = require('./getTokensByAccount');
+const getAirdropsByAccount = require('./getAirdropsByAccount');
 const addAvatar = require('./addAvatar');
 
 // middlewares
@@ -53,6 +54,12 @@ router.get(
   '/:address/tokens',
   asyncHandler(canEditAccount),
   asyncHandlerArray(getTokensByAccount),
+);
+
+router.get(
+  '/:address/airdrops',
+  asyncHandler(canEditAccount),
+  asyncHandlerArray(getAirdropsByAccount),
 );
 
 router.post(
