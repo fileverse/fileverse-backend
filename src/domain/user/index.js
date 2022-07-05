@@ -9,4 +9,5 @@ module.exports = {
   addAvatar: require('./addAvatar'),
   getSession: require('./getSession'),
   createSession: require('./createSession'),
+  usernameExists: require('./usernameExists'),
 };
