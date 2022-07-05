@@ -9,4 +9,7 @@ module.exports = {
   isImagePresent: require('./isImagePresent'),
   canViewContent: require('./canViewContent'),
   validateRecaptcha: require('./validateRecaptcha'),
+  canViewOrg: require('./canViewOrg'),
+  canCreateOrg: require('./canCreateOrg'),
+  canEditOrg: require('./canEditOrg'),
 };
