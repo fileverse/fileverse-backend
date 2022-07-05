@@ -28,11 +28,7 @@ router.post(
 );
 
 // get details of an organisation
-router.get(
-  '/:address',
-  asyncHandler(canViewOrg),
-  asyncHandlerArray(getOrg),
-);
+router.get('/:address', asyncHandler(canViewOrg), asyncHandlerArray(getOrg));
 
 // get member list of an organisation
 router.get(
