@@ -14,6 +14,7 @@ const getOrgFiles = require('./getOrgFiles');
 const getOrgAnalytics = require('./getOrgAnalytics');
 const getOrgChatRooms = require('./getOrgChatRooms');
 const archiveOrg = require('./archiveOrg');
+const editOrg = require('./editOrg');
 
 // middlewares
 const { canCreateOrg, canEditOrg, canViewOrg } = require('../middlewares');
@@ -29,6 +30,13 @@ router.post(
 
 // get details of an organisation
 router.get('/:address', asyncHandler(canViewOrg), asyncHandlerArray(getOrg));
+
+// get details of an organisation
+router.post(
+  '/:address/edit',
+  asyncHandler(canEditOrg),
+  asyncHandlerArray(editOrg),
+);
 
 // get member list of an organisation
 router.get(
