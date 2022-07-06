@@ -6,7 +6,7 @@ const _analytics = {};
 _analytics.schema = new Schema({
   eventName: { type: String, required: true },
   fileUuid: { type: String, required: true },
-  timeStamp: { type: Number, required: true, default: Date.now },
+  timeStamp: { type: Date, required: true, default: Date.now },
 });
 
 _analytics.schema.pre('save', function (next) {
