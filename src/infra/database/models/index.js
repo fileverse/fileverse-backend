@@ -6,6 +6,7 @@ const _models = {
   File: require('./schema/file').model,
   Comment: require('./schema/comment').model,
   Audience: require('./schema/audience').model,
+  Analytics: require('./schema/analytics').model,
 };
 
 module.exports = _models;
