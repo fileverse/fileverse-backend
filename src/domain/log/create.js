@@ -1,4 +1,4 @@
-const { Analytics, File } = require('../../infra/database/models');
+const { Log, File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 
 async function create(eventName, fileUuid) {
@@ -10,8 +10,8 @@ async function create(eventName, fileUuid) {
       message: 'Cannot find the file by this uuid',
     });
   }
-  const analytics = await new Analytics({ eventName, fileUuid }).save();
-  return analytics.safeObject();
+  const logs = await new Log({ eventName, fileUuid }).save();
+  return logs.safeObject();
 }
 
 module.exports = create;
