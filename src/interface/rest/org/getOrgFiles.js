@@ -1,4 +1,4 @@
-const { File } = require('../../../domain');
+// const { File } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
@@ -9,10 +9,12 @@ const getOrgFilesValidation = {
 };
 
 async function getOrgFiles(req, res) {
+  // Disabling due to deployment
   // const { address } = req.params;
-  const files = await File.getByAccount(
-    '0x6b8ddbA9c380e68201F76072523C4aC9AC4113ae'.toLowerCase(),
-  );
+  // const files = await File.getByAccount(
+  //   '0x6b8ddbA9c380e68201F76072523C4aC9AC4113ae'.toLowerCase(),
+  // );
+  const files = [];
   res.json({ files, total: files.length, matching: files.length });
 }
 
