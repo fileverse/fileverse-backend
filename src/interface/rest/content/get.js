@@ -4,7 +4,7 @@ const { File } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
-const { Analytics } = require('../../../domain/index');
+const { Log } = require('../../../domain');
 
 const getValidation = {
   params: Joi.object({
@@ -25,7 +25,7 @@ async function get(req, res) {
     header['Content-Disposition'] = `attachment; filename="${qs.escape(
       filename,
     )}"`;
-    await Analytics.create('download', uuid);
+    await Log.create('download', uuid);
   }
   res.writeHead(200, header);
   contentStream.pipe(res);
