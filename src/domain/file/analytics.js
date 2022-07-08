@@ -1,5 +1,5 @@
 const ErrorHandler = require('../../infra/utils/errorHandler');
-const { File, Analytics } = require('../../infra/database/models');
+const { File, Log } = require('../../infra/database/models');
 
 async function analytics(uuid) {
   const foundFile = await File.findOne({ $or: [{ uuid }, { slug: uuid }] });
@@ -9,7 +9,7 @@ async function analytics(uuid) {
       message: 'Cannot find the file by this uuid',
     });
   }
-  const res = await Analytics.aggregate([
+  const res = await Log.aggregate([
     {
       $match: {
         fileUuid: uuid,

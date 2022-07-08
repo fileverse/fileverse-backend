@@ -3,7 +3,7 @@ const _services = {
   File: require('./file'),
   Comment: require('./comment'),
   Audience: require('./audience'),
-  Analytics: require('./analytics'),
+  Log: require('./log'),
 };
 
 module.exports = _services;

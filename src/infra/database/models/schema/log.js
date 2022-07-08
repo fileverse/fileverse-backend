@@ -1,20 +1,20 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const _analytics = {};
+const _log = {};
 
-_analytics.schema = new Schema({
+_log.schema = new Schema({
   eventName: { type: String, required: true },
   fileUuid: { type: String, required: true },
   timeStamp: { type: Date, required: true, default: Date.now },
 });
 
-_analytics.schema.pre('save', function (next) {
+_log.schema.pre('save', function (next) {
   this.timeStamp = Date.now();
   next();
 });
 
-_analytics.schema.methods.safeObject = function () {
+_log.schema.methods.safeObject = function () {
   const safeFields = ['_id', 'eventName', 'fileUuid', 'timeStamp'];
   const newSafeObject = {};
   safeFields.forEach((elem) => {
@@ -24,6 +24,6 @@ _analytics.schema.methods.safeObject = function () {
   return newSafeObject;
 };
 
-_analytics.model = mongoose.model('analytics', _analytics.schema);
+_log.model = mongoose.model('logs', _log.schema);
 
-module.exports = _analytics;
+module.exports = _log;
