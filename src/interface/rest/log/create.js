@@ -1,4 +1,4 @@
-const { Analytics } = require('../../../domain');
+const { Log } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
@@ -11,7 +11,7 @@ const createValidation = {
 
 async function create(req, res) {
   const { eventName, fileUuid } = req.body;
-  const createdData = await Analytics.create(eventName, fileUuid);
+  const createdData = await Log.create(eventName, fileUuid);
   res.json(createdData);
 }
 
