@@ -1,7 +1,7 @@
-const { Analytics } = require('../../infra/database/models');
+const { Log } = require('../../infra/database/models');
 
 async function analytics(address) {
-  const visits = await Analytics.aggregate([
+  const visits = await Log.aggregate([
     {
       $match: {
         $expr: {
