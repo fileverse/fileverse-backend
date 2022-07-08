@@ -32,7 +32,11 @@ router.get(
   // asyncHandlerArray([validateRecaptcha, canViewFile]),
   asyncHandlerArray(get),
 );
-router.get('/:uuid/analytics', asyncHandlerArray(analytics));
+router.get(
+  '/:uuid/analytics',
+  asyncHandler(canViewFile),
+  asyncHandlerArray(analytics),
+);
 router.post(
   '/:uuid/edit',
   asyncHandlerArray([validateRecaptcha, canEditFile]),
