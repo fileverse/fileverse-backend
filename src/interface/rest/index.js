@@ -7,6 +7,7 @@ const content = require('./content');
 const comment = require('./comment');
 const audience = require('./audience');
 const org = require('./org');
+const analytics = require('./analytics');
 
 router.use('/account', user);
 router.use('/file', file);
@@ -14,5 +15,6 @@ router.use('/content', content);
 router.use('/comment', comment);
 router.use('/audience', audience);
 router.use('/org', org);
+router.use('/analytics', analytics);
 
 module.exports = router;

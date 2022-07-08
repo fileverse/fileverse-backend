@@ -11,6 +11,7 @@ const create = require('./create');
 const edit = require('./edit');
 const get = require('./get');
 const remove = require('./remove');
+const analytics = require('./analytics');
 // middlewares
 const {
   canEditFile,
@@ -31,6 +32,7 @@ router.get(
   // asyncHandlerArray([validateRecaptcha, canViewFile]),
   asyncHandlerArray(get),
 );
+router.get('/:uuid/analytics', asyncHandlerArray(analytics));
 router.post(
   '/:uuid/edit',
   asyncHandlerArray([validateRecaptcha, canEditFile]),
