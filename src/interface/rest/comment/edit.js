@@ -16,6 +16,7 @@ async function edit(req, res) {
   const { text } = req.body;
   const { userId } = req;
   const { shortId, uuid } = req.params;
+  // TODO: Subdomain Support
   const updatedComment = await Comment.edit({
     shortId,
     text,

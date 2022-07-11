@@ -12,6 +12,7 @@ const removeValidation = {
 async function remove(req, res) {
   const { shortId, uuid } = req.params;
   const { userId } = req;
+  // TODO: Subdomain Support
   await Comment.remove({ shortId, userId, fileUuid: uuid });
   res.json({ message: 'deleted successfully' });
 }

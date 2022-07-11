@@ -11,6 +11,7 @@ const addAvatarValidation = {
 async function addAvatar(req, res) {
   const { userId } = req;
   const { address } = req.params;
+  // TODO: Subdomain Support
   const imgLink = await User.addAvatar({
     userId,
     address,
