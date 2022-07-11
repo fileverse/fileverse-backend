@@ -10,6 +10,7 @@ const analyticsValidation = {
 
 async function analytics(req, res) {
   const { uuid } = req.params;
+  // TODO: Subdomain Support
   res.json(await File.analytics(uuid));
 }
 

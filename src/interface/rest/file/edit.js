@@ -25,6 +25,7 @@ async function edit(req, res) {
   const { uuid } = req.params;
   const { name, token, slug, description } = req.body;
   const { address } = req;
+  // TODO: Subdomain Support
   const updatedFile = await File.edit(uuid, {
     file: req.files && req.files.file,
     name,

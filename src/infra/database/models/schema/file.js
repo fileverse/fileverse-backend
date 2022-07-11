@@ -11,6 +11,7 @@ const VersionSchema = new Schema({
   s3Url: { type: String, trim: true },
   s3Key: { type: String, trim: true },
   mimetype: { type: String, trim: true },
+  encryptedDataKey: { type: String, trim: true },
   version: { type: Number },
 });
 

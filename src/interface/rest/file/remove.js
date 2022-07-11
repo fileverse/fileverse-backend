@@ -10,6 +10,7 @@ const removeValidation = {
 
 async function remove(req, res) {
   const { uuid } = req.params;
+  // TODO: Subdomain Support
   const result = await File.remove(uuid);
   res.json(result);
 }
