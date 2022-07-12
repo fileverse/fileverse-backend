@@ -7,6 +7,16 @@ const encryptStream = (stream, password) => {
   return stream.pipe(encrypt);
 };
 
+const encryptString = (string, password) => {
+  let encrypt = crypto.createCipher(algorithm, password);
+  return encrypt.update(string);
+};
+
+const decryptString = (encryptedString, password) => {
+  let encrypt = crypto.createDecipher(algorithm, password);
+  return encrypt.update(encryptedString);
+};
+
 const decryptStream = (stream, password) => {
   let decrypt = crypto.createDecipher(algorithm, password);
   return stream.pipe(decrypt);
@@ -15,4 +25,6 @@ const decryptStream = (stream, password) => {
 module.exports = {
   encryptStream,
   decryptStream,
+  encryptString,
+  decryptString,
 };

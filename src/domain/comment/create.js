@@ -1,6 +1,9 @@
 const short = require('short-uuid');
 const { Comment, File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
+const getChatKey = require('./getChatKey');
+const upload = require('./upload');
+const { encryptString } = require('../../infra/utils/stream');
 
 async function create({ userId, fileUuid, text, address }) {
   const shortId = short.generate();
@@ -14,11 +17,25 @@ async function create({ userId, fileUuid, text, address }) {
     });
   }
 
+  // get chat encryption key of file
+  const chatKey = await getChatKey(file.uuid);
+  // encrypt chat content using the above key
+  const encryptedText = await encryptString(text, chatKey);
+  // store the chat content to ipfs and database
+  const { ipfsUrl, ipfsHash, ipfsStorage, mimetype } = await upload(
+    encryptedText,
+  );
+
   const comment = await new Comment({
     shortId,
     userId,
     fileId: file._id,
-    text,
+    text: encryptedText,
+    ipfsUrl,
+    ipfsHash,
+    ipfsStorage,
+    mimetype,
+    encrypted: true,
     fileUuid: file.uuid,
     by: address,
   }).save();
