@@ -7,4 +7,5 @@ module.exports = {
   permission: require('./permission'),
   content: require('./content'),
   remove: require('./remove'),
+  analytics: require('./analytics'),
 };

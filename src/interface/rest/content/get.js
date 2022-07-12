@@ -4,6 +4,8 @@ const { File } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
+const { Log } = require('../../../domain');
+
 const getValidation = {
   params: Joi.object({
     uuid: Joi.string().required(),
@@ -23,6 +25,7 @@ async function get(req, res) {
     header['Content-Disposition'] = `attachment; filename="${qs.escape(
       filename,
     )}"`;
+    await Log.create('download', uuid);
   }
   res.writeHead(200, header);
   contentStream.pipe(res);
