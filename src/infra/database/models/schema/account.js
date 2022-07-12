@@ -11,6 +11,7 @@ _account.schema = new Schema(
     email: { type: String, trim: true, lowercase: true },
     description: { type: String, trim: true },
     image: { type: String },
+    subdomain: [{ type: String, required: true, trim: true }],
     isPaid: { type: Boolean, default: false },
 
     // system generated
@@ -33,6 +34,7 @@ _account.schema.methods.safeObject = function () {
     'name',
     'address',
     'email',
+    'subdomain',
     'createdAt',
     'description',
     'image',

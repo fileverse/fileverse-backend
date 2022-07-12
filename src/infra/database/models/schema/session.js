@@ -10,7 +10,12 @@ _session.schema = new Schema(
       ref: 'accounts',
     },
     address: { type: String, required: true, lowercase: true },
-
+    subdomain: {
+      type: String,
+      required: true,
+      trim: true,
+      sparse: true,
+    },
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
   },
@@ -19,7 +24,7 @@ _session.schema = new Schema(
 );
 
 _session.schema.methods.safeObject = function () {
-  const safeFields = ['_id', 'userId', 'address', 'createdAt'];
+  const safeFields = ['_id', 'userId', 'address', 'subdomain', 'createdAt'];
   const newSafeObject = {};
   safeFields.forEach((elem) => {
     // eslint-disable-next-line security/detect-object-injection

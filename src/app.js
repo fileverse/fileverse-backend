@@ -16,11 +16,15 @@ const Agendash = require('agendash');
 const config = require('../config');
 const { errorHandler } = require('./interface/rest/middlewares');
 const auth = require('./infra/utils/auth');
+const Headers = require('./infra/utils/headers');
 const router = require('./interface/rest');
 const agenda = require('./interface/cron/index');
 
 // Express App
 const app = express();
+
+// header processor
+const headers = new Headers();
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,6 +52,8 @@ app.use(
   }),
   Agendash(agenda),
 );
+
+app.use(headers.process);
 
 app.use(auth.verifyToken);
 

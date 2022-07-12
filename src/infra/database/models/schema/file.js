@@ -56,6 +56,12 @@ _file.schema = new Schema(
     token: TokenSchema,
     slug: { type: String, trim: true, unique: true },
     description: { type: String, trim: true },
+    subdomain: {
+      type: String,
+      required: true,
+      trim: true,
+      sparse: true,
+    },
 
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
