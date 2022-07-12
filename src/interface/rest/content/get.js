@@ -15,6 +15,7 @@ const getValidation = {
 async function get(req, res) {
   const { uuid } = req.params;
   const { download } = req.query;
+  // TODO: Subdomain Support
   const { contentStream, mimetype, name } = await File.content(uuid);
   const extension = mime.extension(mimetype);
   const filename = `${name}.${extension}`;

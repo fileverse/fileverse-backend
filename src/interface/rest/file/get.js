@@ -23,6 +23,7 @@ const getValidation = {
 
 async function get(req, res) {
   const { uuid } = req.params;
+  // TODO: Subdomain Support
   const file = await File.get(uuid);
   file.currentPermission = await File.permission({
     uuid,

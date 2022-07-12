@@ -15,6 +15,7 @@ async function create(req, res) {
   const { text } = req.body;
   const { userId, address } = req;
   const { uuid } = req.params;
+  // TODO: Subdomain Support
   const createdComment = await Comment.create({
     userId,
     text,

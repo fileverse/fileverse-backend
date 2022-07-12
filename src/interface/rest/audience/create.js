@@ -16,6 +16,7 @@ const createValidation = {
 async function create(req, res) {
   const { address, userId } = req;
   const { addressList, inputType, fileUuid } = req.body;
+  // TODO: Subdomain Support
   const result = await Audience.create({
     owner: userId,
     ownerAddress: address,

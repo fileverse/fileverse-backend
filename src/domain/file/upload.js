@@ -8,9 +8,9 @@ const s3 = new S3();
 const kms = new KMS();
 const ipfs = new IPFS();
 
-async function upload(file) {
+async function upload(file, encryptionContext) {
   const { name, mimetype, data } = file;
-  const dataKey = await kms.generateDataKey();
+  const dataKey = await kms.generateDataKey({ encryptionContext });
   const stream = Readable.from(data);
   const encryptedStreamWeb3Storage = Readable.from(
     encryptStream(stream, dataKey.Plaintext),
@@ -31,6 +31,7 @@ async function upload(file) {
     s3Url: s3File && s3File.s3Url,
     s3Key: s3File && s3File.s3Key,
     encryptedDataKey: dataKey.CiphertextBlob,
+    encryptionContext,
     mimetype,
   };
 }

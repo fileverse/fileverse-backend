@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const upload = require('./upload');
 const { File, Account } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
+const Encryption = require('../../infra/utils/encryption');
 
 async function checkLimits({ owner }) {
   const allCreatedFiles = await File.find({}).count();
@@ -27,7 +28,7 @@ async function checkLimits({ owner }) {
   return;
 }
 
-async function create({ name, file, owner, slug, description }) {
+async function create({ name, file, owner, slug, description, subdomain }) {
   if (file.size > (parseInt(config.FILE_SIZE_LIMIT, 10) || 20 * 1024 * 1024)) {
     return ErrorHandler.throwError({
       code: 403,
@@ -50,6 +51,10 @@ async function create({ name, file, owner, slug, description }) {
   } else {
     slug = uuid;
   }
+  const encryptionContext = Encryption.getEncryptionContextFromFile({
+    uuid,
+    subdomain,
+  });
   const {
     s3Url,
     s3Key,
@@ -58,7 +63,7 @@ async function create({ name, file, owner, slug, description }) {
     ipfsStorage,
     mimetype,
     encryptedDataKey,
-  } = await upload(file);
+  } = await upload(file, encryptionContext);
   const savedFile = await new File({
     uuid,
     name,
@@ -74,6 +79,7 @@ async function create({ name, file, owner, slug, description }) {
     slug,
     description,
     version: [],
+    subdomain,
   }).save();
   return savedFile.safeObject();
 }

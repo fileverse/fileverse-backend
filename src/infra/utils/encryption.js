@@ -17,6 +17,17 @@ class Encryption {
     const secret = this.jwtSecret;
     return jwt.verify(token, secret);
   }
+
+  static getEncryptionContextFromFile({ subdomain, uuid } = {}) {
+    let context = null;
+    if (subdomain) {
+      context = {
+        subdomain,
+        uuid,
+      };
+    }
+    return context;
+  }
 }
 
 module.exports = Encryption;

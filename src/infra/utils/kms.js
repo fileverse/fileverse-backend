@@ -14,11 +14,14 @@ class KMSService {
     });
   }
 
-  async generateDataKey() {
+  async generateDataKey({ encryptionContext } = {}) {
     const params = {
       KeyId: this.kmsKey,
       KeySpec: 'AES_256',
     };
+    if (encryptionContext) {
+      params.EncryptionContext = encryptionContext;
+    }
     const data = await this.kms.generateDataKey(params).promise();
     return {
       Plaintext: data.Plaintext.toString('base64'),
@@ -26,11 +29,14 @@ class KMSService {
     };
   }
 
-  async decrypt({ encryptedDataKey }) {
+  async decrypt({ encryptedDataKey, encryptionContext = null }) {
     const params = {
       CiphertextBlob: Buffer.from(encryptedDataKey, 'base64'),
       KeyId: this.kmsKey,
     };
+    if (encryptionContext) {
+      params.EncryptionContext = encryptionContext;
+    }
     const dataKey = await this.kms.decrypt(params).promise();
     return dataKey.Plaintext.toString('base64');
   }

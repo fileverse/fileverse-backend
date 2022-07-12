@@ -10,6 +10,7 @@ const getAccountValidation = {
 
 async function getAccount(req, res) {
   const { address } = req.params;
+  // TODO: Subdomain Support
   const account = await User.getAccount({ address: address.toLowerCase() });
   res.json(account);
 }

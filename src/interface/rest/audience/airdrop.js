@@ -20,7 +20,7 @@ async function airdrop(req, res) {
   const { address, userId } = req;
   const { name, symbol, addressList, description, inputType, fileUuid } =
     req.body;
-
+  // TODO: Subdomain Support
   const foundAudience = await Audience.airdrop({
     name,
     symbol,

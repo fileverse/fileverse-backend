@@ -4,6 +4,7 @@ const IPFS = require('../../infra/utils/ipfs');
 const S3 = require('../../infra/utils/s3');
 const KMS = require('../../infra/utils/kms');
 const { decryptStream } = require('../../infra/utils/stream');
+const Encryption = require('../../infra/utils/encryption');
 const ipfs = new IPFS();
 const s3 = new S3();
 const kms = new KMS();
@@ -27,7 +28,11 @@ async function content(uuid) {
   } else {
     stream = await ipfs.get({ ipfsUrl, ipfsHash, ipfsStorage });
   }
-  const dataKeyPlain = await kms.decrypt({ encryptedDataKey });
+  const encryptionContext = await Encryption.getEncryptionContextFromFile(file);
+  const dataKeyPlain = await kms.decrypt({
+    encryptedDataKey,
+    encryptionContext,
+  });
   const decryptedStream = Readable.from(decryptStream(stream, dataKeyPlain));
   return {
     name,
