@@ -14,7 +14,8 @@ const basicAuth = require('express-basic-auth');
 const Agendash = require('agendash');
 
 const config = require('../config');
-const { errorHandler } = require('./interface/rest/middlewares');
+const { errorHandler, validateOrg } = require('./interface/rest/middlewares');
+
 const auth = require('./infra/utils/auth');
 const Headers = require('./infra/utils/headers');
 const router = require('./interface/rest');
@@ -56,6 +57,8 @@ app.use(
 app.use(headers.process);
 
 app.use(auth.verifyToken);
+
+app.use(validateOrg);
 
 // This is to check if the service is online or not
 app.use('/ping', function (req, res) {
