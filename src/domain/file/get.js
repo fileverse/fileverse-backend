@@ -1,18 +1,28 @@
 const ErrorHandler = require('../../infra/utils/errorHandler');
-const { File } = require('../../infra/database/models');
+const { File, Account } = require('../../infra/database/models');
 
 async function get(uuid, safe = true) {
-  const foundFile = await File.findOne({ $or: [{ uuid }, { slug: uuid }] });
+  let foundFile = await File.findOne({ $or: [{ uuid }, { slug: uuid }] });
   if (!foundFile) {
     return ErrorHandler.throwError({
       code: 404,
       message: 'Cannot find the file by this uuid',
     });
   }
-  if (safe) {
-    return foundFile.safeObject();
+
+  let owner = {};
+
+  if (foundFile.owner) {
+    owner = await Account.findOne(
+      { _id: foundFile.owner },
+      { __v: 0, createdAt: 0, _id: 0 },
+    );
   }
-  return foundFile.toObject();
+
+  if (safe) {
+    return { ...foundFile.safeObject(), owner };
+  }
+  return { ...foundFile.toObject(), owner };
 }
 
 module.exports = get;
