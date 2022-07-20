@@ -10,7 +10,7 @@ async function get(uuid, safe = true) {
     });
   }
 
-  let owner = {};
+  let owner = null;
 
   if (foundFile.owner) {
     owner = await Account.findOne(
