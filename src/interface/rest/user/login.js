@@ -20,6 +20,7 @@ async function login(req, res) {
       message,
       signature,
       address: address.toLowerCase(),
+      subdomain: req.subdomain,
     })) || {};
   res.json({ token });
 }

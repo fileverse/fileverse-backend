@@ -22,6 +22,12 @@ _comment.schema = new Schema(
     },
     fileUuid: { type: String },
     by: { type: String },
+    subdomain: {
+      type: String,
+      required: true,
+      trim: true,
+      sparse: true,
+    },
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
     updatedAt: { type: Number, default: Date.now },
@@ -45,6 +51,7 @@ _comment.schema.methods.safeObject = function () {
     'text',
     'fileUuid',
     'by',
+    'subdomain',
     'createdAt',
     'updatedAt',
   ];

@@ -10,6 +10,7 @@ const getValidation = {
 
 async function get(req, res) {
   const { uuid } = req.params;
+  // TODO: Subdomain Support
   const comments = await Comment.get(uuid);
   res.json(comments);
 }

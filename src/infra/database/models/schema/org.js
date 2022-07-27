@@ -1,19 +1,16 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const _account = {};
+const _org = {};
 
-_account.schema = new Schema(
+_org.schema = new Schema(
   {
-    username: { type: String, trim: true, unique: true },
-    name: { type: String, trim: true },
     address: { type: String, required: true, lowercase: true },
-    email: { type: String, trim: true, lowercase: true },
+    subdomain: { type: String, trim: true },
+    name: { type: String, trim: true },
     description: { type: String, trim: true },
-    image: { type: String },
-    subdomain: [{ type: String, required: true, trim: true }],
-    isPaid: { type: Boolean, default: false },
-
+    logo: { type: String },
+    cover: { type: String },
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
   },
@@ -21,23 +18,22 @@ _account.schema = new Schema(
   { runSettersOnQuery: true },
 );
 
-_account.schema.pre('save', function (next) {
+_org.schema.pre('save', function (next) {
   const user = this;
   user.updatedAt = Date.now();
   next();
 });
 
-_account.schema.methods.safeObject = function () {
+_org.schema.methods.safeObject = function () {
   const safeFields = [
     '_id',
-    'username',
-    'name',
     'address',
-    'email',
     'subdomain',
-    'createdAt',
+    'name',
     'description',
-    'image',
+    'logo',
+    'cover',
+    'createdAt',
   ];
   const newSafeObject = {};
   safeFields.forEach((elem) => {
@@ -47,6 +43,6 @@ _account.schema.methods.safeObject = function () {
   return newSafeObject;
 };
 
-_account.model = mongoose.model('accounts', _account.schema);
+_org.model = mongoose.model('orgs', _org.schema);
 
-module.exports = _account;
+module.exports = _org;

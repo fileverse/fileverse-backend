@@ -1,6 +1,6 @@
+const { Organization } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
-const mocksOrgs = require('./org.json');
 
 const getOrgValidation = {
   params: Joi.object({
@@ -9,9 +9,8 @@ const getOrgValidation = {
 };
 
 async function getOrg(req, res) {
-  const { address } = req.body;
-  const org = mocksOrgs[0];
-  org.address = address;
+  const { address } = req.params;
+  const org = await Organization.getByAddress(address);
   res.json(org);
 }
 

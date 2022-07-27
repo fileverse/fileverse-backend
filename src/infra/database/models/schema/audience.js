@@ -52,6 +52,12 @@ _audience.schema = new Schema(
       createdOnFileverse: { type: Boolean, default: true },
       managedOnFileverse: { type: Boolean, default: true },
     },
+    subdomain: {
+      type: String,
+      required: true,
+      trim: true,
+      sparse: true,
+    },
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
     updatedAt: { type: Number, default: Date.now },
@@ -75,6 +81,7 @@ _audience.schema.methods.safeObject = function () {
     'owner',
     'members',
     'token',
+    'subdomain',
     'explorerLink',
     'createdAt',
     'updatedAt',

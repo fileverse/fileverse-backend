@@ -11,6 +11,7 @@ const VersionSchema = new Schema({
   s3Url: { type: String, trim: true },
   s3Key: { type: String, trim: true },
   mimetype: { type: String, trim: true },
+  encryptedDataKey: { type: String, trim: true },
   version: { type: Number },
 });
 
@@ -55,6 +56,12 @@ _file.schema = new Schema(
     token: TokenSchema,
     slug: { type: String, trim: true, unique: true },
     description: { type: String, trim: true },
+    subdomain: {
+      type: String,
+      required: true,
+      trim: true,
+      sparse: true,
+    },
 
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },

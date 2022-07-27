@@ -10,6 +10,7 @@ const getValidation = {
 
 async function get(req, res) {
   const { uuid } = req.params;
+  // TODO: Subdomain Support
   const foundAudience = await Audience.get(uuid);
   res.json(foundAudience);
 }

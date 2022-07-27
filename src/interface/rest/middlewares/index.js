@@ -12,4 +12,5 @@ module.exports = {
   canViewOrg: require('./canViewOrg'),
   canCreateOrg: require('./canCreateOrg'),
   canEditOrg: require('./canEditOrg'),
+  validateOrg: require('./validateOrg'),
 };
