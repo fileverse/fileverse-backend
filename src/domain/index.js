@@ -5,6 +5,7 @@ const _services = {
   Audience: require('./audience'),
   Log: require('./log'),
   Organization: require('./org'),
+  Feedback: require('./feedback'),
 };
 
 module.exports = _services;
