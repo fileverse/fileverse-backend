@@ -11,8 +11,12 @@ const createValidation = {
 };
 
 async function create(req, res) {
-  const { url, comment, address } = req.body;
-  const createdData = await Feedback.create({ url, comment, address });
+  const { url, comment } = req.body;
+  const createdData = await Feedback.create({
+    url,
+    comment,
+    address: req.address,
+  });
   res.json(createdData);
 }
 
