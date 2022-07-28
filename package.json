@@ -43,6 +43,7 @@
     "express-basic-auth": "^1.2.1",
     "express-fileupload": "^1.2.1",
     "express-validation": "^3.0.8",
+    "file-type": "^16.5.3",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",

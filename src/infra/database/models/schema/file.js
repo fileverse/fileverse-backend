@@ -41,6 +41,7 @@ _file.schema = new Schema(
     s3Key: { type: String, trim: true },
     encryptedDataKey: { type: String, trim: true },
     mimetype: { type: String, trim: true },
+    extension: { type: String, trim: true },
     currentVersion: { type: Number, default: 1 },
     permission: {
       type: String,
@@ -80,6 +81,7 @@ _file.schema.methods.safeObject = function () {
     'uuid',
     'currentVersion',
     'mimetype',
+    'extension',
     'name',
     'permission',
     'ipfsUrl',

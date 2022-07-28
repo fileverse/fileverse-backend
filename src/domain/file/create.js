@@ -3,6 +3,8 @@ const { v4: uuidv4 } = require('uuid');
 const upload = require('./upload');
 const { File, Account } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
+const { fromBuffer } = require('file-type');
+const mime = require('mime-types');
 
 async function checkLimits({ owner }) {
   const allCreatedFiles = await File.find({}).count();
@@ -59,9 +61,14 @@ async function create({ name, file, owner, slug, description }) {
     mimetype,
     encryptedDataKey,
   } = await upload(file);
+
+  const fileType = await fromBuffer(file.data);
+  const fileName = name.slice(0, name.lastIndexOf('.'));
+  const extension = (fileType && fileType.ext) || mime.extension(mimetype);
+
   const savedFile = await new File({
     uuid,
-    name,
+    name: fileName,
     url: `${config.SERVER_URL}/content/${uuid}`,
     s3Url,
     s3Key,
@@ -70,6 +77,7 @@ async function create({ name, file, owner, slug, description }) {
     ipfsStorage,
     encryptedDataKey,
     mimetype,
+    extension,
     owner,
     slug,
     description,
