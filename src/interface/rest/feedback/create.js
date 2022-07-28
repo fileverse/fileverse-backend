@@ -6,7 +6,6 @@ const createValidation = {
   body: Joi.object({
     url: Joi.string().required(),
     comment: Joi.string().required(),
-    address: Joi.string().optional(),
   }),
 };
 
