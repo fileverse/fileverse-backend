@@ -29,9 +29,12 @@ const TokenSchema = new Schema({
   audienceUuid: { type: String },
 });
 
-const SettingsSchema = new Schema({
-  downloadable: { type: Boolean, default: true },
-});
+const SettingsSchema = new Schema(
+  {
+    downloadable: { type: Boolean, default: true },
+  },
+  { _id: false },
+);
 
 _file.schema = new Schema(
   {
@@ -46,7 +49,7 @@ _file.schema = new Schema(
     encryptedDataKey: { type: String, trim: true },
     mimetype: { type: String, trim: true },
     currentVersion: { type: Number, default: 1 },
-    settings: SettingsSchema,
+    settings: { type: SettingsSchema, default: { downloadable: true } },
     permission: {
       type: String,
       enum: ['public', 'private', 'unlisted', 'token-gated'],

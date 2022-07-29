@@ -10,6 +10,7 @@ const editValidation = {
     name: Joi.string().optional().allow(''),
     slug: Joi.string().optional(),
     description: Joi.string().optional().max(500),
+    downloadable: Joi.string().optional(),
     token: Joi.object({
       name: Joi.string().optional(),
       image: Joi.string().optional().allow(null, ''),
@@ -23,7 +24,7 @@ const editValidation = {
 
 async function edit(req, res) {
   const { uuid } = req.params;
-  const { name, token, slug, description } = req.body;
+  const { name, token, slug, description, downloadable } = req.body;
   const { address } = req;
   const updatedFile = await File.edit(uuid, {
     file: req.files && req.files.file,
@@ -32,6 +33,7 @@ async function edit(req, res) {
     address,
     slug,
     description,
+    downloadable,
   });
   res.json(updatedFile);
 }

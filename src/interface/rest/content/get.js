@@ -15,13 +15,13 @@ const getValidation = {
 async function get(req, res) {
   const { uuid } = req.params;
   const { download } = req.query;
-  const { contentStream, mimetype, name } = await File.content(uuid);
+  const { contentStream, mimetype, name, settings } = await File.content(uuid);
   const extension = mime.extension(mimetype);
   const filename = `${name}.${extension}`;
   const header = {
     'Content-Type': mimetype,
   };
-  if (download) {
+  if (download && settings.downloadable) {
     header['Content-Disposition'] = `attachment; filename="${qs.escape(
       filename,
     )}"`;
