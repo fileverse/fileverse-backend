@@ -2,7 +2,6 @@ const ErrorHandler = require('../../infra/utils/errorHandler');
 const upload = require('./upload');
 const { File } = require('../../infra/database/models');
 const config = require('../../../config');
-const { fromBuffer } = require('file-type');
 const mime = require('mime-types');
 
 function getExplorerLink(contractAddress, chain) {
@@ -47,8 +46,10 @@ async function edit(uuid, { name, file, token, slug, description }) {
     foundFile.token = token;
   }
   if (file) {
-    const fileType = await fromBuffer(file.data);
-    const extension = (fileType && fileType.ext) || mime.extension(mimetype);
+    let extension = file.name.split('.').pop();
+    if (file.mimetype.includes('image')) {
+      extension = mime.extension(file.mimetype);
+    }
     const oldVersion = {
       s3Url: foundFile.s3Url,
       s3Key: foundFile.s3Key,
