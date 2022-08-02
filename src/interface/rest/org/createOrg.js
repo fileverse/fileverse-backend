@@ -1,17 +1,18 @@
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
-const mocksOrgs = require('./org.json');
+const { Org } = require('../../../domain');
 
 const createOrgValidation = {
   body: Joi.object({
-    address: Joi.string().required(),
+    subdomain: Joi.string().required(),
+    name: Joi.string().required(),
+    description: Joi.string().optional(),
   }),
 };
 
 async function createOrg(req, res) {
-  const { address } = req.body;
-  const org = mocksOrgs[0];
-  org.address = address;
+  const { subdomain, name, description } = req.body;
+  const org = await Org.create({ subdomain, name, description });
   res.json(org);
 }
 

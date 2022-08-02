@@ -1,4 +1,4 @@
-const { Organization } = require('../../../domain');
+const { Org } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
@@ -10,7 +10,7 @@ const getOrgValidation = {
 
 async function getOrg(req, res) {
   const { address } = req.params;
-  const org = await Organization.getByAddress(address);
+  const org = await Org.getByAddress(address);
   res.json(org);
 }
 

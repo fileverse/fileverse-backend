@@ -1,4 +1,4 @@
-const { Organization } = require('../../../domain');
+const { Org } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
@@ -10,7 +10,7 @@ const getOrgAnalyticsValidation = {
 
 async function getOrgAnalytics(req, res) {
   const { address } = req.params;
-  res.json(await Organization.analytics(address));
+  res.json(await Org.analytics(address));
 }
 
 module.exports = [validate(getOrgAnalyticsValidation), getOrgAnalytics];

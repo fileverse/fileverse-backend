@@ -5,12 +5,15 @@ const _org = {};
 
 _org.schema = new Schema(
   {
-    address: { type: String, required: true, lowercase: true },
+    address: { type: String, lowercase: true },
     subdomain: { type: String, trim: true },
     name: { type: String, trim: true },
     description: { type: String, trim: true },
     logo: { type: String },
     cover: { type: String },
+    deployTxHash: { type: String },
+    deployTxLink: { type: String },
+    deployTxStatus: { type: String },
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
   },
