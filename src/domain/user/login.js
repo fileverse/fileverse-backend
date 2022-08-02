@@ -10,16 +10,20 @@ async function verifySignature({ address, message, signature }) {
   return adr.toLowerCase() === address.toLowerCase();
 }
 
-async function getAuthToken({ address, userId, sessionId }) {
+async function getAuthToken({ address, userId, sessionId, subdomain }) {
   const encryption = new Encryption(config.JWT_SECRET);
-  return encryption.signToken({
+  const tokenContent = {
     address: address.toLowerCase(),
     userId,
     sessionId,
-  });
+  };
+  if (subdomain) {
+    tokenContent.subdomain = subdomain.toLowerCase();
+  }
+  return encryption.signToken(tokenContent);
 }
 
-async function login({ address, signature, message }) {
+async function login({ address, signature, message, subdomain }) {
   const isSignatureValid = await verifySignature({
     address,
     message,
@@ -31,9 +35,12 @@ async function login({ address, signature, message }) {
       message: `Signature is not valid for address: ${address}`,
     });
   }
-  const userId = await createAccount({ address });
-  const sessionId = await createSession({ address, userId });
-  return { token: await getAuthToken({ address, userId, sessionId }), userId };
+  const userId = await createAccount({ address, subdomain });
+  const sessionId = await createSession({ address, userId, subdomain });
+  return {
+    token: await getAuthToken({ address, userId, sessionId, subdomain }),
+    userId,
+  };
 }
 
 module.exports = login;

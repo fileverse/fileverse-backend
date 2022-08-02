@@ -11,7 +11,7 @@ function validateOrg(req, res, next) {
           requestId: req.requestId,
         });
       }
-      req.subdomain = subdomain;
+      req.subdomain = subdomain.toLowerCase();
       req.org = org;
       next();
     });

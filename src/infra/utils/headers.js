@@ -11,7 +11,7 @@ class Header {
     const recaptchaToken = req.headers['recaptchatoken'];
     const processedHeaders = {
       token: token || null,
-      subdomain: subdomain || null,
+      subdomain: (subdomain && subdomain.toLowerCase()) || null,
       recaptchaToken: recaptchaToken || null,
     };
     req.processedHeaders = processedHeaders;
