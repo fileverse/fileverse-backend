@@ -20,6 +20,7 @@ async function content(uuid) {
     mimetype,
     extension,
     encryptedDataKey,
+    settings,
   } = file;
   let fileContent = await s3.get({ s3Key, s3Url });
   let stream = null;
@@ -35,6 +36,7 @@ async function content(uuid) {
     extension,
     contentStream: decryptedStream,
     mimetype,
+    settings,
   };
 }
 

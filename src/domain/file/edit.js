@@ -17,7 +17,10 @@ function getExplorerLink(contractAddress, chain) {
   return '';
 }
 
-async function edit(uuid, { name, file, token, slug, description }) {
+async function edit(
+  uuid,
+  { name, file, token, slug, description, downloadable },
+) {
   const foundFile = await File.findOne({ uuid });
   if (!foundFile) {
     return ErrorHandler.throwError({
@@ -85,6 +88,9 @@ async function edit(uuid, { name, file, token, slug, description }) {
   }
   if (description) {
     foundFile.description = description;
+  }
+  if (downloadable !== undefined) {
+    foundFile.settings.downloadable = downloadable === 'true';
   }
   await foundFile.save();
   return foundFile.safeObject();

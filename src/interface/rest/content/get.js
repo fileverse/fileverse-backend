@@ -21,7 +21,7 @@ async function get(req, res) {
   const header = {
     'Content-Type': mimetype,
   };
-  if (download) {
+  if (download && settings.downloadable) {
     header['Content-Disposition'] = `attachment; filename="${qs.escape(
       fileName,
     )}"`;

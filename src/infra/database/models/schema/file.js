@@ -29,6 +29,13 @@ const TokenSchema = new Schema({
   audienceUuid: { type: String },
 });
 
+const SettingsSchema = new Schema(
+  {
+    downloadable: { type: Boolean, default: true },
+  },
+  { _id: false },
+);
+
 _file.schema = new Schema(
   {
     uuid: { type: String },
@@ -43,6 +50,7 @@ _file.schema = new Schema(
     mimetype: { type: String, trim: true },
     extension: { type: String, trim: true },
     currentVersion: { type: Number, default: 1 },
+    settings: { type: SettingsSchema, default: { downloadable: true } },
     permission: {
       type: String,
       enum: ['public', 'private', 'unlisted', 'token-gated'],
@@ -83,6 +91,7 @@ _file.schema.methods.safeObject = function () {
     'mimetype',
     'extension',
     'name',
+    'settings',
     'permission',
     'ipfsUrl',
     'ipfsHash',
