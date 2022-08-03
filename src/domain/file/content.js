@@ -18,6 +18,7 @@ async function content(uuid) {
     ipfsUrl,
     ipfsStorage,
     mimetype,
+    extension,
     encryptedDataKey,
   } = file;
   let fileContent = await s3.get({ s3Key, s3Url });
@@ -31,6 +32,7 @@ async function content(uuid) {
   const decryptedStream = Readable.from(decryptStream(stream, dataKeyPlain));
   return {
     name,
+    extension,
     contentStream: decryptedStream,
     mimetype,
   };
