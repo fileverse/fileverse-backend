@@ -18,6 +18,7 @@ async function content(uuid) {
     ipfsUrl,
     ipfsStorage,
     mimetype,
+    extension,
     encryptedDataKey,
     settings,
   } = file;
@@ -32,6 +33,7 @@ async function content(uuid) {
   const decryptedStream = Readable.from(decryptStream(stream, dataKeyPlain));
   return {
     name,
+    extension,
     contentStream: decryptedStream,
     mimetype,
     settings,

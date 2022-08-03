@@ -2,6 +2,7 @@ const ErrorHandler = require('../../infra/utils/errorHandler');
 const upload = require('./upload');
 const { File } = require('../../infra/database/models');
 const config = require('../../../config');
+const mime = require('mime-types');
 
 function getExplorerLink(contractAddress, chain) {
   if (chain === 'gnosis') {
@@ -48,6 +49,10 @@ async function edit(
     foundFile.token = token;
   }
   if (file) {
+    let extension = file.name.split('.').pop();
+    if (file.mimetype.includes('image')) {
+      extension = mime.extension(file.mimetype);
+    }
     const oldVersion = {
       s3Url: foundFile.s3Url,
       s3Key: foundFile.s3Key,
@@ -73,6 +78,7 @@ async function edit(
     foundFile.ipfsUrl = ipfsUrl;
     foundFile.ipfsStorage = ipfsStorage;
     foundFile.mimetype = mimetype;
+    foundFile.extension = extension;
     foundFile.encryptedDataKey = encryptedDataKey;
     foundFile.currentVersion = foundFile.currentVersion + 1;
     foundFile.version.push(oldVersion);
