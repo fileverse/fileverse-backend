@@ -9,6 +9,7 @@ const audience = require('./audience');
 const log = require('./log');
 const org = require('./org');
 const feedback = require('./feedback');
+const stream = require('./stream');
 
 router.use('/account', user);
 router.use('/file', file);
@@ -18,5 +19,6 @@ router.use('/audience', audience);
 router.use('/log', log);
 router.use('/org', org);
 router.use('/feedback', feedback);
+router.use('/stream', stream);
 
 module.exports = router;

@@ -6,6 +6,7 @@ const _services = {
   Log: require('./log'),
   Organization: require('./org'),
   Feedback: require('./feedback'),
+  Stream: require('./stream'),
 };
 
 module.exports = _services;
