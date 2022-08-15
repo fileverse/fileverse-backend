@@ -15,7 +15,8 @@ const getValidation = {
 async function get(req, res) {
   const { uuid } = req.params;
   const { download } = req.query;
-  const { contentStream, mimetype, extension, name } = await File.content(uuid);
+  const { contentStream, mimetype, extension, name, settings } =
+    await File.content(uuid);
   const fileName = `${name}.${extension}`;
 
   const header = {

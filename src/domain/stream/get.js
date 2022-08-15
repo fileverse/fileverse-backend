@@ -23,7 +23,11 @@ async function get({ streamId, ownerAddress, reqAddress }) {
   };
   ownerAddress = ownerAddress.toLowerCase();
   if (ownerAddress === reqAddress) {
-    streamData = { ...streamData, streamKey: data.streamKey };
+    streamData = {
+      ...streamData,
+      streamKey: data.streamKey,
+      record: data.record,
+    };
   }
 
   return streamData;
