@@ -1,7 +1,9 @@
 const config = require('../../../config');
 const axios = require('axios');
+const sessions = require('./sessions');
 
 async function get({ streamId, ownerAddress, reqAddress }) {
+  // get stream data
   const { data } = await axios.get(
     `${config.LIVEPEER_BASE_URL}/api/stream/${streamId}`,
     {
@@ -28,6 +30,12 @@ async function get({ streamId, ownerAddress, reqAddress }) {
       streamKey: data.streamKey,
       record: data.record,
     };
+  }
+
+  //get latest recorded session, if any
+  const session = await sessions(streamId);
+  if (session.length > 0) {
+    streamData = { ...streamData, lastRecordedSession: session[0] };
   }
 
   return streamData;

@@ -11,6 +11,7 @@ const router = express.Router();
 const create = require('./create');
 const get = require('./get');
 const switchRecording = require('./switchRecording');
+const sessions = require('./sessions');
 
 //middlewares
 const { canCreateFile, canViewFile } = require('../middlewares');
@@ -23,7 +24,7 @@ router.post(
 );
 
 router.patch('/:streamId/record', asyncHandlerArray(switchRecording));
-
 router.get('/:streamId', asyncHandler(canViewFile), asyncHandlerArray(get));
+router.get('/:streamId/sessions', asyncHandlerArray(sessions));
 
 module.exports = router;
