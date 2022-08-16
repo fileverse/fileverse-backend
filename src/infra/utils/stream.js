@@ -9,12 +9,16 @@ const encryptStream = (stream, password) => {
 
 const encryptString = (string, password) => {
   let encrypt = crypto.createCipher(algorithm, password);
-  return encrypt.update(string);
+  let encrypted = encrypt.update(string, 'utf8', 'hex');
+  encrypted += encrypt.final('hex');
+  return encrypted;
 };
 
 const decryptString = (encryptedString, password) => {
-  let encrypt = crypto.createDecipher(algorithm, password);
-  return encrypt.update(encryptedString);
+  let decrypt = crypto.createDecipher(algorithm, password);
+  let decrypted = decrypt.update(encryptedString, 'hex', 'utf8');
+  decrypted += decrypt.final('utf8');
+  return decrypted;
 };
 
 const decryptStream = (stream, password) => {

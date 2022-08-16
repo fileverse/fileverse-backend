@@ -20,11 +20,15 @@ async function create({ userId, fileUuid, text, address }) {
   // get chat encryption key of file
   const chatKey = await getChatKey(file.uuid);
   // encrypt chat content using the above key
-  const encryptedText = await encryptString(text, chatKey);
+  const encryptedTextBuffer = await encryptString(text, chatKey);
+  const encryptedText = encryptedTextBuffer.toString();
   // store the chat content to ipfs and database
-  const { ipfsUrl, ipfsHash, ipfsStorage, mimetype } = await upload(
-    encryptedText,
-  );
+  const { ipfsUrl, ipfsHash, ipfsStorage, mimetype } = await upload({
+    userId,
+    fileUuid,
+    text: encryptedText,
+    address,
+  });
 
   const comment = await new Comment({
     shortId,
@@ -39,7 +43,6 @@ async function create({ userId, fileUuid, text, address }) {
     fileUuid: file.uuid,
     by: address,
   }).save();
-
   return comment.safeObject();
 }
 
