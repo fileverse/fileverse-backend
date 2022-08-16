@@ -49,6 +49,7 @@ _comment.schema.methods.safeObject = function () {
     'file',
     'text',
     'fileUuid',
+    'ipfsHash',
     'encrypted',
     'by',
     'createdAt',
