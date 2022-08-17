@@ -3,7 +3,17 @@ const { Comment, File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 const getChatKey = require('./getChatKey');
 const upload = require('./upload');
-const { encryptString } = require('../../infra/utils/stream');
+const { decryptString, encryptString } = require('../../infra/utils/stream');
+
+async function processComment(comment, chatKey) {
+  const safeComment = comment.safeObject();
+  if (safeComment.encrypted) {
+    // decrypt chat content using the above key
+    safeComment.text = await decryptString(safeComment.text, chatKey);
+  }
+  // return the chat content
+  return safeComment;
+}
 
 async function create({ userId, fileUuid, text, address }) {
   const shortId = short.generate();
@@ -43,7 +53,7 @@ async function create({ userId, fileUuid, text, address }) {
     fileUuid: file.uuid,
     by: address,
   }).save();
-  return comment.safeObject();
+  return processComment(comment, chatKey);
 }
 
 module.exports = create;

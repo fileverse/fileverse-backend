@@ -1,7 +1,9 @@
+const NodeCache = require('node-cache');
 const { File } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 const KMS = require('../../infra/utils/kms');
 const kms = new KMS();
+const chatKeyCache = new NodeCache({ stdTTL: 21600 });
 
 async function getChatKey(uuid) {
   const foundFile = await File.findOne({ uuid });
@@ -18,9 +20,14 @@ async function getChatKey(uuid) {
     chatKey = kmsKey.Plaintext;
     await foundFile.save();
   } else {
-    chatKey = await kms.decrypt({
-      encryptedDataKey: foundFile.encryptedChatKey,
-    });
+    chatKey = chatKeyCache.get(foundFile.encryptedChatKey);
+    if (!chatKey) {
+      console.log('cache miss');
+      chatKey = await kms.decrypt({
+        encryptedDataKey: foundFile.encryptedChatKey,
+      });
+      chatKeyCache.set(foundFile.encryptedChatKey, chatKey);
+    }
   }
   return chatKey;
 }
