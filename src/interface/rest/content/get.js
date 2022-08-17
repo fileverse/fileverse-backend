@@ -17,7 +17,10 @@ async function get(req, res) {
   const { download } = req.query;
   const { contentStream, mimetype, extension, name, settings } =
     await File.content(uuid);
-  const fileName = `${name}.${extension}`;
+  let fileName = name;
+  if (extension) {
+    fileName += `.${extension}`;
+  }
 
   const header = {
     'Content-Type': mimetype,
