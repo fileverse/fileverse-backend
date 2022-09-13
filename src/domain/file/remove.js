@@ -1,4 +1,4 @@
-const { File } = require('../../infra/database/models');
+const { File, Audience } = require('../../infra/database/models');
 const ErrorHandler = require('../../infra/utils/errorHandler');
 const S3Service = require('./../../infra/utils/s3');
 const IPFS = require('../../infra/utils/ipfs');
@@ -18,6 +18,7 @@ async function remove(uuid) {
     ipfsHash: foundFile.ipfsHash,
     ipfsStorage: foundFile.ipfsStorage,
   });
+  await Audience.updateMany({ fileUuid: uuid }, { $unset: { fileUuid: '' } });
   await File.deleteOne({ uuid });
   return 'ok';
 }

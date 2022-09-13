@@ -2,6 +2,7 @@ const ErrorHandler = require('../../infra/utils/errorHandler');
 const upload = require('./upload');
 const { File } = require('../../infra/database/models');
 const config = require('../../../config');
+const mime = require('mime-types');
 
 function getExplorerLink(contractAddress, chain) {
   if (chain === 'gnosis') {
@@ -16,7 +17,10 @@ function getExplorerLink(contractAddress, chain) {
   return '';
 }
 
-async function edit(uuid, { name, file, token, slug, description }) {
+async function edit(
+  uuid,
+  { name, file, token, slug, description, downloadable },
+) {
   const foundFile = await File.findOne({ uuid });
   if (!foundFile) {
     return ErrorHandler.throwError({
@@ -45,6 +49,10 @@ async function edit(uuid, { name, file, token, slug, description }) {
     foundFile.token = token;
   }
   if (file) {
+    let extension = file.name.split('.').pop();
+    if (file.mimetype.includes('image')) {
+      extension = mime.extension(file.mimetype);
+    }
     const oldVersion = {
       s3Url: foundFile.s3Url,
       s3Key: foundFile.s3Key,
@@ -70,6 +78,7 @@ async function edit(uuid, { name, file, token, slug, description }) {
     foundFile.ipfsUrl = ipfsUrl;
     foundFile.ipfsStorage = ipfsStorage;
     foundFile.mimetype = mimetype;
+    foundFile.extension = extension;
     foundFile.encryptedDataKey = encryptedDataKey;
     foundFile.currentVersion = foundFile.currentVersion + 1;
     foundFile.version.push(oldVersion);
@@ -79,6 +88,9 @@ async function edit(uuid, { name, file, token, slug, description }) {
   }
   if (description) {
     foundFile.description = description;
+  }
+  if (downloadable !== undefined) {
+    foundFile.settings.downloadable = downloadable === 'true';
   }
   await foundFile.save();
   return foundFile.safeObject();
