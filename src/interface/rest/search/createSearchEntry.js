@@ -1,3 +1,4 @@
+const { Search } = require('../../../domain');
 const { validator } = require('../middlewares');
 const { Joi, validate } = validator;
 
@@ -11,6 +12,8 @@ const createSearchEntryValidation = {
 };
 
 async function createSearchEntry(req, res) {
+  const entry = req.body;
+  await Search.searchEntry(entry);
   res.json({
     success: true,
   });

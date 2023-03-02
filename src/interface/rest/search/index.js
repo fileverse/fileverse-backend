@@ -1,6 +1,4 @@
-const {
-  asyncHandlerArray,
-} = require('../../../infra/utils/asyncHandler');
+const { asyncHandlerArray } = require('../../../infra/utils/asyncHandler');
 const express = require('express');
 const router = express.Router();
 
