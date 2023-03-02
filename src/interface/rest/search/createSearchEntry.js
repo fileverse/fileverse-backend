@@ -11,7 +11,9 @@ const createSearchEntryValidation = {
 };
 
 async function createSearchEntry(req, res) {
-  res.json({});
+  res.json({
+    success: true,
+  });
 }
 
 module.exports = [validate(createSearchEntryValidation), createSearchEntry];
