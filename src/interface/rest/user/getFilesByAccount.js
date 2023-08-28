@@ -19,11 +19,20 @@ const getFilesByAccountValidation = {
   params: Joi.object({
     address: Joi.string().required(),
   }),
+  query: Joi.object({
+    offset: Joi.number().optional().min(0),
+    limit: Joi.number().optional().min(1).max(50),
+  }),
 };
 
 async function getFilesByAccount(req, res) {
   const { address } = req.params;
-  const files = await File.getByAccount(address.toLowerCase());
+  const { offset = 0, limit = 10 } = req.query;
+  const files = await File.getByAccount({
+    address: address.toLowerCase(),
+    offset,
+    limit,
+  });
   res.json({
     file: files.map((file) => addSessionToFileUrl(file, req.sessionId)),
   });
