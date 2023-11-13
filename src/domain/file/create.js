@@ -6,13 +6,13 @@ const ErrorHandler = require('../../infra/utils/errorHandler');
 const mime = require('mime-types');
 
 async function checkLimits({ owner }) {
-  const allCreatedFiles = await File.find({}).count();
-  if (allCreatedFiles > 10000) {
-    return ErrorHandler.throwError({
-      code: 429,
-      message: 'You seem to have hit our limits! We are currently in beta.',
-    });
-  }
+  // const allCreatedFiles = await File.find({}).count();
+  // if (allCreatedFiles > 10000) {
+  //   return ErrorHandler.throwError({
+  //     code: 429,
+  //     message: 'You seem to have hit our limits! We are currently in beta.',
+  //   });
+  // }
   if (!owner) {
     return;
   }
