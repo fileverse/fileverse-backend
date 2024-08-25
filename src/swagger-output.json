@@ -1,0 +1,929 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Fileverse Backend",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "host": "http://127.0.0.1:8001",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/account/{address}/login": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/account/{address}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/account/{address}/edit": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/account/{address}/all": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/account/{address}/nfts": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/account/{address}/tokens": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/account/{address}/airdrops": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/account/{address}/avatar": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/account/{address}/claim": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/file/create": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/file/{uuid}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/file/{uuid}/analytics": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/file/{uuid}/edit": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/file/{uuid}/remove": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/content/{uuid}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/comment/{uuid}/all": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/comment/{uuid}/create": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/comment/{uuid}/{shortId}/edit": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shortId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/comment/{uuid}/{shortId}/remove": {
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "shortId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/audience/create": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/audience/{uuid}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/audience/airdrop": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/log/create": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/org/create": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/org/{address}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/org/{address}/edit": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/org/{address}/members": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/org/{address}/files": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/org/{address}/analytics": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/org/{address}/chat-rooms": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/feedback/": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/ipfs/recent": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/ipfs/search": {
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "slice(7",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "length",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}
