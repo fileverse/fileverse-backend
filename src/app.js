@@ -12,6 +12,8 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const basicAuth = require('express-basic-auth');
 const Agendash = require('agendash');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
 
 const config = require('../config');
 const { errorHandler } = require('./interface/rest/middlewares');
@@ -60,6 +62,9 @@ app.use('/ping', function (req, res) {
 app.use('/', router);
 
 app.use(errorHandler);
+
+// Swagger documentation
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Export the express app instance
 module.exports = app;
