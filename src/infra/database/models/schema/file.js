@@ -69,6 +69,7 @@ _file.schema = new Schema(
     // system generated
     createdAt: { type: Number, required: true, default: Date.now },
     updatedAt: { type: Number, default: Date.now },
+    isDeleted: { type: Boolean, default: false },
   },
   { usePushEach: true },
   { runSettersOnQuery: true },
