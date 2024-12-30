@@ -4,7 +4,7 @@ const { File, Account } = require('../../infra/database/models');
 async function get(uuid, safe = true) {
   let foundFile = await File.findOne({
     $or: [{ uuid }, { slug: uuid }],
-    isDeleted: false,
+    isDeleted: { $ne: true },
   });
   if (!foundFile) {
     return ErrorHandler.throwError({
