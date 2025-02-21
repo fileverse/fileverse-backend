@@ -1,4 +1,5 @@
 # Fileverse Backend
+This repository contains the backend infrastructure supporting the Fileverse applications: [dDocs](https://ddocs.new/), Portal, and others. 
 
 ## Run the project locally (Development)
 
